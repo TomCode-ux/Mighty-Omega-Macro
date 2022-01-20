@@ -109,6 +109,7 @@ if (macro_on)
 					Click , 409, 296
 					Sleep 16
 				} Until A_TickCount - 1 > 2000
+				Sleep 1000
 			}
 			if slot = 0
 			{
@@ -240,6 +241,7 @@ if (macro_on)
 					Click , 409, 296
 					Sleep 16
 				} Until A_TickCount - 1 > 2000
+				Sleep 1000
 			}
 			if slot = 0
 			{

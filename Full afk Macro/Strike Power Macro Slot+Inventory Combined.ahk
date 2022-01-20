@@ -1571,7 +1571,7 @@ if (macro_on)
             Sendinput, {w up}{s up}
             Sleep 10000
         }
-        PixelSearch , x, y, 110, 144, 115, 146, 0x3A3A3A, 40, Fast
+        PixelSearch , x, y, 80, 144, 85, 146, 0x3A3A3A, 40, Fast
         If ErrorLevel = 0
         {
 		tooltip, eat
@@ -1584,8 +1584,8 @@ if (macro_on)
                 Send {Click 10}
                 Sleep 5500
                 Send %slot%
-		        Sleep 100
-		        Send 1
+		Sleep 100
+		Send 1
                 Sleep 50
                 SendInput, {VKC0}
                 Sleep 50

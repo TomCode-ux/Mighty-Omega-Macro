@@ -1588,8 +1588,9 @@ if (macro_on)
 		Send 1
                 Sleep 50
                 SendInput, {VKC0}
-                Sleep 50
+                Sleep 300
                 SendInput, {VKC0}
+		Sleep 50
                 current++
             }
             if slot = 0
@@ -1603,9 +1604,9 @@ if (macro_on)
             {
                 Sleep 50
                 SendInput, {VKC0}
-                Sleep 50
+                Sleep 300
                 SendInput, {VKC0}
-                Sleep 10
+		Sleep 50
                 slot++
                 current = 0
                 if slot >= 10

@@ -83,7 +83,7 @@ if (macro_on)
 					SetTimer, removetooltip, -2000
 					Sleep 8000
 				}					
-				ImageSearch, x , y , 250 , 220 , 560 , 440, *45 %A_ScriptDir%\bin\yellow.png
+				ImageSearch, x , y , 250 , 220 , 560 , 440, *20 %A_ScriptDir%\bin\yellow.png
 				if (errorlevel = 0)
 				{					
 					MouseClick, Left,  x+5, y+5
@@ -156,7 +156,7 @@ if (macro_on)
 				SetTimer, removetooltip, -2000
 				Sleep 8000
 			}			
-			ImageSearch, x , y , 250 , 220 , 560 , 440, *45 %A_ScriptDir%\bin\yellow.png
+			ImageSearch, x , y , 250 , 220 , 560 , 440, *20 %A_ScriptDir%\bin\yellow.png
 			if (errorlevel = 0)
 			{				
 				MouseClick, Left,  x+5, y+5

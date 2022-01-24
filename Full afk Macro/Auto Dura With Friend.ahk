@@ -10,7 +10,7 @@ CenterWindow(WinTitle)
 	WinMove, %WinTitle%,, (A_ScreenWidth/2)-(Width/2), (A_ScreenHeight/2)-(Height/2), 400, 400
 }
 
-MsgBox, 0, F1 On Buy Pad. to Start Dura Macro,  F2 [First Pop Dura Side] F3 [Hitting Side]
+MsgBox, 0, put mouse on Buy Pad. to Start Dura Macro,  F1 [First Pop Dura Side] F2 [Hitting Side]
 Stop()
 {
     Clipboard = Stop ;copy clipboard text
@@ -53,13 +53,6 @@ removetooltip(){
 end::reload
 
 F1::
-CoordMode, Mouse, Window
-MouseGetPos, x1, y1
-ToolTip, Saved First Position
-SetTimer, removetooltip, -500
-Return
-
-F2::
 macro_on := !macro_on
 if (macro_on)
 {
@@ -71,9 +64,9 @@ if (macro_on)
     {
         tooltip, Start Buying Dura
         settimer, removetooltip, -1000
-        Click, %x1% %y1% ;buy dura
+        Click ;buy dura
         Sleep 25
-        Click, %x1% %y1% ;for sure
+        Click ;for sure
         Sleep 1000
         Send 2{Click} ;pop dura
         Clipboard = Start ;copy clipboard text
@@ -198,7 +191,7 @@ else
 }
 Return
 
-F3::
+F2::
 macro_on := !macro_on
 CoordMode, Pixel, Window
 PixelGetColor, Lol, 255, 120
@@ -238,9 +231,9 @@ if (macro_on)
         ; STOP
         tooltip, Start Buying Dura
         settimer, removetooltip, -1000
-        Click, %x1% %y1% ;buy dura
+        Click ;buy dura
         Sleep 25
-        Click, %x1% %y1% ;for sure
+        Click ;for sure
         Sleep 1000
         Send 2{Click} ;pop dura
         Clipboard = Start ;copy clipboard text

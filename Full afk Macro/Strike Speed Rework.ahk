@@ -26,10 +26,8 @@ if ErrorLevel = 1
     ExitApp
 }
 
-If (gym = "kure" or gym = "taek" or gym = "box" or gym = "karate")
+If not (gym = "kure" or gym = "taek" or gym = "box" or gym = "karate")
 {
-
-} else {
     tooltip, Look like the %gym% not exist in this version of macro
     SetTimer, reload1, -3000
     return

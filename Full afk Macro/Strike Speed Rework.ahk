@@ -1,4 +1,4 @@
-﻿#maxThreadsPerHotkey, 2
+#maxThreadsPerHotkey, 2
 Loop, 3
 {	
 	CenterWindow("ahk_exe RobloxPlayerBeta.exe")
@@ -51,7 +51,6 @@ if (gym = "kure" or gym = "taek")
 {
     Loop,
     {
-        111 = 0
         Send {Click 10}
         Sleep 100
         ImageSearch, x, y, 695, 530, 750, 580, *10 %A_ScriptDir%\bin2\training.png
@@ -63,22 +62,107 @@ if (gym = "kure" or gym = "taek")
         }
         Loop,
         {
-            ImageSearch, x, y, 10, 30, 800, 630, *5 %A_ScriptDir%\bin2\ss.png ;
+            ImageSearch, x, y, 10, 30, 800, 630, *2 %A_ScriptDir%\bin2\ss.png ;
             If ErrorLevel = 0
             {
-                Send {Click}
-                ImageSearch, x, y, 10, 30, 800, 630, *5 %A_ScriptDir%\bin2\ss.png
+                Loop, 4
+                {
+                    Send {Click}
+                    Sleep 1050
+                    ImageSearch, x, y, 695, 530, 750, 580, *10 %A_ScriptDir%\bin2\aa.png
+                    if ErrorLevel = 0
+                    {
+                        Break
+                    }
+                }
+                ImageSearch, x, y, 10, 30, 800, 630, *2 %A_ScriptDir%\bin2\ss.png
                 {
                     Send {Click, Right}
+                    Sleep 300
                 }
-                Sleep, 200
+                ImageSearch, x, y, 695, 530, 750, 580, *10 %A_ScriptDir%\bin2\aa.png
+                if ErrorLevel = 0
+                {
+                    Send 1
+                    Break
+                }
             }
-            ImageSearch, x, y, 695, 530, 750, 580, *10 %A_ScriptDir%\bin2\aa.png
-            if ErrorLevel = 0
+        }
+        L++
+        Tooltip, %L%
+        SetTimer, removetooltip, -1000
+        if L = %logs%
+        {
+            Send !{f4}
+            ExitApp
+        }
+    }
+}
+if (gym = "karate" or gym = "box")
+{
+    MouseGetPos, x1, y1
+    Loop,
+    {
+        Send {Click 10}
+        ImageSearch, x, y, 695, 530, 750, 580, *10 %A_ScriptDir%\bin2\training.png
+        if ErrorLevel = 0
+        {
+            Sleep 100
+            Send {Shift}
+            Sleep 100
+            Send {d Down}
+            Sleep 850
+            Send {d up}{w Down}
+            Sleep 750
+            Send {w up}
+            sleep 300
+        }
+        ImageSearch, x, y, 695, 530, 750, 580, *10 %A_ScriptDir%\bin2\training.png
+        if ErrorLevel = 0
+        {
+            send 0{Click}
+            Sleep 100
+            Send 1r
+        }
+        Loop,
+        {
+            ImageSearch, x, y, 10, 30, 800, 630, *2 %A_ScriptDir%\bin2\ss.png ;
+            If ErrorLevel = 0
             {
-                Send 1
-                Break
+                Loop, 4
+                {
+                    Send {Click}
+                    Sleep 1050
+                    ImageSearch, x, y, 695, 530, 750, 580, *10 %A_ScriptDir%\bin2\aa.png
+                    if ErrorLevel = 0
+                    {
+                        Break
+                    }
+                }
+                ImageSearch, x, y, 10, 30, 800, 630, *2 %A_ScriptDir%\bin2\ss.png
+                {
+                    Send {Click, Right}
+                    Sleep 300
+                }
+                ImageSearch, x, y, 695, 530, 750, 580, *10 %A_ScriptDir%\bin2\aa.png
+                if ErrorLevel = 0
+                {
+                    Send 1
+                    Break
+                }
             }
+        }
+        ImageSearch, x, y, 695, 530, 750, 580, *10 %A_ScriptDir%\bin2\aa.png
+        if ErrorLevel = 0
+        {
+            Sleep 1300
+            Send {s Down}
+            Sleep 750
+            Send {s up}{a Down}
+            Sleep 850
+            Send {a up}
+            sleep 100
+            Send {Shift}
         }
         L++
         Tooltip, %L%

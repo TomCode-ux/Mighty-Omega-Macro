@@ -57,35 +57,46 @@ if (gym = "kure" or gym = "taek")
             send 0{Click}
             Sleep 100
             Send 1r
-        }
-        Loop,
-        {
-            ImageSearch, x, y, 10, 30, 800, 630, *2 %A_ScriptDir%\bin2\ss.png ;
-            If ErrorLevel = 0
+            StartTime12 := A_TickCount
+            Loop,
             {
-                Loop, 4
+                ImageSearch, x, y, 10, 30, 800, 630, *2 %A_ScriptDir%\bin2\ss.png ;
+                If ErrorLevel = 0
                 {
-                    Send {Click}
-                    Sleep 1050
+                    Loop, 4
+                    {
+                        Send {Click}
+                        Sleep 1050
+                        ImageSearch, x, y, 695, 530, 750, 580, *10 %A_ScriptDir%\bin2\aa.png
+                        if ErrorLevel = 0
+                        {
+                            Break
+                        }
+                    }
+                    StartTime11 := A_TickCount
+                    Loop,
+                    {
+                        ImageSearch, x, y, 10, 30, 800, 630, *2 %A_ScriptDir%\bin2\ss.png
+                        {
+                            Send {Click, Right}
+                            Sleep 300
+                            Break
+                        }
+                        ImageSearch, x, y, 695, 530, 750, 580, *10 %A_ScriptDir%\bin2\aa.png
+                        if ErrorLevel = 0
+                        {
+                            Break
+                        }
+                    } Until A_TickCount - StartTime11 > 10000
                     ImageSearch, x, y, 695, 530, 750, 580, *10 %A_ScriptDir%\bin2\aa.png
                     if ErrorLevel = 0
                     {
+                        Send 1
                         Break
                     }
                 }
-                ImageSearch, x, y, 10, 30, 800, 630, *2 %A_ScriptDir%\bin2\ss.png
-                {
-                    Send {Click, Right}
-                    Sleep 300
-                }
-                ImageSearch, x, y, 695, 530, 750, 580, *10 %A_ScriptDir%\bin2\aa.png
-                if ErrorLevel = 0
-                {
-                    Send 1
-                    Break
-                }
-            }
-        }
+            } Until A_TickCount - StartTime12 > 25000
+        } 
         L++
         Tooltip, %L%
         SetTimer, removetooltip, -1000
@@ -114,53 +125,60 @@ if (gym = "karate" or gym = "box")
             Sleep 750
             Send {w up}
             sleep 300
-        }
-        ImageSearch, x, y, 695, 530, 750, 580, *10 %A_ScriptDir%\bin2\training.png
-        if ErrorLevel = 0
-        {
             send 0{Click}
             Sleep 100
             Send 1r
-        }
-        Loop,
-        {
-            ImageSearch, x, y, 10, 30, 800, 630, *2 %A_ScriptDir%\bin2\ss.png ;
-            If ErrorLevel = 0
+            StartTime12 := A_TickCount
+            Loop,
             {
-                Loop, 4
+                ImageSearch, x, y, 10, 30, 800, 630, *2 %A_ScriptDir%\bin2\ss.png ;
+                If ErrorLevel = 0
                 {
-                    Send {Click}
-                    Sleep 1050
+                    Loop, 4
+                    {
+                        Send {Click}
+                        Sleep 1050
+                        ImageSearch, x, y, 695, 530, 750, 580, *10 %A_ScriptDir%\bin2\aa.png
+                        if ErrorLevel = 0
+                        {
+                            Break
+                        }
+                    }
+                    StartTime11 := A_TickCount
+                    Loop,
+                    {
+                        ImageSearch, x, y, 10, 30, 800, 630, *2 %A_ScriptDir%\bin2\ss.png
+                        {
+                            Send {Click, Right}
+                            Sleep 300
+                            Break
+                        }
+                        ImageSearch, x, y, 695, 530, 750, 580, *10 %A_ScriptDir%\bin2\aa.png
+                        if ErrorLevel = 0
+                        {
+                            Break
+                        }
+                    } Until A_TickCount - StartTime11 > 10000
                     ImageSearch, x, y, 695, 530, 750, 580, *10 %A_ScriptDir%\bin2\aa.png
                     if ErrorLevel = 0
                     {
+                        Send 1
                         Break
                     }
                 }
-                ImageSearch, x, y, 10, 30, 800, 630, *2 %A_ScriptDir%\bin2\ss.png
-                {
-                    Send {Click, Right}
-                    Sleep 300
-                }
-                ImageSearch, x, y, 695, 530, 750, 580, *10 %A_ScriptDir%\bin2\aa.png
-                if ErrorLevel = 0
-                {
-                    Send 1
-                    Break
-                }
+            } Until A_TickCount - StartTime12 > 25000
+            ImageSearch, x, y, 695, 530, 750, 580, *10 %A_ScriptDir%\bin2\aa.png
+            if ErrorLevel = 0
+            {
+                Sleep 1300
+                Send {s Down}
+                Sleep 750
+                Send {s up}{a Down}
+                Sleep 850
+                Send {a up}
+                sleep 100
+                Send {Shift}
             }
-        }
-        ImageSearch, x, y, 695, 530, 750, 580, *10 %A_ScriptDir%\bin2\aa.png
-        if ErrorLevel = 0
-        {
-            Sleep 1300
-            Send {s Down}
-            Sleep 750
-            Send {s up}{a Down}
-            Sleep 850
-            Send {a up}
-            sleep 100
-            Send {Shift}
         }
         L++
         Tooltip, %L%

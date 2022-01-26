@@ -53,6 +53,8 @@ removetooltip(){
 end::reload
 
 F1::
+CoordMode, Pixel, Window
+PixelGetColor, lol, 255, 120
 macro_on := !macro_on
 if (macro_on)
 {
@@ -68,6 +70,14 @@ if (macro_on)
         Sleep 25
         Click ;for sure
         Sleep 1000
+        Loop,
+        {
+            PixelSearch, OutputVarX, OutputVarY, 254, 119, 255, 120, %lol%,,Fast
+            If ErrorLevel = 0
+            {
+                Break
+            }
+        }
         Send 2{Click} ;pop dura
         Clipboard = Start ;copy clipboard text
         Send / ;chat
@@ -171,15 +181,6 @@ if (macro_on)
                 }
             }
         }
-
-        Loop,
-        {
-            PixelSearch, OutputVarX, OutputVarY, 254, 119, 255, 120, %lol%,,Fast
-            If ErrorLevel = 0
-            {
-                Break
-            }
-        }
         Tooltip, %A_Index%
         Settimer, removetooltip, -2000
 
@@ -194,7 +195,7 @@ Return
 F2::
 macro_on := !macro_on
 CoordMode, Pixel, Window
-PixelGetColor, Lol, 255, 120
+PixelGetColor, lol, 255, 120
 if (macro_on)
 {
     CoordMode, Pixel, Window
@@ -235,6 +236,14 @@ if (macro_on)
         Sleep 25
         Click ;for sure
         Sleep 1000
+        Loop,
+        {
+            PixelSearch, OutputVarX, OutputVarY, 254, 119, 255, 120, %lol%,,Fast
+            If ErrorLevel = 0
+            {
+                Break
+            }
+        }
         Send 2{Click} ;pop dura
         Clipboard = Start ;copy clipboard text
         Send / ;chat
@@ -308,15 +317,6 @@ if (macro_on)
                 {
                     slot = 0
                 }
-            }
-        }
-
-        Loop,
-        {
-            PixelSearch, OutputVarX, OutputVarY, 254, 119, 255, 120, %lol%,,Fast
-            If ErrorLevel = 0
-            {
-                Break
             }
         }
         Tooltip, %A_Index%

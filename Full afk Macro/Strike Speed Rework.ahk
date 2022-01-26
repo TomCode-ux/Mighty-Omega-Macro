@@ -88,12 +88,12 @@ if (gym = "kure" or gym = "taek")
                             Break
                         }
                     } Until A_TickCount - StartTime11 > 10000
-                    ImageSearch, x, y, 695, 530, 750, 580, *10 %A_ScriptDir%\bin2\aa.png
-                    if ErrorLevel = 0
-                    {
-                        Send 1
-                        Break
-                    }
+                }
+		ImageSearch, x, y, 695, 530, 750, 580, *10 %A_ScriptDir%\bin2\aa.png
+                if ErrorLevel = 0
+                {
+                    Send 1
+                    Break
                 }
             } Until A_TickCount - StartTime12 > 25000
         } 
@@ -159,12 +159,12 @@ if (gym = "karate" or gym = "box")
                             Break
                         }
                     } Until A_TickCount - StartTime11 > 10000
-                    ImageSearch, x, y, 695, 530, 750, 580, *10 %A_ScriptDir%\bin2\aa.png
-                    if ErrorLevel = 0
-                    {
-                        Send 1
-                        Break
-                    }
+                }
+		ImageSearch, x, y, 695, 530, 750, 580, *10 %A_ScriptDir%\bin2\aa.png
+                if ErrorLevel = 0
+                {
+                    Send 1
+                    Break
                 }
             } Until A_TickCount - StartTime12 > 25000
             ImageSearch, x, y, 695, 530, 750, 580, *10 %A_ScriptDir%\bin2\aa.png

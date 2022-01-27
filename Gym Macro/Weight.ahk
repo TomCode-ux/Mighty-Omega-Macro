@@ -13,11 +13,11 @@ CenterWindow(WinTitle)
 	WinGetPos,,, Width, Height, %WinTitle%
 	WinMove, %WinTitle%,, (A_ScreenWidth/2)-(Width/2), (A_ScreenHeight/2)-(Height/2), 400, 400
 }
-removetooltip:
+removetooltip()
 {	
 	ToolTip
 }
-Return
+
 MsgBox, 0,Tutorial, F1 for protein weight F2 for normal weight  
 end::reload
 #maxThreadsPerHotkey, 2

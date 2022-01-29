@@ -1,4 +1,5 @@
 #maxThreadsPerHotkey, 2
+
 SetPrimaryMonitorScaling(100) ; https://www.autohotkey.com/boards/viewtopic.php?t=94218
 Sleep 100
 SetPrimaryMonitorScaling(value) {
@@ -173,7 +174,6 @@ if (macro_on)
 		Click , 410, 355
 		Click , 410, 351
 		Sleep 3000
-		Send e
 		StartTime := A_TickCount
 		Loop ,
 		{			
@@ -213,7 +213,6 @@ if (macro_on)
 				}	
 			}
 		} Until A_TickCount - StartTime > 60000
-		Send e
 		StartTime2 := A_TickCount
 		Loop ,
 		{			

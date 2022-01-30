@@ -183,22 +183,22 @@ if (macro_on)
 			ImageSearch , FoundX, FoundY, 200, 240, 600, 300, *30 %A_ScriptDir%\bin\w.png
 			if (errorlevel = 0)
 			{				
-				Sendinput {w down}{w up}
+				Send {w down}{w up}
 			}			
 			ImageSearch , FoundX, FoundY, 200, 240, 600, 300, *30 %A_ScriptDir%\bin\a.png
 			if (errorlevel = 0)
 			{				
-				Sendinput {a down}{a up}
+				Send {a down}{a up}
 			}			
 			ImageSearch , FoundX, FoundY, 200, 240, 600, 300, *30 %A_ScriptDir%\bin\s.png
 			if (errorlevel = 0)
 			{				
-				Sendinput {s down}{s up}
+				Send {s down}{s up}
 			}			
 			ImageSearch , FoundX, FoundY, 200, 240, 600, 300, *30 %A_ScriptDir%\bin\d.png
 			if (errorlevel = 0)
 			{				
-				Sendinput {d down}{d up}
+				Send {d down}{d up}
 			}
 			if detect = true
 			{

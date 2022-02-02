@@ -10,42 +10,28 @@ CenterWindow(WinTitle)
 	WinMove, %WinTitle%,, (A_ScreenWidth/2)-(Width/2), (A_ScreenHeight/2)-(Height/2), 400, 400
 }
 
-MsgBox, 0, put mouse on Buy Pad. to Start Dura Macro,  F1 [First Pop Dura Side] F2 [Hitting Side]
-Stop()
-{
-    Clipboard = Stop ;copy clipboard text
-    Send / ;chat
-    Sleep 30
-    Send ^{v} ;paste
-    Sleep 10
-    Send {Enter} ;enter
-}
-Start()
-{
-    Clipboard = Start ;copy clipboard text
-    Send / ;chat
-    Sleep 30
-    Send ^{v} ;paste
-    Sleep 10
-    Send {Enter} ;enter
-}
+MsgBox, 0, put mouse on Buy Pad. to Start Dura Macro,  F1 [YOU] and Wait for Start `nMessage to show up Then Your friend press F1  
+
+
 e()
 {
     Send e
 }
+
 type()
 {
     Clipboard = . ;copy clipboard text
     Loop, 3
     {
         Send / ;chat
-        Sleep 30
+        Sleep 100
         Send ^{v} ;paste
-        Sleep 40
+        Sleep 100
         Send {Enter} ;enter
-        Sleep 50
+        Sleep 100
     }
 }
+
 removetooltip(){
     Tooltip
 }
@@ -62,269 +48,187 @@ if (macro_on)
     CoordMode, Mouse, Window
     current = 0
     slot = 3
-    Loop,
+    Send 1r ;charge rythm
+    Loop, ; wait for full hp
     {
-        tooltip, Start Buying Dura
-        settimer, removetooltip, -1000
-        Click ;buy dura
-        Sleep 25
-        Click ;for sure
-        Sleep 1000
-        Loop,
-        {
-            PixelSearch, OutputVarX, OutputVarY, 254, 119, 255, 120, %lol%,,Fast
-            If ErrorLevel = 0
-            {
-                Break
-            }
-        }
-        Send 2{Click} ;pop dura
-        Clipboard = Start ;copy clipboard text
-        Send / ;chat
-        Sleep 40
-        Send ^{v} ;paste
-        Sleep 40
-        Send {Enter} ;enter
-        Sleep 100
-        Settimer, e, -15000 ;berserk
-        Loop,
-        {
-            PixelSearch, OutputVarX, OutputVarY, 60, 117, 61, 118, 0x3D3DA2, 20, Fast 
-            If ErrorLevel = 0
-            {
-                Clipboard = Stop ;copy clipboard text
-                Send / ;chat
-                Sleep 40
-                Send ^{v} ;paste
-                Sleep 40
-                Send {Enter} ;enter
-                Sleep 3000
-                Send e{Click} ; un pop dura
-                Sleep 100
-                type()
-                Break
-            }
-            PixelSearch, OutputVarX, OutputVarY, 60, 117, 61, 118, 0x444444, 20, Fast 
-            If ErrorLevel = 0
-            {
-                Clipboard = Stop ;copy clipboard text
-                Send / ;chat
-                Sleep 30
-                Send ^{v} ;paste
-                Sleep 10
-                Send {Enter} ;enter
-                Sleep 3000
-                Send e{Click} ; un pop dura
-                Sleep 100
-                type()
-                Break
-            }
-        }
-
-        ; STOP
-
-
-        Send 1r ;charge rythm
-        Loop,
-        {
-            ImageSearch, x, y, 10, 30, 800, 630, *20 %A_ScriptDir%\bin2\Start.png
-            If ErrorLevel = 0
-            {
-                Break
-            }
-        } 
-        Sleep 100
-        Loop,
-        {
-            ImageSearch, x, y, 10, 30, 800, 630, *40 %A_ScriptDir%\bin2\Stop.png
-            If ErrorLevel = 0
-            {
-                Break
-            } else {
-                Send {Click}
-            }
-        }
-        Send 1
-        
-
-        ; STOP
-
-        PixelSearch , x, y, 80, 144, 85, 146, 0x3A3A3A, 40, Fast ;auto eat
+        ImageSearch, x, y, 10, 30, 800, 630, *20 %A_ScriptDir%\bin2\Start.png
         If ErrorLevel = 0
         {
-            tooltip, eat
-            settimer, removetooltip, -3000
-            if current <= 5
+            Loop,
             {
-                Sleep 100
-                Send %slot%
-                Sleep 200
-                Send {Click 10}
-                Sleep 5500
-                Send %slot%
-                current++
-            }
-            if slot = 0
-            {
-                if current >= 5
+                PixelSearch, x, y, 409, 151, 411, 153, 0x242424,, Fast ;auto flow
+                If ErrorLevel = 0
                 {
-                    Exitapp
+                    Send e
+                    Sleep 100
                 }
-            }
-            if current >= 5
-            {
-                slot++
-                current = 0
-                if slot >= 10
+
+                ImageSearch, x, y, 10, 30, 800, 630, *40 %A_ScriptDir%\bin2\Stop.png
+                If ErrorLevel = 0
                 {
-                    slot = 0
+                    Break
+                } else {
+                    Send {Click}
                 }
             }
         }
-        Tooltip, %A_Index%
-        Settimer, removetooltip, -2000
+        PixelSearch, OutputVarX, OutputVarY, 254, 119, 255, 120, %lol%,,Fast ; Full and pop Dura
+        If ErrorLevel = 0
+        {
+            Sleep 1000
+            Send 1
+            Sleep 100
+            tooltip, Start Buying Dura
+            settimer, removetooltip, -1000
+            Click ;buy dura
+            Sleep 25
+            Click ;for sure
+            Sleep 1000
+            Send 2{Click} ;pop dura
+            Clipboard = Start ;copy clipboard text
+            Sleep 100
+            Send / ;chat
+            Sleep 50
+            Send ^{v} ;paste
+            Sleep 50
+            Send {Enter} ;enter
+            Sleep 100
+            ;Settimer, e, -8000 ;berserk
+            Loop,
+            {
+                PixelSearch, OutputVarX, OutputVarY, 70, 117, 71, 118, 0x3D3DA2, 20, Fast 
+                If ErrorLevel = 0
+                {
+                    Clipboard = Stop ;copy clipboard text
+                    Send / ;chat
+                    Sleep 80
+                    Send ^{v} ;paste
+                    Sleep 80
+                    Send {Enter} ;enter
+                    Sleep 2000
+                    Send {Click} ; un pop dura
+                    Sleep 100
+                    tooltip, Start Buying Dura
+                    settimer, removetooltip, -1000
+                    Click ;buy dura
+                    Sleep 25
+                    Click ;for sure
+                    Send 1r
+                    Sleep 1000
+                    type()
+                    PixelSearch , x, y, 99, 144, 100, 146, 0x3A3A3A, 40, Fast ;auto eat
+                    If ErrorLevel = 0
+                    {
+                        tooltip, eat
+                        settimer, removetooltip, -3000
+                        if current <= 5
+                        {
+                            
+                            Sleep 100
+                            Send %slot%
+                            Sleep 200
+                            Send {Click 10}
+                            Sleep 5500
+                            Send %slot%
+                            Send 1r
+                            current++
+                        }
+                        if slot = 0
+                        {
+                            if current >= 5
+                            {
+                                PixelSearch , x, y, 99, 144, 100, 146, 0x3A3A3A, 40, Fast ;auto eat
+                                If ErrorLevel = 0
+                                {
+                                    ExitApp
+                                }
+                            }
+                        }
+                        if current >= 5
+                        {
+                            slot++
+                            Send {VKC0}
+                            Sleep 200
+                            Send {VKC0}
+                            current = 0
+                            if slot >= 10
+                            {
+                                slot = 0
+                            }
+                        }
+                    }
+                    Break
+                }
+                PixelSearch, OutputVarX, OutputVarY, 70, 117, 71, 118, 0x444444, 20, Fast 
+                If ErrorLevel = 0
+                {
+                    Clipboard = Stop ;copy clipboard text
+                    Send / ;chat
+                    Sleep 80
+                    Send ^{v} ;paste
+                    Sleep 80
+                    Send {Enter} ;enter
+                    Sleep 2000
+                    Send {Click} ; un pop dura
+                    Sleep 100
+                    tooltip, Start Buying Dura
+                    settimer, removetooltip, -1000
+                    Click ;buy dura
+                    Sleep 25
+                    Click ;for sure
+                    Send 1r
+                    Sleep 1000
+                    type()
+                    PixelSearch , x, y, 99, 144, 100, 146, 0x3A3A3A, 40, Fast ;auto eat
+                    If ErrorLevel = 0
+                    {
+                        tooltip, eat
+                        settimer, removetooltip, -3000
+                        if current <= 5
+                        {
+                            Sleep 100
+                            Send %slot%
+                            Sleep 200
+                            Send {Click 10}
+                            Sleep 5500
+                            Send %slot%
+                            Send 1r
+                            current++
+                        }
+                        if slot = 0
+                        {
+                            if current >= 5
+                            {
+                                PixelSearch , x, y, 99, 144, 100, 146, 0x3A3A3A, 40, Fast ;auto eat
+                                If ErrorLevel = 0
+                                {
+                                    ExitApp
+                                }
+                            }
+                        }
+                        if current >= 5
+                        {
+                            slot++
+                            Send {VKC0}
+                            Sleep 200
+                            Send {VKC0}
+                            current = 0
+                            if slot >= 10
+                            {
+                                slot = 0
+                            }
+                        }
+                    }
+                    Break
+                }
+            }
+        }
 
+        
     }
 }
 else
 {
-    ExitApp
-}
-Return
-
-F2::
-macro_on := !macro_on
-CoordMode, Pixel, Window
-PixelGetColor, lol, 255, 120
-if (macro_on)
-{
-    CoordMode, Pixel, Window
-    CoordMode, Mouse, Window
-    current = 0
-    slot = 3
-    Loop,
-    {
-
-        Send 1r ;charge rythm
-        Loop,
-        {
-            ImageSearch, x, y, 10, 30, 800, 630, *20 %A_ScriptDir%\bin2\Start.png
-            If ErrorLevel = 0
-            {
-                Break
-            }
-        } 
-        Sleep 100
-        Loop,
-        {
-            ImageSearch, x, y, 10, 30, 800, 630, *40 %A_ScriptDir%\bin2\Stop.png
-            If ErrorLevel = 0
-            {
-                Break
-            } 
-            else 
-            {
-                Send {Click}
-            }
-        }
-        Send 1
-        
-        ; STOP
-        tooltip, Start Buying Dura
-        settimer, removetooltip, -1000
-        Click ;buy dura
-        Sleep 25
-        Click ;for sure
-        Sleep 1000
-        Loop,
-        {
-            PixelSearch, OutputVarX, OutputVarY, 254, 119, 255, 120, %lol%,,Fast
-            If ErrorLevel = 0
-            {
-                Break
-            }
-        }
-        Send 2{Click} ;pop dura
-        Clipboard = Start ;copy clipboard text
-        Send / ;chat
-        Sleep 40
-        Send ^{v} ;paste
-        Sleep 40
-        Send {Enter} ;enter
-        Sleep 100
-        Settimer, e, -15000 ;berserk
-        Loop,
-        {
-            PixelSearch, OutputVarX, OutputVarY, 60, 117, 61, 118, 0x3D3DA2, 20, Fast 
-            If ErrorLevel = 0
-            {
-                Clipboard = Stop ;copy clipboard text
-                Send / ;chat
-                Sleep 40
-                Send ^{v} ;paste
-                Sleep 40
-                Send {Enter} ;enter
-                Sleep 3000
-                Send {Click} ; un pop dura
-                Sleep 1000
-                type()
-                Break
-            }
-            PixelSearch, OutputVarX, OutputVarY, 60, 117, 61, 118, 0x444444, 20, Fast 
-            If ErrorLevel = 0
-            {
-                Clipboard = Stop ;copy clipboard text
-                Send / ;chat
-                Sleep 40
-                Send ^{v} ;paste
-                Sleep 40
-                Send {Enter} ;enter
-                Sleep 3000
-                Send {Click} ; un pop dura
-                Sleep 1000
-                type()
-                Break
-            }
-        }
-
-        PixelSearch , x, y, 80, 144, 85, 146, 0x3A3A3A, 40, Fast ;auto eat
-        If ErrorLevel = 0
-        {
-            tooltip, eat
-            settimer, removetooltip, -3000
-            if current <= 5
-            {
-                Sleep 100
-                Send %slot%
-                Sleep 200
-                Send {Click 10}
-                Sleep 5500
-                Send %slot%
-                current++
-            }
-            if slot = 0
-            {
-                if current >= 5
-                {
-                    Exitapp
-                }
-            }
-            if current >= 5
-            {
-                slot++
-                current = 0
-                if slot >= 10
-                {
-                    slot = 0
-                }
-            }
-        }
-        Tooltip, %A_Index%
-        Settimer, removetooltip, -2000
-    }
-}
-else
-{
-    ExitApp
+    Return
 }
 Return

@@ -20,13 +20,11 @@ IfNotExist, %A_ScriptDir%\bin2\Stop.png
     ExitApp 
 }
 
+
 MsgBox, 0, put mouse on Buy Pad. to Start Dura Macro,  F1 [YOU] and Wait for Start `nMessage to show up Then Your friend press F1  
 
 
-e()
-{
-    Send e
-}
+
 
 type()
 {
@@ -64,6 +62,7 @@ if (macro_on)
         ImageSearch, x, y, 10, 30, 800, 630, *20 %A_ScriptDir%\bin2\Start.png
         If ErrorLevel = 0
         {
+            Sleep 2000
             Loop,
             {
                 PixelSearch, x, y, 409, 151, 411, 153, 0x242424,, Fast ;auto flow
@@ -85,16 +84,6 @@ if (macro_on)
         PixelSearch, OutputVarX, OutputVarY, 254, 119, 255, 120, %lol%,,Fast ; Full and pop Dura
         If ErrorLevel = 0
         {
-            Sleep 1000
-            Send 1
-            Sleep 100
-            tooltip, Start Buying Dura
-            settimer, removetooltip, -1000
-            Click ;buy dura
-            Sleep 25
-            Click ;for sure
-            Sleep 1000
-            Send 2{Click} ;pop dura
             Clipboard = Start ;copy clipboard text
             Sleep 100
             Send / ;chat
@@ -103,6 +92,10 @@ if (macro_on)
             Sleep 50
             Send {Enter} ;enter
             Sleep 100
+            Send 1
+            Click, 10 ;buy dura
+            Sleep 1000
+            Send 2{Click} ;pop dura
             ;Settimer, e, -8000 ;berserk
             Loop,
             {
@@ -116,16 +109,16 @@ if (macro_on)
                     Sleep 80
                     Send {Enter} ;enter
                     Sleep 2000
-                    Send {Click} ; un pop dura
+                    Click ; un pop dura
                     Sleep 100
-                    tooltip, Start Buying Dura
-                    settimer, removetooltip, -1000
-                    Click ;buy dura
+                    Click, 10 ;buy dura
                     Sleep 25
                     Click ;for sure
+                    Sleep 1000
                     Send 1r
                     Sleep 1000
                     type()
+                    Sleep 1000
                     PixelSearch , x, y, 99, 144, 100, 146, 0x3A3A3A, 40, Fast ;auto eat
                     If ErrorLevel = 0
                     {
@@ -147,7 +140,7 @@ if (macro_on)
                         {
                             if current >= 5
                             {
-                                PixelSearch , x, y, 99, 144, 100, 146, 0x3A3A3A, 40, Fast ;auto eat
+                                PixelSearch , x, y, 60, 144, 61, 146, 0x3A3A3A, 40, Fast ;auto eat
                                 If ErrorLevel = 0
                                 {
                                     ExitApp
@@ -169,7 +162,7 @@ if (macro_on)
                     }
                     Break
                 }
-                PixelSearch, OutputVarX, OutputVarY, 70, 117, 71, 118, 0x444444, 20, Fast 
+                PixelSearch, OutputVarX, OutputVarY, 70, 117, 71, 118, 0x3D3DA2, 20, Fast 
                 If ErrorLevel = 0
                 {
                     Clipboard = Stop ;copy clipboard text
@@ -179,16 +172,16 @@ if (macro_on)
                     Sleep 80
                     Send {Enter} ;enter
                     Sleep 2000
-                    Send {Click} ; un pop dura
+                    Click ; un pop dura
                     Sleep 100
-                    tooltip, Start Buying Dura
-                    settimer, removetooltip, -1000
-                    Click ;buy dura
+                    Click, 10 ;buy dura
                     Sleep 25
                     Click ;for sure
+                    Sleep 1000
                     Send 1r
                     Sleep 1000
                     type()
+                    Sleep 1000
                     PixelSearch , x, y, 99, 144, 100, 146, 0x3A3A3A, 40, Fast ;auto eat
                     If ErrorLevel = 0
                     {
@@ -196,12 +189,12 @@ if (macro_on)
                         settimer, removetooltip, -3000
                         if current <= 5
                         {
+                            
                             Sleep 100
                             Send %slot%
                             Sleep 200
                             Send {Click 10}
                             Sleep 5500
-                            Send %slot%
                             Send 1r
                             current++
                         }
@@ -209,7 +202,7 @@ if (macro_on)
                         {
                             if current >= 5
                             {
-                                PixelSearch , x, y, 99, 144, 100, 146, 0x3A3A3A, 40, Fast ;auto eat
+                                PixelSearch , x, y, 60, 144, 61, 146, 0x3A3A3A, 40, Fast ;auto eat
                                 If ErrorLevel = 0
                                 {
                                     ExitApp

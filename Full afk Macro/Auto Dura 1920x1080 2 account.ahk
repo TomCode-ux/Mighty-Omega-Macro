@@ -1,7 +1,9 @@
+#maxThreadsPerHotkey, 2
 end::reload
-removetooltip:
+removetooltip(){
    ToolTip
-return
+}
+
 f1::
    CoordMode, Pixel, Screen
    CoordMode, Mouse, Screen
@@ -50,7 +52,7 @@ f2::
          loop,
          {
             ; amongus
-            PixelSearch, x, y, 54, 114, 56, 116, 0x3D3DA2,, Fast 
+            PixelSearch, x, y, 54, 114, 56, 116, 0x3D3DA2, 20, Fast 
             If ErrorLevel = 0
             {
                Send 1
@@ -65,7 +67,7 @@ f2::
                Click, %x2%, %y2%
                Sleep 25
             }
-            PixelSearch, x, y, 54, 114, 56, 116, 0x444444,, Fast 
+            PixelSearch, x, y, 54, 114, 56, 116, 0x444444, 20, Fast 
             If ErrorLevel = 0
             {
                Send 1
@@ -79,7 +81,7 @@ f2::
             }else  {
                Click, %x2%, %y2%
                Sleep 25
-               PixelSearch, x, y, 1429, 244, 1431, 246, 0x212121,, Fast 
+               PixelSearch, x, y, 1429, 244, 1431, 246, 0x212121, 3, Fast 
                If ErrorLevel = 0
                {
                   Sleep 100
@@ -106,7 +108,7 @@ f2::
             loop,
             {
                ; amongus
-               PixelSearch, x, y, 1020, 114, 1025, 116, 0x3D3DA2,, Fast 
+               PixelSearch, x, y, 1020, 114, 1025, 116, 0x3D3DA2, 20, Fast 
                If ErrorLevel = 0
                {
                   Send 1
@@ -122,7 +124,7 @@ f2::
                   Click, %x1%, %y1%
                   Sleep 25
                }
-               PixelSearch, x, y, 1020, 114, 1025, 116, 0x444444,, Fast 
+               PixelSearch, x, y, 1020, 114, 1025, 116, 0x444444, 20, Fast 
                If ErrorLevel = 0
                {
                   Send 1
@@ -137,7 +139,7 @@ f2::
                }else  {
                   Click, %x1%, %y1%
                   Sleep 25
-                  PixelSearch, x, y, 479, 259, 481, 261, 0x1E1E1E,, Fast 
+                  PixelSearch, x, y, 479, 259, 481, 261, 0x1E1E1E, 3, Fast 
                   If ErrorLevel = 0
                   {
                      Sleep 100
@@ -149,239 +151,91 @@ f2::
             Sleep 25
             Click, %x1% %y1%
             Sleep 400
-            PixelSearch, x, y, 70, 144, 90, 145, 0x444444,, Fast ; food under 50%
-            If ErrorLevel = 0
-            {
-               if eats1 = 1
-               {
-                  temps1++
-                  Send 3
-                  Sleep 50
-                  Send {Click}
-                  Sleep 5000
-                  Send 3
-                  Sleep 200
-                  if temps1 = 5
-                  {
-                     temps1 = 0
-                     eats1 = 2
-                  }}
-               if eats1 = 2
-               {
-                  temps1++
-                  Send 4
-                  Sleep 50
-                  Send {Click}
-                  Sleep 5000
-                  Send 4
-                  Sleep 200
-                  if temps1 = 5
-                  {
-                     temps1 = 0
-                     eats1 = 3
-                  }}
-               if eats1 = 3
-               {
-                  temps1++
-                  Send 5
-                  Sleep 50
-                  Send {Click}
-                  Sleep 5000
-                  Send 5
-                  Sleep 200
-                  if temps1 = 5
-                  {
-                     temps1 = 0
-                     eats1 = 4
-                  }}
-               if eats1 = 4
-               {
-                  temps1++
-                  Send 6
-                  Sleep 50
-                  Send {Click}
-                  Sleep 5000
-                  Send 6
-                  Sleep 200
-                  if temps1 = 5
-                  {
-                     temps1 = 0
-                     eats1 = 5
-                  }}
-               if eats1 = 5
-               {
-                  temps1++
-                  Send 7
-                  Sleep 50
-                  Send {Click}
-                  Sleep 5000
-                  Send 7
-                  Sleep 200
-                  if temps1 = 5
-                  {
-                     temps1 = 0
-                     eats1 = 6
-                  }}
-               if eats1 = 6
-               {
-                  temps1++
-                  Send 8
-                  Sleep 50
-                  Send {Click}
-                  Sleep 5000
-                  Send 8
-                  Sleep 200
-                  if temps1 = 5
-                  {
-                     temps1 = 0
-                     eats1 = 7
-                  }}
-               if eats1 = 7
-               {
-                  temps1++
-                  Send 9
-                  Sleep 50
-                  Send {Click}
-                  Sleep 5000
-                  Send 9
-                  Sleep 200
-                  if temps1 = 5
-                  {
-                     temps1 = 0
-                     eats1 = 8
-                  }
-                  if eats2 = 8
-                  {
-                     temps2++
-                     Send 9
-                     Sleep 50
-                     Send {Click}
-                     Sleep 5000
-                     Send 9
-                     Sleep 200
-                     if temps2 = 5
-                     {
-                        Send !{F4}
-                     }}}}}
+            PixelSearch , x, y, 99, 144, 100, 146, 0x3A3A3A, 40, Fast ;auto eat
+                    If ErrorLevel = 0
+                    {
+                        tooltip, eat
+                        settimer, removetooltip, -3000
+                        if current <= 5
+                        {
+                            Sleep 100
+                            Send %slot%
+                            Sleep 200
+                            Send {Click 10}
+                            Sleep 5500
+                            Send %slot%
+                            Send 1r
+                            current++
+                        }
+                        if slot = 0
+                        {
+                            if current >= 5
+                            {
+                                PixelSearch , x, y, 99, 144, 100, 146, 0x3A3A3A, 40, Fast ;auto eat
+                                If ErrorLevel = 0
+                                {
+                                    ExitApp
+                                }
+                            }
+                        }
+                        if current >= 5
+                        {
+                            slot++
+                            Send {VKC0}
+                            Sleep 200
+                            Send {VKC0}
+                            current = 0
+                            if slot >= 10
+                            {
+                                slot = 0
+                            }
+                        }
+                    }}
          ;screen 2
          Click, %x2% %y2%
          Sleep 25
          Click, %x2% %y2%
          Sleep 400
-         PixelSearch, x, y, 1035, 144, 1055, 145, 0x444444,, Fast ; food under 50%
-         If ErrorLevel = 0
-         {
-            if eats2 = 1
-            {
-               temps2++
-               Send 3
-               Sleep 50
-               Send {Click}
-               Sleep 5000
-               Send 3
-               Sleep 200
-               if temps2 = 5
-               {
-                  temps2 = 0
-                  eats2 = 2
-               }}
-            if eats2 = 2
-            {
-               temps2++
-               Send 4
-               Sleep 50
-               Send {Click}
-               Sleep 5000
-               Send 4
-               Sleep 200
-               if temps2 = 5
-               {
-                  temps2 = 0
-                  eats2 = 3
-               }}
-            if eats2 = 3
-            {
-               temps2++
-               Send 5
-               Sleep 50
-               Send {Click}
-               Sleep 5000
-               Send 5
-               Sleep 200
-               if temps2 = 5
-               {
-                  temps2 = 0
-                  eats2 = 4
-               }}
-            if eats2 = 4
-            {
-               temps2++
-               Send 6
-               Sleep 50
-               Send {Click}
-               Sleep 5000
-               Send 6
-               Sleep 200
-               if temps2 = 5
-               {
-                  temps2 = 0
-                  eats2 = 5
-               }}
-            if eats2 = 5
-            {
-               temps2++
-               Send 7
-               Sleep 50
-               Send {Click}
-               Sleep 5000
-               Send 7
-               Sleep 200
-               if temps2 = 5
-               {
-                  temps2 = 0
-                  eats2 = 6
-               }}
-            if eats2 = 6
-            {
-               temps2++
-               Send 8
-               Sleep 50
-               Send {Click}
-               Sleep 5000
-               Send 8
-               Sleep 200
-               if temps2 = 5
-               {
-                  temps2 = 0
-                  eats2 = 7
-               }}
-            if eats2 = 7
-            {
-               temps2++
-               Send 9
-               Sleep 50
-               Send {Click}
-               Sleep 5000
-               Send 9
-               Sleep 200
-               if temps2 = 5
-               {
-                  temps2 = 0
-                  eats2 = 8
-               }}
-            if eats2 = 8
-            {
-               temps2++
-               Send 9
-               Sleep 50
-               Send {Click}
-               Sleep 5000
-               Send 9
-               Sleep 200
-               if temps2 = 5
-               {
-                  Send !{F4}
-               }}}}
+         PixelSearch , x, y, 99, 144, 100, 146, 0x3A3A3A, 40, Fast ;auto eat
+                    If ErrorLevel = 0
+                    {
+                        tooltip, eat
+                        settimer, removetooltip, -3000
+                        if current <= 5
+                        {
+                            Sleep 100
+                            Send %slot%
+                            Sleep 200
+                            Send {Click 10}
+                            Sleep 5500
+                            Send %slot%
+                            Send 1r
+                            current++
+                        }
+                        if slot = 0
+                        {
+                            if current >= 5
+                            {
+                                PixelSearch , x, y, 99, 144, 100, 146, 0x3A3A3A, 40, Fast ;auto eat
+                                If ErrorLevel = 0
+                                {
+                                    ExitApp
+                                }
+                            }
+                        }
+                        if current >= 5
+                        {
+                            slot++
+                            Send {VKC0}
+                            Sleep 200
+                            Send {VKC0}
+                            current = 0
+                            if slot >= 10
+                            {
+                                slot = 0
+                            }
+                        }
+                    }}
       
       if heal = now
       {

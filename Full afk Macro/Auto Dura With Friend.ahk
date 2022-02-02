@@ -9,6 +9,16 @@ CenterWindow(WinTitle)
 	WinGetPos,,, Width, Height, %WinTitle%
 	WinMove, %WinTitle%,, (A_ScreenWidth/2)-(Width/2), (A_ScreenHeight/2)-(Height/2), 400, 400
 }
+IfNotExist, %A_ScriptDir%\bin2\Start.png
+{
+    msgbox,, file missing,Look like you didn't extract file,3
+    ExitApp 
+}
+IfNotExist, %A_ScriptDir%\bin2\Stop.png
+{
+    msgbox,, file missing,Look like you didn't extract file,3
+    ExitApp 
+}
 
 MsgBox, 0, put mouse on Buy Pad. to Start Dura Macro,  F1 [YOU] and Wait for Start `nMessage to show up Then Your friend press F1  
 

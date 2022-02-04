@@ -3,6 +3,18 @@ IfNotExist, %A_ScriptDir%\bin\yellow.png
     msgbox,, file missing,Look like you didn't extract file,3
     ExitApp 
 }
+InputBox, level, weight Level, Please enter level., , 200, 150
+if ErrorLevel = 1
+{
+	ExitApp
+}
+
+If not (level = "1" or level = "2" or level = "3" or level = "4" or level = "5")
+{
+    tooltip, Look like level %level% not exist in this version of macro
+    SetTimer, removetooltip, -3000
+    return
+}
 InputBox, logs, how many weight you want to do?, use for auto leave if nonstop put text in it
 if ErrorLevel = 1
 {	
@@ -81,11 +93,44 @@ if (macro_on)
 		{
 			toolTip, %A_Index%
 			SetTimer, removetooltip, -3000
-			Click , 340, 400 ; select level
-			Send {Click 10}
+			if level = 6
+			{
+				Click , 340, 400 ; select level
+				Click , 340, 401 ; select level
+				Sleep 200
+			}
+			if level = 5
+			{
+				Click , 340, 370
+				Click , 340, 371
+				Sleep 200
+			}
+			if level = 4
+			{
+				Click , 340, 340
+				Click , 340, 341
+				Sleep 200
+			}
+			if level = 3
+			{
+				Click , 340, 310
+				Click , 340, 311
+				Sleep 200
+			}
+			if level = 2
+			{
+				Click , 340, 280
+				Click , 340, 281
+				Sleep 200
+			}
+			if level = 1
+			{
+				Click , 340, 250
+				Click , 340, 251
+				Sleep 200
+			}
 			Sleep 400
 			Click , 410, 355 ; hand
-			Send {F6}
 			StartTime := A_TickCount
 			Loop,
 			{
@@ -118,7 +163,6 @@ if (macro_on)
 				Click, 400, 390
 				Click, 400, 391
 			} Until A_TickCount - StartTime2 > 6000
-			Send {f6}
 			if A_Index = %logs%
 			{				
 				Send !{f4}

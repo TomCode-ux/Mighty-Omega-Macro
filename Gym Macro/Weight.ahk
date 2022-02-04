@@ -9,7 +9,7 @@ if ErrorLevel = 1
 	ExitApp
 }
 
-If not (level = "1" or level = "2" or level = "3" or level = "4" or level = "5")
+If not (level = "1" or level = "2" or level = "3" or level = "4" or level = "5" or level = "6")
 {
     tooltip, Look like level %level% not exist in this version of macro
     SetTimer, removetooltip, -3000

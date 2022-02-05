@@ -61,7 +61,7 @@ if (macro_on)
          Send 2{Click} ;pop dura
          ;Settimer, e, -8000 ;berserk
          MouseMove, x2, y2, 2
-         Sleep 100
+         Sleep 2000
          Send {MButton}
          Loop,
          {
@@ -117,7 +117,7 @@ if (macro_on)
          Send 2{Click} ;pop dura
          ;Settimer, e, -8000 ;berserk
          MouseMove, x1, y1, 2
-         Sleep 100
+         Sleep 2000
          Send {MButton}
          Loop,
          {
@@ -198,7 +198,7 @@ if (macro_on)
             }
          }
       }
-      PixelSearch , x, y, 99, 144, 100, 145, 0x3A3A3A, 20, Fast ;auto eat
+      PixelSearch , x, y, 1055, 144, 1056, 145, 0x3A3A3A, 20, Fast ;auto eat
       If ErrorLevel = 0
       {
          MouseMove, x2, y2, 2
@@ -221,7 +221,7 @@ if (macro_on)
          {
             if current2 >= 5
             {
-               PixelSearch , x, y, 60, 144, 61, 146, 0x3A3A3A, 40, Fast ;auto eat
+               PixelSearch , x, y, 1010, 144, 1011, 146, 0x3A3A3A, 40, Fast ;auto eat
                If ErrorLevel = 0
                {
                   ExitApp

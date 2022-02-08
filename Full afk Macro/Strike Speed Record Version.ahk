@@ -16,17 +16,17 @@ loop,
     Send 2{Click}
     Sleep 500
     Send 1r
-    Sleep 1700
+    Sleep 2700
     Loop, 4
     {
 	Loop, 4
 	{
-		Sleep 1050
 		Send {Click}
+		Sleep 1050
 	}
-	Sleep 1050
+	Sleep 100
 	Send {Click, Right}
-	Sleep 200
+	Sleep 1050
     }
     Send {Click}
     Sleep 1100

@@ -48,9 +48,11 @@ if (macro_on)
         L = 0
         Loop,
         {
+            f = 0
             Loop, ; buy
             {
                 Click, 10
+                f++
                 ImageSearch, x, y, 60, 520, 790, 590, *10 %A_ScriptDir%\bin2\training.png
                 if ErrorLevel = 0
                 {
@@ -58,6 +60,11 @@ if (macro_on)
                     Sleep 100
                     Send 1r
                     Break
+                }
+                if f = 10
+                {
+                    sleep 100
+                    send 1
                 }
             }
 

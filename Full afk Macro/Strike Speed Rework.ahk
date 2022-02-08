@@ -7,6 +7,7 @@ Loop, 3
 CenterWindow(WinTitle)
 {	
 	WinGetPos,,, Width, Height, %WinTitle%
+    WinMove, %WinTitle%,, (A_ScreenWidth/2)-(Width/2), (A_ScreenHeight/2)-(Height/2), 400, 400
 }
 
 removetooltip() 
@@ -14,27 +15,20 @@ removetooltip()
     tooltip
 }
 
-IfNotExist, %A_ScriptDir%\bin2
+IfNotExist, %A_ScriptDir%\bin2\slotempty.png
+{
+    msgbox,, file missing,Look like you didn't extract file,3
+    ExitApp 
+}
+IfNotExist, %A_ScriptDir%\bin2\training.png
 {
     msgbox,, file missing,Look like you didn't extract file,3
     ExitApp 
 }
 
-;InputBox, gym, What Gym are you at?, Answer: kure/ taek / box / karate
-;if ErrorLevel = 1 
-;{
-;    ExitApp
-;}
-
-;If not (gym = "kure" or gym = "taek")
-;{
-;    tooltip, Look like the %gym% not exist in this version of macro
-;    SetTimer, reload1, -3000
-;    return
-;}
 
 
-InputBox, logs, how many ss you want to do?, recommended for 500 for 400+ ss
+InputBox, logs, how many ss you want to do?, recommended put 500+ for 400+ ss
 If ErrorLevel = 1
 {
     ExitApp
@@ -50,7 +44,6 @@ if (macro_on)
     CoordMode, Mouse, Window
     CoordMode, Pixel, Window
     SetBatchLines, -1
-    if (gym = "kure" or gym = "taek")
     {
         L = 0
         Loop,

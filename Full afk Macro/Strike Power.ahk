@@ -335,7 +335,7 @@ if (toggle)
                         }
                     }
                 }
-                PixelSearch , x, y, 25, 144, 30, 146, 0x3A3A3A, 40, Fast ; losing muscle
+                PixelSearch , x, y, 40, 144, 45, 146, 0x3A3A3A, 40, Fast ; losing muscle
                 If ErrorLevel = 0
                 {
                     Send !{f4}

@@ -67,38 +67,34 @@ if (macro_on)
                     send 1
                 }
             }
-
+            StartTime2 := A_TickCount
             Loop, ; ss 
             {
                 ImageSearch, x, y, 10, 30, 800, 630, *2 %A_ScriptDir%\bin2\ss.png
                 If ErrorLevel = 0
                 {
-                    Loop,
-                    {
-                        Loop, 4
-                        {
-                            ImageSearch, x, y, 60, 520, 790, 590, *10 %A_ScriptDir%\bin2\slotempty.png
-                            if ErrorLevel = 0
-                            {
-                                Break
-                            }
-                            Click
-                            Sleep 1080
-                        }
-                        ImageSearch, x, y, 60, 520, 790, 590, *10 %A_ScriptDir%\bin2\slotempty.png
-                        if ErrorLevel = 0
-                        {
-                            Break
-                        }
-                        Click, Right
-                        Sleep 1080
-                    }
+                    Break
+                }
+            } Until A_TickCount - StartTime2 > 4000
+            Loop,
+            {
+                Loop, 4
+                {
                     ImageSearch, x, y, 60, 520, 790, 590, *10 %A_ScriptDir%\bin2\slotempty.png
                     if ErrorLevel = 0
                     {
                         Break
                     }
+                    Click
+                    Sleep 1080
                 }
+                ImageSearch, x, y, 60, 520, 790, 590, *10 %A_ScriptDir%\bin2\slotempty.png
+                if ErrorLevel = 0
+                {
+                    Break
+                }
+                Click, Right
+                Sleep 1080
             }
             Sleep 100
             Send 1
@@ -116,6 +112,6 @@ if (macro_on)
 }
 else
 {
-    ExitApp
+    Return
 }
 Return

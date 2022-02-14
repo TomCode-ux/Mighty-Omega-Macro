@@ -64,7 +64,7 @@ if (toggle)
                     Tooltip, Start Eating 2 Time
                     SetTimer, removetooltip, 500
                     Sleep 500
-                    Loop, 2
+                    Loop, 1
                     {
                         Rythm = False
                         tooltip, eat slot %slots% current %current%

@@ -20,6 +20,7 @@ Loop,
         Click, 100 468
     }
 }
+reload
 }
 else
 {

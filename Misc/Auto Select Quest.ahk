@@ -1,12 +1,16 @@
-﻿f1::
 CoordMode, Pixel, Window
 CoordMode, Mouse, Window
+#maxThreadsPerHotkey, 2
+f1::
+macro_on := !macro_on
+if (macro_on)
+{
 MouseGetPos, x1, y1
 Loop,
 {
     Click, %x1% %y1%
-    Sleep 150
-    ImageSearch, x, y, 10, 460, 68, 475, *60 nah.png
+    Sleep 300
+    ImageSearch, x, y, 0, 450, 100, 490, *100 nah.png
     If ErrorLevel = 0
     {
         Break
@@ -15,6 +19,11 @@ Loop,
     {
         Click, 100 468
     }
+}
+}
+else
+{
+Return
 }
 Return
 end::Reload

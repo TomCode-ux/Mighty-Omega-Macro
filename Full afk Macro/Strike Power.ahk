@@ -1,6 +1,15 @@
 #maxThreadsPerHotkey, 2
 CoordMode, Pixel, Window
 CoordMode, Mouse, Window
+MsgBox, 4, Inventory Eat?,automatically drag food from inventory if your foood ranout
+IfMsgBox Yes
+{
+    nah = false
+}
+else
+{
+	nah = true
+}
 Loop, 3
 {	
 	CenterWindow("ahk_exe RobloxPlayerBeta.exe")
@@ -64,7 +73,7 @@ if (toggle)
                     Tooltip, Start Eating 2 Time
                     SetTimer, removetooltip, 500
                     Sleep 500
-                    Loop, 1
+                    Loop, 2
                     {
                         Rythm = False
                         tooltip, eat slot %slots% current %current%
@@ -98,7 +107,7 @@ if (toggle)
                                         Sleep 50
                                         SendInput, 1{VKC0}
                                         Sleep 500
-                                        Loop, 9 ; Search for 9 time
+                                        Loop, 9
                                         {
                                             ; Searching for slot
                                             ImageSearch, Emptyx, Emptyy, 145, 530, 190, 580, *10 %A_ScriptDir%\bin2\empty.png ;slot 2
@@ -316,22 +325,29 @@ if (toggle)
                                     }
                                 }
                                 
-                                PixelSearch , x, y, 25, 144, 30, 146, 0x3A3A3A, 40, Fast ; logs when hungry
+                            }
+                        }
+                        if current >= 5
+                        {
+                            if slots = 0
+                            {
+                                PixelSearch , x, y, 40, 144, 45, 146, 0x3A3A3A, 40, Fast ; losing muscle
                                 If ErrorLevel = 0
                                 {
                                     Send !{f4}
                                     Return
                                 }
                             }
-                        }
-                        if current >= 5
-                        {
-                            slots++
-                            current = 0
-                            if slots >= 10
+                            else
                             {
-                                slots = 0
+                                slots++
+                                current = 0
+                                if slots >= 10
+                                {
+                                    slots = 0
+                                }
                             }
+                
                         }
                     }
                 }
@@ -354,7 +370,7 @@ if (toggle)
                     If Rythm = False
                     {
                         Rythm = True
-                        Send r
+                        Send r ;auto rhythm
                     }
                     else
                     {

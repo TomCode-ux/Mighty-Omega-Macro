@@ -80,12 +80,13 @@ if (toggle)
                         settimer, removetooltip, -3000
                         if current <= 5
                         {
-                            
+			    Sleep 150
+                            Send 1 ;unequip combat
                             Sleep 150
                             Send %slots%
                             Sleep 200
                             Send {Click 10}
-                            Sleep 5500
+                            Sleep 4400
                             Send %slots%
                             Sleep 100
                             Send 1

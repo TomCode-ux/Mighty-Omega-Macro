@@ -139,13 +139,16 @@ if (macro_on)
 				ImageSearch, x , y , 250 , 220 , 560 , 440, *25 %A_ScriptDir%\bin\yellow.png
 				if (errorlevel = 0)
 				{
-					MouseClick, Left, x+5, y+5, 1
-					MouseClick, Left, x+5, y+5, 1
 					ElapsedTime := A_TickCount - StartTime22
-					tooltip, %ElapsedTime% ms
-					MouseMove, 400, 541, 1
+					MouseMove, x+5, y+5, 0
+					MouseMove, x+5, y+6, 0
+					Click, 5
+					Sleep 70
+					MouseMove, 400, 541, 0
+					MouseMove, 400, 540, 0
 					Sleep 20
-					settimer, removetooltip, -200
+					tooltip, %ElapsedTime% ms
+					settimer, removetooltip, -300
 				}
 				If Stam = true
 				{

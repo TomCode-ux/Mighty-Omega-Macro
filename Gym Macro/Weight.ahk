@@ -61,7 +61,7 @@ CoordMode, Pixel, Window
 CoordMode, Mouse, Window
 macro_on := !macro_on
 if (macro_on)
-{
+{	bruh = 0
 	CoordMode , Pixel, Window
 	PixelGetColor , color2, 250, 134,
     Loop,
@@ -166,7 +166,8 @@ if (macro_on)
 				Click, 400, 390
 				Click, 400, 391
 			} Until A_TickCount - StartTime2 > 6000
-			if A_Index = %logs%
+			bruh++
+			if bruh = %logs%
 			{				
 				Send !{f4}
 				ExitApp

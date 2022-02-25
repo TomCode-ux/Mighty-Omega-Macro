@@ -219,11 +219,11 @@ if (macro_on)
 		{
 			if current <= 5
 			{
-				Sleep 2400
+				Sleep 2500
 				Send %slot%
-				Sleep 200
+				Sleep 100
 				Click, 400, 610, 10
-				Sleep 3100
+				Sleep 4000
 				Send %slot%
 				current++
 			}

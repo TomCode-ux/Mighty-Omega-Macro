@@ -213,33 +213,18 @@ if (macro_on)
 				}	
 			}
 		} Until A_TickCount - StartTime > 60000
-		StartTime2 := A_TickCount
-		Loop ,
-		{			
-			Click , 409, 296
-			Click , 409, 295
-		} Until A_TickCount - StartTime2 > 6000
-		PixelSearch , x, y, 105, 144, 110, 146, 0x3A3A3A, 40, Fast
+		PixelSearch , x, y, 70, 144, 75, 146, 0x3A3A3A, 40, Fast
 		If ErrorLevel = 0
 		{
 			if current <= 5
 			{
-				Sleep 1000
-				Click , 410, 340
-				Sleep 100
+				Sleep 3000
 				Send %slot%
 				Sleep 200
-				Send {Click 10}
-				Sleep 5500
+				Click, 10
+				Sleep 4100
 				Send %slot%
 				current++
-				1 := A_TickCount
-				Loop ,
-				{					
-					Click , 409, 296
-					Click , 409, 295
-				} Until A_TickCount - 1 > 2000
-				Sleep 1000
 			}
 			if slot = 0
 			{
@@ -258,7 +243,14 @@ if (macro_on)
 					slot = 0
 				}
 			}
-		}		
+		}	
+		StartTime2 := A_TickCount
+		Loop ,
+		{			
+			Click , 409, 296
+			Click , 409, 295
+		} Until A_TickCount - StartTime2 > 4000
+			
 		if A_Index = %logs%
 		{			
 			Send !{f4}

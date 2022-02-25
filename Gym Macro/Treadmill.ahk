@@ -78,7 +78,7 @@ If not (level = "1" or level = "2" or level = "3" or level = "4" or level = "5")
     return
 }
 
-InputBox, logs, how many tread you want to do?, Please enter Number., , 400, 150
+InputBox, logs,Auto Leave, how many tread you want to do?`nPlease enter Number., , 400, 150
 
 MsgBox, 4, Stamina Detection
 IfMsgBox Yes
@@ -89,8 +89,11 @@ Else
 {
 	detect = false
 }
+MsgBox, 0,Tutorial, F1 for activate macro. END for Stop, 3
 
-
+if WinExist("Roblox") {
+	WinActivate
+}
 Loop, 3
 {	
 	CenterWindow("ahk_exe RobloxPlayerBeta.exe")
@@ -102,11 +105,9 @@ CenterWindow(WinTitle)
 	WinMove, %WinTitle%,, (A_ScreenWidth/2)-(Width/2), (A_ScreenHeight/2)-(Height/2), 400, 400
 }
 
-MsgBox, 0,Tutorial, F1 for activate macro. END for Stop, 3
 
-if WinExist("Roblox") {
-	WinActivate
-}
+
+
 removetooltip()
 {
 	ToolTip
@@ -180,22 +181,22 @@ if (macro_on)
 			CoordMode , Pixel, Window
 			CoordMode , Click, Window
 			SetBatchLines, -1
-			ImageSearch , FoundX, FoundY, 200, 240, 600, 300, *30 %A_ScriptDir%\bin\w.png
+			ImageSearch , FoundX, FoundY, 200, 240, 600, 300, *50 %A_ScriptDir%\bin\w.png
 			if (errorlevel = 0)
 			{				
 				Send {w down}{w up}
 			}			
-			ImageSearch , FoundX, FoundY, 200, 240, 600, 300, *30 %A_ScriptDir%\bin\a.png
+			ImageSearch , FoundX, FoundY, 200, 240, 600, 300, *50 %A_ScriptDir%\bin\a.png
 			if (errorlevel = 0)
 			{				
 				Send {a down}{a up}
 			}			
-			ImageSearch , FoundX, FoundY, 200, 240, 600, 300, *30 %A_ScriptDir%\bin\s.png
+			ImageSearch , FoundX, FoundY, 200, 240, 600, 300, *50 %A_ScriptDir%\bin\s.png
 			if (errorlevel = 0)
 			{				
 				Send {s down}{s up}
 			}			
-			ImageSearch , FoundX, FoundY, 200, 240, 600, 300, *30 %A_ScriptDir%\bin\d.png
+			ImageSearch , FoundX, FoundY, 200, 240, 600, 300, *50 %A_ScriptDir%\bin\d.png
 			if (errorlevel = 0)
 			{				
 				Send {d down}{d up}
@@ -218,11 +219,11 @@ if (macro_on)
 		{
 			if current <= 5
 			{
-				Sleep 3000
+				Sleep 2400
 				Send %slot%
 				Sleep 200
-				Click, 10
-				Sleep 4100
+				Click, 400, 610, 10
+				Sleep 3100
 				Send %slot%
 				current++
 			}
@@ -274,3 +275,8 @@ else
 }
 Return
 
+f2::
+Click, 400, 610, 10
+Sleep 3100
+Send 1
+Return

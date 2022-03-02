@@ -58,6 +58,7 @@ if (macro_on)
             settimer, rtooltip, -3000
             if current <= 5
             {
+	    	Send 1
                 Sleep 100
                 Send %slot%
                 Sleep 200

@@ -206,11 +206,7 @@ if (macro_on)
 				PixelSearch , x, y, 30, 130, 40, 133, 0x3A3A3A, 40, Fast
 				If ErrorLevel = 0
 				{				
-					StartTime1 := A_TickCount
-					Loop ,
-					{					
-						Click , 409, 296
-					} Until A_TickCount - StartTime1 > 8000
+					Sleep 8000
 				}	
 			}
 		} Until A_TickCount - StartTime > 60000

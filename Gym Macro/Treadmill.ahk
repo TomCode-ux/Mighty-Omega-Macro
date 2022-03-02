@@ -219,11 +219,22 @@ if (macro_on)
 		{
 			if current <= 5
 			{
-				Sleep 2500
+                Loop,
+                {
+                    PixelSearch, x, y, 439, 459, 440, 460, 0x494995, 3, Fast
+                    If ErrorLevel = 1
+                    {
+                        Sleep 100
+                    }
+                    else
+                    {
+                        Break
+                    }
+                }
+                Sleep 100
 				Send %slot%
-				Sleep 100
 				Click, 400, 610, 10
-				Sleep 4000
+				Sleep 3500
 				Send %slot%
 				current++
 			}
@@ -273,10 +284,4 @@ else
 {	
 	ExitApp
 }
-Return
-
-f2::
-Click, 400, 610, 10
-Sleep 3100
-Send 1
 Return

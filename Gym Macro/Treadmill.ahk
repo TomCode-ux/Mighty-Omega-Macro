@@ -227,7 +227,7 @@ if (macro_on)
                         Break
                     }
                 }
-                Sleep 100
+                Sleep 1000
 				Send %slot%
 				Click, 400, 610, 10
 				Sleep 3500

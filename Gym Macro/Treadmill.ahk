@@ -217,8 +217,8 @@ if (macro_on)
 			{
                 Loop,
                 {
-                    PixelSearch, x, y, 439, 459, 440, 460, 0x494995, 3, Fast
-                    If ErrorLevel = 1
+                    PixelSearch, x, y, 439, 455, 440, 456, 0x494995, 3, Fast
+                    If ErrorLevel = 0
                     {
                         Sleep 100
                     }
@@ -227,7 +227,7 @@ if (macro_on)
                         Break
                     }
                 }
-                Sleep 1000
+                Sleep 100
 				Send %slot%
 				Click, 400, 610, 10
 				Sleep 3500

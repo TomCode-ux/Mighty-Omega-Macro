@@ -70,12 +70,13 @@ if (macro_on)
             StartTime2 := A_TickCount
             Loop, ; ss 
             {
-                ImageSearch, x, y, 10, 30, 800, 630, *2 %A_ScriptDir%\bin2\ss.png
+                ImageSearch, x, y, 10, 30, 800, 630, *5 %A_ScriptDir%\bin2\ss.png
                 If ErrorLevel = 0
                 {
                     Break
                 }
             } Until A_TickCount - StartTime2 > 4000
+            Notactivate := A_TickCount
             Loop,
             {
                 Loop, 4
@@ -95,6 +96,10 @@ if (macro_on)
                 }
                 Click, Right
                 Sleep 1080
+                If A_TickCount - Notactivate > 40000
+                {
+                    Break
+                }
             }
             Sleep 100
             Send 1
@@ -112,6 +117,6 @@ if (macro_on)
 }
 else
 {
-    Return
+    Reload
 }
 Return

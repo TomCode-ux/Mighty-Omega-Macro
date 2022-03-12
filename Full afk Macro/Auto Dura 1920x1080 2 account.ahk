@@ -35,7 +35,7 @@ if (macro_on)
       MouseMove, x2, y2, 2
       Sleep 100
       Send {MButton}
-      Send 100
+      Sleep 100
       Send 1r
       Sleep 1000
       MouseMove, x1, y1, 2
@@ -59,8 +59,8 @@ if (macro_on)
                Sleep 100
                Send e
             }
-            Sleep 100
-            Send 2{Click} ;pop dura
+            Sleep 300
+            Send 2{Click, 5} ;pop dura
             ;Settimer, e, -8000 ;berserk
             MouseMove, x2, y2, 2
             Sleep 2000
@@ -98,7 +98,7 @@ if (macro_on)
                   Break
                }
                Send {Click}
-               Sleep 300
+               Sleep 70
             }
          }
 
@@ -116,15 +116,15 @@ if (macro_on)
                Sleep 100
                Send e
             }
-            Sleep 100
-            Send 2{Click} ;pop dura
+            Sleep 300
+            Send 2{Click, 5} ;pop dura
             ;Settimer, e, -8000 ;berserk
             MouseMove, x1, y1, 2
             Sleep 2000
             Send {MButton}
             Loop,
             {
-               PixelSearch, OutputVarX, OutputVarY, 1025, 117, 1026, 118, 0x3D3DA2, 20, Fast 
+               PixelSearch, OutputVarX, OutputVarY, 1030, 117, 1031, 118, 0x3D3DA2, 50, Fast 
                If ErrorLevel = 0
                {
                   Sleep 1000
@@ -139,7 +139,7 @@ if (macro_on)
                   Send 1r
                   Break
                }
-               PixelSearch, OutputVarX, OutputVarY, 1025, 117, 1026, 118, 0x444444, 20, Fast
+               PixelSearch, OutputVarX, OutputVarY, 1030, 117, 1031, 118, 0x444444, 50, Fast
                If ErrorLevel = 0
                {
                   Sleep 1000
@@ -155,7 +155,7 @@ if (macro_on)
                   Break
                }
                Send {Click}
-               Sleep 300
+               Sleep 70
             }
          }
          PixelSearch , x, y, 99, 144, 100, 145, 0x3A3A3A, 20, Fast ;auto eat

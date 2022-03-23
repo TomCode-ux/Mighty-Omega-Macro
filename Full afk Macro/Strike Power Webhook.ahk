@@ -201,6 +201,7 @@ if (toggle)
 					Break
 				}
 			} Until A_TickCount - time > 60000
+			Sleep 100
 			Send 1
 		}
 

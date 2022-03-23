@@ -1,409 +1,309 @@
-#maxThreadsPerHotkey, 2
+#SingleInstance, force
+#NoEnv
+#MaxThreadsPerHotkey, 2
+SetBatchLines, -1
 CoordMode, Pixel, Window
 CoordMode, Mouse, Window
-MsgBox, 4, Inventory Eat?,automatically drag food from inventory if your foood ranout
-IfMsgBox Yes
+url:="bruh" ; use the url from Discord webhook bot
+userid:="<@userid>" ; tag
+; True, False
+autorhythm = false
+flow = True
+Webhook = false
+; do not change
+ruined = False
+lol = false
+Running = false
+rhythm = False
+; - dialog -
+combattag = false
+combattag=
+(
+	{
+		"content": "%userid% Combat tag detected!",
+		"embeds": null
+	}
+)
+foodranout = false
+foodranout=
+(
+	{
+		"content": "%userid% your food in ranout of inventory!",
+		"embeds": null
+	}
+)
+lowhunder = false
+lowhunder=
+(
+	{
+		"content": "%userid% your hunger was too low!",
+		"embeds": null
+	}
+)
+autoleave=
+(
+	{
+		"content": "auto leave in 3 minutes",
+		"embeds": null
+	}
+)
+IfNotExist, %A_ScriptDir%\bin2
 {
-    nah = false
+	msgbox,, file missing,Look like you didn't extract file,3
+	ExitApp 
 }
-else
+if webhook = true
 {
-	nah = true
+	if url = bruh
+	{
+		MsgBox, 0, Something Went Wrong, Your webhook was invalid, 3
+		ExitApp
+	}
+	if userid = <@userid>
+	{
+		MsgBox, 0, Something Went Wrong, You have to put your userid after enable Webhook, 3
+		ExitApp
+	}
+	WebRequest := ComObjCreate("WinHttp.WinHttpRequest.5.1")
+	WebRequest.Open("POST", url, false)
+	WebRequest.SetRequestHeader("Content-Type", "application/json")
 }
-Loop, 3
-{	
-	CenterWindow("ahk_exe RobloxPlayerBeta.exe")
-	Sleep 100
+if WinExist("Roblox") {
+	WinActivate
+    CenterWindow("ahk_exe RobloxPlayerBeta.exe")
+} else {
+	tooltip, Roblox not found
+	settimer, removetooltip, -3000
+	Sleep 3000
+	ExitApp
 }
 CenterWindow(WinTitle) {	
 	WinGetPos,,, Width, Height, %WinTitle%
-	WinMove, %WinTitle%,, (A_ScreenWidth/2)-(Width/2), (A_ScreenHeight/2)-(Height/2), 400, 400
+	WinMove, %WinTitle%,, (A_ScreenWidth/2)-(Width/2), (A_ScreenHeight/2)-(Height/2), 800, 599
 }
 removetooltip() {
     tooltip
 }
-
-end::reload
-
-f1:: ; change keybind here!
-PixelGetColor , color2, 250, 134
-slots = 2
-current = 0
+$end::reload ; for stop macro
+$f1:: ; change hotkey here https://www.autohotkey.com/docs/KeyList.htm key list
 toggle := !toggle
 if (toggle)
-{
-    Loop, ; Start Loop
-    {
-        Tooltip, Start Running
-        SetTimer, removetooltip, 1000
-        task:
-        {
-            Sendinput, {w down}{w up}{w down}{s down}
-            Rythm = False
-            Loop,
+{ ;remember to make less loop possible for best performence and always put timer in loop if stuck in loop
+	Loop, ; Start of the loop
+	{
+		; misc
+		If Flow = True
+		{
+			PixelSearch, x, y, 409, 151, 411, 153, 0x242424,, Fast ;auto flow
+            If ErrorLevel = 0
             {
-                PixelSearch, x, y, 170, 132, 171, 134, 0x3A3A3A, 40, Fast ;stamina 
-                If ErrorLevel = 0
-                {
-                    Tooltip, Enough Stamina
-                    SetTimer, removetooltip, 1000
-                    Sleep 1000
-                    Sendinput, {w up}{s up}
-                    Sleep 100
-                    Break
-                }
-                Sleep 1000
-                PixelSearch, x, y, 249, 133, 250, 134, color2,, Fast ;If Still Full Stamina
-                If ErrorLevel = 0
-                {
-                    Tooltip, Full Stamina
-                    SetTimer, removetooltip, 1000
-                    Sendinput, {w up}{s up}
-                    Sleep 1000
-                    Tooltip, Restart Run
-                    SetTimer, removetooltip, -3000
-                    Goto, task ; back to start
-                }
+                Send e
             }
-            Loop,
-            {
-                PixelSearch , x, y, 80, 144, 85, 146, 0x3A3A3A, 40, Fast ;Hungry
-                If ErrorLevel = 0
-                {
-                    Tooltip, Start Eating 2 Time
-                    SetTimer, removetooltip, 500
-                    Sleep 500
-                    Loop, 2
-                    {
-                        Rythm = False
-                        tooltip, eat slot %slots% current %current%
-                        settimer, removetooltip, -3000
-                        if current <= 5
-                        {
-			    Sleep 150
-                            Send 1 ;unequip combat
-                            Sleep 150
-                            Send %slots%
-                            Sleep 200
-                            Send {Click 10}
-                            Sleep 4400
-                            Send %slots%
-                            Sleep 100
-                            Send 1
-                            current++
-                        }
-                        if slots = 0
-                        {
-                            if current >= 5
-                            {
-                                if nah = False
-                                {
-                                    current = 0 
-                                    Slots = 2
-                                    nah = True
-                                    ImageSearch, x, y, 60, 520, 790, 590, *10 %A_ScriptDir%\bin2\slot.png
-                                    If ErrorLevel = 0
-                                    {
-                                        SetBatchLines, -1
-                                        Sleep 50
-                                        SendInput, 1{VKC0}
-                                        Sleep 500
-                                        Loop, 9
-                                        {
-                                            ; Searching for slot
-                                            ImageSearch, Emptyx, Emptyy, 145, 530, 190, 580, *10 %A_ScriptDir%\bin2\empty.png ;slot 2
-                                            If errorlevel = 0 
-                                            {
-                                                Slot = 2
-                                            } else {
-                                                ImageSearch, Emptyx, Emptyy, 210, 530, 260, 580, *10 %A_ScriptDir%\bin2\empty.png ;slot 3
-                                                If errorlevel = 0 
-                                                {
-                                                    Slot = 3
-                                                } else {
-                                                    ImageSearch, Emptyx, Emptyy, 280, 530, 330, 580, *10 %A_ScriptDir%\bin2\empty.png ;slot 4
-                                                    If errorlevel = 0 
-                                                    {
-                                                        Slot = 4
-                                                    } else {
-                                                        ImageSearch, Emptyx, Emptyy, 350, 530, 400, 580, *10 %A_ScriptDir%\bin2\empty.png ;slot 5
-                                                        If errorlevel = 0 
-                                                        {
-                                                            Slot = 5
-                                                        } else {
-                                                            ImageSearch, Emptyx, Emptyy, 420, 530, 470, 580, *10 %A_ScriptDir%\bin2\empty.png ;slot 6
-                                                            If errorlevel = 0 
-                                                            {
-                                                                Slot = 6
-                                                            } else {
-                                                                ImageSearch, Emptyx, Emptyy, 490, 530, 540, 580, *10 %A_ScriptDir%\bin2\empty.png ;slot 7
-                                                                If errorlevel = 0 
-                                                                {
-                                                                    Slot = 7
-                                                                } else {
-                                                                    ImageSearch, Emptyx, Emptyy, 560, 530, 610, 580, *10 %A_ScriptDir%\bin2\empty.png ;slot 8
-                                                                    If errorlevel = 0 
-                                                                    {
-                                                                        Slot = 8
-                                                                    } else {
-                                                                        ImageSearch, Emptyx, Emptyy, 630, 530, 680, 580, *10 %A_ScriptDir%\bin2\empty.png ;slot 9
-                                                                        If errorlevel = 0 
-                                                                        {
-                                                                            Slot = 9
-                                                                        } else {
-                                                                            ImageSearch, Emptyx, Emptyy, 700, 530, 750, 580, *10 %A_ScriptDir%\bin2\empty.png ;slot 0
-                                                                            If errorlevel = 0 
-                                                                            {
-                                                                                Slot = 0
-                                                                            }
-                                                                        }
-                                                                    }
-                                                                }
-                                                            }
-                                                        }
-                                                    }
-                                                }
-                                            }
+		}
+		; Food System
+		
+		PixelSearch, x, y, 70, 144, 75, 146, 0x3A3A3A, 40, Fast
+		if ErrorLevel = 0
+		{
+			rhythm = false
+			Send 1
+			Sleep 100
+			Sendinput, 234567890
+			Sleep 300
+			ImageSearch, x, y, 60, 515, 710, 585, *10 %A_ScriptDir%\bin2\equip.png ;if not found equiped slot / not found food in slot
+			If ErrorLevel = 1
+			{
+				Send, {Shift}{VKC0}
+				MouseMove, 90, 480
+				Sleep 350
+				search = 0
+				Loop, 21 ;Search for Food Slot
+				{
+					ImageSearch, foodx, foody, 80, 180, 680, 460, *20 %A_ScriptDir%\bin2\Image%A_Index%.png  ; Search For food
+					If ErrorLevel = 0
+					{
+						fullslot = false
+						Loop, ;Empty Slot
+						{
+							ImageSearch, Emptyx, Emptyy, 130, 520, 755, 585, %A_ScriptDir%\bin2\Slot%A_Index%.png  
+							If errorlevel = 0 
+							{
+								Break
+							}
+							if A_Index = 10
+							{
+								fullslot = true
+								Break
+							}
+						}
+						if fullslot = false
+						{
+							MouseMove, foodx+10, foody+10 ;Drag food
+							MouseMove, foodx+10, foody+11
+							Sleep 20
+							Send {Click, Down}
+							MouseMove, Emptyx+10, Emptyy+20
+							MouseMove, Emptyx+10, Emptyy+21
+							Sleep 20
+							Send {Click, Up}
+							Sleep 10
+						}
+						else
+						{
+							Break
+						}
+					}
+					else
+					{
+						search++
+						if search = 21 ;searched 21 time not found any food on inventory
+						{
+							foodranout = true
+						}
+					}
+				}
+				MouseMove, 90, 480
+				Send, {VKC0}{Shift}
+			}
+			awww = 0
+			time := A_TickCount
+			Loop, ; Eating part
+			{
+				Click
+				Sleep 100
+				Pixelsearch, x, y, 80, 95, 81, 96, 0x37378A, 10, Fast
+				if ErrorLevel = 0
+				{
+					combattag = true
+					Break
+				}
+				PixelSearch, x, y, 119, 144, 110, 146, 0x3A3A3A, 40, Fast ; full hunger
+				If ErrorLevel = 1
+				{
+					Break
+				}
+				ImageSearch, x, y, 60, 515, 710, 585, *20 %A_ScriptDir%\bin2\equip.png ;if not found equiped slot /and still not full hunger
+				If ErrorLevel = 1
+				{
+					awww++
+					Sendinput, 234567890
+				}
+				if awww = 3
+				{
+					Break
+				}
+			} Until A_TickCount - time > 60000
+			Send 1
+		}
 
-                                            Loop, 1
-                                            {
-                                                ImageSearch, foodx, foody, 80, 185, 680, 500, *40 %A_ScriptDir%\bin2\eztaco.png  ;eztaco
-                                                If errorLevel = 0 
-                                                {
-                                                    Break
-                                                }
-                                                ImageSearch, foodx, foody, 80, 185, 680, 500, *40 %A_ScriptDir%\bin2\hotdog.png ;hotdog
-                                                If errorLevel = 0 
-                                                {
-                                                    Break
-                                                }
-                                                ImageSearch, foodx, foody, 80, 185, 680, 500, *40 %A_ScriptDir%\bin2\hamburger.png ;hamburger
-                                                If errorLevel = 0 
-                                                {
-                                                    Break
-                                                }
-                                                ImageSearch, foodx, foody, 80, 185, 680, 500, *40 %A_ScriptDir%\bin2\pancakes.png ;pancakes
-                                                If errorLevel = 0 
-                                                {
-                                                    Break
-                                                }
-                                                ImageSearch, foodx, foody, 80, 185, 680, 500, *40 %A_ScriptDir%\bin2\pie.png ;pie
-                                                If errorLevel = 0 
-                                                {
-                                                    Break
-                                                }
-                                                ImageSearch, foodx, foody, 80, 185, 680, 500, *40 %A_ScriptDir%\bin2\donut.png  ;donut
-                                                If errorLevel = 0 
-                                                {
-                                                    Break
-                                                }
-                                                ImageSearch, foodx, foody, 80, 185, 680, 500, *40 %A_ScriptDir%\bin2\ramen.png ;ramen  
-                                                If errorLevel = 0 
-                                                {
-                                                    Break
-                                                }
-                                                ImageSearch, foodx, foody, 80, 185, 680, 500, *40 %A_ScriptDir%\bin2\TofuBeefSoup.png  ;TofuBeefSoup
-                                                If errorLevel = 0 
-                                                {
-                                                    Break
-                                                }
-                                                ImageSearch, foodx, foody, 80, 185, 680, 500, *40 %A_ScriptDir%\bin2\tokitosake.png ;tokitosake  
-                                                If errorLevel = 0 
-                                                {
-                                                    Break
-                                                }
-                                                ImageSearch, foodx, foody, 80, 185, 680, 500, *40 %A_ScriptDir%\bin2\Chickenfries.png ;Chickenfires  
-                                                If errorLevel = 0 
-                                                {
-                                                    Break
-                                                }
-                                                ImageSearch, foodx, foody, 80, 185, 680, 500, *40 %A_ScriptDir%\bin2\steak.png  
-                                                If errorLevel = 0 
-                                                {
-                                                    Break
-                                                }
-                                                ImageSearch, foodx, foody, 80, 185, 680, 500, *40 %A_ScriptDir%\bin2\chicken.png  
-                                                If errorLevel = 0 
-                                                {
-                                                    Break
-                                                }
-                                                ImageSearch, foodx, foody, 80, 185, 680, 500, *40 %A_ScriptDir%\bin2\steakfriedrice.png  
-                                                If errorLevel = 0 
-                                                {
-                                                    Break
-                                                }
-                                                ImageSearch, foodx, foody, 80, 185, 680, 500, *40 %A_ScriptDir%\bin2\onigiri.png  
-                                                If errorLevel = 0 
-                                                {
-                                                    Break
-                                                }
-                                                ImageSearch, foodx, foody, 80, 185, 680, 500, *40 %A_ScriptDir%\bin2\omelette.png  
-                                                If errorLevel = 0 
-                                                {
-                                                    Break
-                                                }
-                                                ImageSearch, foodx, foody, 80, 185, 680, 500, *40 %A_ScriptDir%\bin2\sunnysideupegg.png  
-                                                If errorLevel = 0 
-                                                {
-                                                    Break
-                                                }
-                                                ImageSearch, foodx, foody, 80, 185, 680, 500, *40 %A_ScriptDir%\bin2\GrotesqueFood.png  
-                                                If errorLevel = 0 
-                                                {
-                                                    Break
-                                                }
-                                                
-                                            }
-                                            if Slot = 2
-                                            {
-                                                MouseMove, foodx+10, foody+10
-                                                Send {Click, Down}
-                                                MouseMove, Emptyx+20, Emptyy+5
-                                                Send {Click, Up}
-                                            }
-                                            if Slot = 3
-                                            {
-                                                MouseMove, foodx+10, foody+10
-                                                Send {Click, Down}
-                                                MouseMove, Emptyx+20, Emptyy+5
-                                                Send {Click, Up}
-                                            }
-                                            if Slot = 4
-                                            {
-                                                MouseMove, foodx+10, foody+10
-                                                Send {Click, Down}
-                                                MouseMove, Emptyx+20, Emptyy+5
-                                                Send {Click, Up}
-                                            }
-                                            if Slot = 5
-                                            {
-                                                MouseMove, foodx+10, foody+10
-                                                Send {Click, Down}
-                                                MouseMove, Emptyx+20, Emptyy+5
-                                                Send {Click, Up}
-                                            }
-                                            if Slot = 6
-                                            {
-                                                MouseMove, foodx+10, foody+10
-                                                Send {Click, Down}
-                                                MouseMove, Emptyx+20, Emptyy+5
-                                                Send {Click, Up}
-                                            }
-                                            if Slot = 7
-                                            {
-                                                MouseMove, foodx+10, foody+10
-                                                Send {Click, Down}
-                                                MouseMove, Emptyx+20, Emptyy+5
-                                                Send {Click, Up}
-                                            }
-                                            if Slot = 8
-                                            {
-                                                MouseMove, foodx+10, foody+10
-                                                Send {Click, Down}
-                                                MouseMove, Emptyx+20, Emptyy+5
-                                                Send {Click, Up}
-                                            }
-                                            if Slot = 9
-                                            {
-                                                MouseMove, foodx+10, foody+10
-                                                Send {Click, Down}
-                                                MouseMove, Emptyx+20, Emptyy+5
-                                                Send {Click, Up}
-                                            }
-                                            if Slot = 0
-                                            {
-                                                MouseMove, foodx+10, foody+10
-                                                Send {Click, Down}
-                                                MouseMove, Emptyx+20, Emptyy+5
-                                                Send {Click, Up}
-                                            }
-
-                                            Slot = 1
-                                        }
-                                        Sleep 500
-                                        SendInput, {VKC0}1
-                                        Sleep 200
-                                    }
-                                }
-                                
-                            }
-                        }
-                        if current >= 5
-                        {
-                            if slots = 0
-                            {
-                                PixelSearch , x, y, 40, 144, 45, 146, 0x3A3A3A, 40, Fast ; losing muscle
-                                If ErrorLevel = 0
-                                {
-                                    Send !{f4}
-                                    Return
-                                }
-                            }
-                            else
-                            {
-                                slots++
-                                current = 0
-                                if slots >= 10
-                                {
-                                    slots = 0
-                                }
-                            }
-                
-                        }
-                    }
-                }
-                PixelSearch , x, y, 40, 144, 45, 146, 0x3A3A3A, 40, Fast ; losing muscle
-                If ErrorLevel = 0
+		PixelSearch, x, y, 40, 144, 55, 146, 0x3A3A3A, 40, Fast ; too low hunger
+		If ErrorLevel = 0
+		{
+			if webhook = true
+			{
+				lowhunder = true
+			}
+			else
+			{
+				send !{f4}
+				ExitApp
+			}
+		}
+		; Stamina control & Punch
+		PixelSearch, x, y, 170, 132, 171, 134, 0x3A3A3A, 40, Fast ;enough stamina for sp gain
+		If ErrorLevel = 1 ; If not
+		{
+			rhythm = false
+			If Running = False
+			{
+				Sendinput, {w down}{w up}{w down}{s down}
+				Sleep 2000
+				Running = True
+			}
+			PixelSearch, x, y, 249, 132, 250, 134, 0x3A3A3A, 40, Fast ;Full Stamina
+			If ErrorLevel = 1 ; If Found
+			{
+				Running = False
+				Sendinput, {w up}{s up}
+			}
+		} 
+		else 
+		{ ; if True
+			if Running = True
+			{
+				Sendinput, {w up}{s up}
+				Running = False			
+			}
+			if autorhythm = True ; Auto Rythm
+			{
+				if rhythm = false
+				{
+					Sendinput, r
+					rhythm = True
+				}
+			}
+			; Start Punching
+			Click, 50 ; m1 Combo
+			Click, Right ; Right Click can be disable by put " ; " on the first of this line
+			; Stamina Check
+			PixelSearch, x, y, 50, 132, 51, 134, 0x3A3A3A, 40, Fast ;if staming was too low
+			If ErrorLevel = 0
+			{
+				Aaa := A_TickCount ;start counting
+                Loop,
                 {
-                    Send !{f4}
-                    Return
-                }
-                PixelSearch, x, y, 184, 132, 186, 134, 0x3A3A3A, 40, Fast ; Still Enough Stamina
-                If ErrorLevel = 1 ; not enough
-                {
-                    Tooltip, Restart Run
-                    SetTimer, removetooltip, -1000
-                    ; too much stamina
-                    Goto, task ; back to start
-                }
-                Else
-                {
-                    If Rythm = False
-                    {
-                        Rythm = True
-                        Send r ;auto rhythm
-                    }
-                    else
-                    {
-                        Send {Click, 50}{Click, Right}
-                    }
-                }
-                PixelSearch, x, y, 40, 132, 65, 134, 0x3A3A3A, 40, Fast  ; if too low stam
-                if ErrorLevel = 0
-                {
-                    Tooltip, Too Low Stamina
-                    SetTimer, removetooltip, -3000
-                    Sleep 10000
-                }
-                
-                PixelSearch, x, y, 409, 151, 411, 153, 0x242424,, Fast ;auto flow
-                If ErrorLevel = 0
-                {
-                    Send e
-                    Sleep 100
-                }
-                ; more here
-
-
-            }
-        }
-
-    }
-
+					if webhook = true
+					{
+						If combattag = false
+						{
+							Pixelsearch, x, y, 80, 95, 81, 96, 0x37378A, 10, Fast ; search for combat tag
+							if ErrorLevel = 0
+							{
+								combattag = true
+							}
+						}
+					}
+					Sleep 200
+                } Until A_TickCount - Aaa > 10000
+			}
+		}
+		; Webhook
+		if webhook = true
+		{
+			Pixelsearch, x, y, 80, 95, 81, 96, 0x37378A, 10, Fast ; Combat Tag 
+			if ErrorLevel = 0
+			{
+				combattag = true
+			}
+			if combattag = true
+			{
+				ruined = true
+			}
+			If ruined = True
+			{
+				if foodranout = true
+				{
+					WebRequest.Send(foodranout) 
+				}
+				if combattag = true
+				{
+					WebRequest.Send(combattag) 
+				}
+				if lowhunder = true
+				{
+					WebRequest.Send(lowhunder)
+				}
+				WebRequest.Send(autoleave)
+				Sleep 120000
+				Send !{f4}
+				Sleep 200
+				ExitApp
+			}
+		}
+	}
 }
 else
 {
-    Return
+	ExitApp ; if not toggle
 }
 Return
-

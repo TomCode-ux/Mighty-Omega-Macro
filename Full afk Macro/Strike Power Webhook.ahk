@@ -20,6 +20,8 @@ combattag = false
 combattag=
 (
 	{
+		"username": "i love vivace's macro",
+		"avatar_url": "https://cdn.discordapp.com/attachments/919400611030650910/956032138942226462/004453D2-4B9F-4867-B090-4F88858C287B.jpg",
 		"content": "%userid% Combat tag detected!",
 		"embeds": null
 	}
@@ -28,6 +30,8 @@ foodranout = false
 foodranout=
 (
 	{
+		"username": "i love vivace's macro",
+		"avatar_url": "https://cdn.discordapp.com/attachments/919400611030650910/956032138942226462/004453D2-4B9F-4867-B090-4F88858C287B.jpg",
 		"content": "%userid% your food in ranout of inventory!",
 		"embeds": null
 	}
@@ -36,6 +40,8 @@ lowhunder = false
 lowhunder=
 (
 	{
+		"username": "i love vivace's macro",
+		"avatar_url": "https://cdn.discordapp.com/attachments/919400611030650910/956032138942226462/004453D2-4B9F-4867-B090-4F88858C287B.jpg",
 		"content": "%userid% your hunger was too low!",
 		"embeds": null
 	}
@@ -43,6 +49,8 @@ lowhunder=
 autoleave=
 (
 	{
+		"username": "i love vivace's macro",
+		"avatar_url": "https://cdn.discordapp.com/attachments/919400611030650910/956032138942226462/004453D2-4B9F-4867-B090-4F88858C287B.jpg",
 		"content": "auto leave in 3 minutes",
 		"embeds": null
 	}

@@ -276,18 +276,15 @@ if (toggle)
 			}
 		}
 		; Webhook
+		Pixelsearch, x, y, 80, 95, 81, 96, 0x37378A, 10, Fast ; Combat Tag 
+		if ErrorLevel = 0
+		{
+			combattag = true
+			ruined = true
+		}
 		if webhook = true
 		{
-			Pixelsearch, x, y, 80, 95, 81, 96, 0x37378A, 10, Fast ; Combat Tag 
-			if ErrorLevel = 0
-			{
-				combattag = true
-			}
-			if combattag = true
-			{
-				ruined = true
-			}
-			If ruined = True
+			If ruined = true
 			{
 				if foodranout = true
 				{

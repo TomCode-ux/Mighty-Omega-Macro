@@ -118,7 +118,7 @@ if (toggle)
 			Sleep 100
 			Sendinput, 234567890
 			Sleep 300
-			ImageSearch, x, y, 60, 515, 710, 585, *10 %A_ScriptDir%\bin2\equip.png ;if not found equiped slot / not found food in slot
+			ImageSearch, x, y, 60, 515, 710, 585, %A_ScriptDir%\bin2\equip.png ;if not found equiped slot / not found food in slot
 			If ErrorLevel = 1
 			{
 				Send, {Shift}{VKC0}
@@ -167,6 +167,7 @@ if (toggle)
 						if search = 21 ;searched 21 time not found any food on inventory
 						{
 							foodranout = true
+							ruined = true
 						}
 					}
 				}

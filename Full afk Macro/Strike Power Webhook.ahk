@@ -112,7 +112,7 @@ if (toggle)
 			rhythm = false
 		}
 		PixelSearch, x, y, 70, 144, 75, 146, 0x3A3A3A, 40, Fast
-		if ErrorLevel = 1
+		if ErrorLevel = 0
 		{
 			rhythm = false
 			Send 1
@@ -120,7 +120,7 @@ if (toggle)
 			Sendinput, 234567890
 			Sleep 300
 			ImageSearch, x, y, 60, 515, 760, 600, %A_ScriptDir%\bin2\equip.png ;if not found equiped slot / not found food in slot
-			If ErrorLevel = 0
+			If ErrorLevel = 1
 			{
 				Send, {Shift}{VKC0}
 				MouseMove, 90, 480

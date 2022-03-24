@@ -5,7 +5,7 @@ SetBatchLines, -1
 CoordMode, Pixel, Window
 CoordMode, Mouse, Window
 url:="bruh" ; use the url from Discord webhook bot
-userid:="<@userid>" ; tag
+userid:="<@userid>" ; Copy ID from discord
 ; True, False
 autorhythm = false
 flow = True
@@ -17,31 +17,28 @@ Running = false
 rhythm = False
 ; - dialog -
 combattag = false
-combattag=
+combattaga=
 (
 	{
 		"username": "i love vivace's macro",
-		"avatar_url": "https://cdn.discordapp.com/attachments/919400611030650910/956032138942226462/004453D2-4B9F-4867-B090-4F88858C287B.jpg",
 		"content": "%userid% Combat tag detected!",
 		"embeds": null
 	}
 )
 foodranout = false
-foodranout=
+foodranouta=
 (
 	{
 		"username": "i love vivace's macro",
-		"avatar_url": "https://cdn.discordapp.com/attachments/919400611030650910/956032138942226462/004453D2-4B9F-4867-B090-4F88858C287B.jpg",
 		"content": "%userid% your food in ranout of inventory!",
 		"embeds": null
 	}
 )
 lowhunder = false
-lowhunder=
+lowhundera=
 (
 	{
 		"username": "i love vivace's macro",
-		"avatar_url": "https://cdn.discordapp.com/attachments/919400611030650910/956032138942226462/004453D2-4B9F-4867-B090-4F88858C287B.jpg",
 		"content": "%userid% your hunger was too low!",
 		"embeds": null
 	}
@@ -50,7 +47,6 @@ autoleave=
 (
 	{
 		"username": "i love vivace's macro",
-		"avatar_url": "https://cdn.discordapp.com/attachments/919400611030650910/956032138942226462/004453D2-4B9F-4867-B090-4F88858C287B.jpg",
 		"content": "auto leave in 3 minutes",
 		"embeds": null
 	}
@@ -109,17 +105,22 @@ if (toggle)
             }
 		}
 		; Food System
-		
+		ImageSearch, x, y, 60, 515, 710, 600, %A_ScriptDir%\bin2\combat.png ;if not found equiped slot /and still not full hunger
+		If ErrorLevel = 0
+		{
+			Sendinput, 1
+			rhythm = false
+		}
 		PixelSearch, x, y, 70, 144, 75, 146, 0x3A3A3A, 40, Fast
-		if ErrorLevel = 0
+		if ErrorLevel = 1
 		{
 			rhythm = false
 			Send 1
 			Sleep 100
 			Sendinput, 234567890
 			Sleep 300
-			ImageSearch, x, y, 60, 515, 710, 585, %A_ScriptDir%\bin2\equip.png ;if not found equiped slot / not found food in slot
-			If ErrorLevel = 1
+			ImageSearch, x, y, 60, 515, 760, 600, %A_ScriptDir%\bin2\equip.png ;if not found equiped slot / not found food in slot
+			If ErrorLevel = 0
 			{
 				Send, {Shift}{VKC0}
 				MouseMove, 90, 480
@@ -134,17 +135,21 @@ if (toggle)
 						Loop, ;Empty Slot
 						{
 							ImageSearch, Emptyx, Emptyy, 130, 520, 755, 585, %A_ScriptDir%\bin2\Slot%A_Index%.png  
-							If errorlevel = 0 
+							If Errorlevel = 0 
 							{
 								Break
 							}
-							if A_Index = 10
-							{
+							if A_Index >= 10
+							{ 
 								fullslot = true
 								Break
 							}
 						}
-						if fullslot = false
+						if fullslot = true
+						{
+							Break
+						}
+						Else
 						{
 							MouseMove, foodx+10, foody+10 ;Drag food
 							MouseMove, foodx+10, foody+11
@@ -156,18 +161,22 @@ if (toggle)
 							Send {Click, Up}
 							Sleep 10
 						}
-						else
-						{
-							Break
-						}
 					}
 					else
 					{
 						search++
 						if search = 21 ;searched 21 time not found any food on inventory
 						{
-							foodranout = true
-							ruined = true
+							if webhook = false
+							{
+								Sleep 12000
+								Send !{f4}
+							}
+							else
+							{
+								foodranout = true
+								ruined = true
+							}						
 						}
 					}
 				}
@@ -175,15 +184,26 @@ if (toggle)
 				Send, {VKC0}{Shift}
 			}
 			awww = 0
+			Sleep 100
+			ImageSearch, x, y, 60, 515, 760, 600, *20 %A_ScriptDir%\bin2\equip.png ;if not found equiped slot /and still not full hunger
+			If ErrorLevel = 1
+			{
+				Sendinput, 234567890
+			}
 			time := A_TickCount
 			Loop, ; Eating part
 			{
+				if ruined = true
+				{
+					Break
+				}
 				Click
 				Sleep 100
 				Pixelsearch, x, y, 80, 95, 81, 96, 0x37378A, 10, Fast
 				if ErrorLevel = 0
 				{
 					combattag = true
+					ruined = true
 					Break
 				}
 				PixelSearch, x, y, 119, 144, 110, 146, 0x3A3A3A, 40, Fast ; full hunger
@@ -191,7 +211,7 @@ if (toggle)
 				{
 					Break
 				}
-				ImageSearch, x, y, 60, 515, 710, 585, *20 %A_ScriptDir%\bin2\equip.png ;if not found equiped slot /and still not full hunger
+				ImageSearch, x, y, 60, 515, 760, 600, *20 %A_ScriptDir%\bin2\equip.png ;if not found equiped slot /and still not full hunger
 				If ErrorLevel = 1
 				{
 					awww++
@@ -212,6 +232,7 @@ if (toggle)
 			if webhook = true
 			{
 				lowhunder = true
+				ruined = true
 			}
 			else
 			{
@@ -270,6 +291,8 @@ if (toggle)
 							if ErrorLevel = 0
 							{
 								combattag = true
+								ruined = true
+								Break
 							}
 						}
 					}
@@ -277,6 +300,7 @@ if (toggle)
                 } Until A_TickCount - Aaa > 10000
 			}
 		}
+		
 		; Webhook
 		Pixelsearch, x, y, 80, 95, 81, 96, 0x37378A, 10, Fast ; Combat Tag 
 		if ErrorLevel = 0
@@ -290,15 +314,15 @@ if (toggle)
 			{
 				if foodranout = true
 				{
-					WebRequest.Send(foodranout) 
+					WebRequest.Send(foodranouta)
 				}
 				if combattag = true
 				{
-					WebRequest.Send(combattag) 
+					WebRequest.Send(combattaga) 
 				}
 				if lowhunder = true
 				{
-					WebRequest.Send(lowhunder)
+					WebRequest.Send(lowhundera)
 				}
 				WebRequest.Send(autoleave)
 				Sleep 120000

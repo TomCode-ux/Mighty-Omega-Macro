@@ -134,7 +134,7 @@ if (toggle)
 						fullslot = false
 						Loop, ;Empty Slot
 						{
-							ImageSearch, Emptyx, Emptyy, 130, 520, 755, 585, %A_ScriptDir%\bin2\Slot%A_Index%.png  
+							ImageSearch, Emptyx, Emptyy, 130, 520, 760, 585, *20 %A_ScriptDir%\bin2\Slot%A_Index%.png  
 							If Errorlevel = 0 
 							{
 								Break

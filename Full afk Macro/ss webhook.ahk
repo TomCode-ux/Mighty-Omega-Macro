@@ -71,7 +71,7 @@ IfNotExist, %A_ScriptDir%\bin2\trainingss.png
 	msgbox,, file missing,Look like you didn't extract file,3
 	ExitApp 
 }
-IfNotExist, %A_ScriptDir%\bin2\combat1.png
+IfNotExist, %A_ScriptDir%\bin2\combatss.png
 {
 	msgbox,, file missing,Look like you didn't extract file,3
 	ExitApp 
@@ -133,14 +133,14 @@ if (toggle)
 		)
 		if ss = false
 		{
-            ImageSearch, x, y, 60, 515, 710, 600, %A_ScriptDir%\bin2\combat.png ;if not found equiped slot /and still not full hunger
+            ImageSearch, x, y, 60, 515, 710, 600, %A_ScriptDir%\bin2\combatss.png ;if not found equiped slot /and still not full hunger
             If ErrorLevel = 1
             {
                 Send 1
             }
             Click, 10
             Sleep 200
-            ImageSearch, x, y, 60, 520, 790, 590, *10 %A_ScriptDir%\bin2\training.png
+            ImageSearch, x, y, 60, 520, 790, 590, *10 %A_ScriptDir%\bin2\trainingss.png
             if ErrorLevel = 0
             {
                 send 2{Click}
@@ -160,7 +160,7 @@ if (toggle)
 		}
         if ss = true
         {
-            ImageSearch, x, y, 60, 515, 710, 600, %A_ScriptDir%\bin2\combat.png ;if not found equiped slot /and still not full hunger
+            ImageSearch, x, y, 60, 515, 710, 600, %A_ScriptDir%\bin2\combatss.png ;if not found equiped slot /and still not full hunger
             If ErrorLevel = 0
             {
                 Sendinput, 1
@@ -192,7 +192,7 @@ if (toggle)
                 Sleep 1000
                 m2 = 0
             }
-            ImageSearch, x, y, 60, 520, 790, 590, *10 %A_ScriptDir%\bin2\training.png
+            ImageSearch, x, y, 60, 520, 790, 590, *10 %A_ScriptDir%\bin2\trainingss.png
             If ErrorLevel = 1
             {
                 Send 1

@@ -1,35 +1,5 @@
 #maxThreadsPerHotkey, 2
 
-SetPrimaryMonitorScaling(100) ; https://www.autohotkey.com/boards/viewtopic.php?t=94218
-Sleep 100
-SetPrimaryMonitorScaling(value) {
-; possible values 100, 125, 150, 175, 200, 225, 250, 300, 350, 400, 450, 500
-   static SPI_GETLOGICALDPIOVERRIDE := 0x009E
-        , SPI_SETLOGICALDPIOVERRIDE := 0x009F
-        , SPIF_UPDATEINIFILE := 0x00000001
-        , MONITOR_DEFAULTTOPRIMARY := 0x00000001
-        , ScaleValues := [100, 125, 150, 175, 200, 225, 250, 300, 350, 400, 450, 500]
-        
-   for k, v in ScaleValues
-      if (value = v && found := true)
-         break
-   if !found
-      throw "Incorrect value: " . value . ". Allowed values: 100, 125, 150, 175, 200, 225, 250, 300, 350, 400, 450, 500"
-   if !DllCall("SystemParametersInfo", "UInt", SPI_GETLOGICALDPIOVERRIDE, "Int", 0, "IntP", v, "UInt", 0)
-      throw "SPI_GETLOGICALDPIOVERRIDE unsupported"
-   if !recommendedScaling := ScaleValues[ 1 - v ]
-      throw "Something wrong"
-   for k, v in ScaleValues {
-      (v = value && s := k)
-      (v = recommendedScaling && r := k)
-   } until s && r
-   if !DllCall("SystemParametersInfo", "UInt", SPI_SETLOGICALDPIOVERRIDE, "Int", s - r, "Ptr", 0, "UInt", SPIF_UPDATEINIFILE)
-      throw "Failed to set new scale factor"
-   hMon := DllCall("MonitorFromWindow", "Ptr", 0, "UInt", MONITOR_DEFAULTTOPRIMARY, "Ptr")
-   DllCall("Shcore\GetScaleFactorForMonitor", "Ptr", hMon, "UIntP", scale)
-   Return scale
-}
-
 IfNotExist, %A_ScriptDir%\bin\w.png
 {
     msgbox,, file missing,Look like you didn't extract file,3
@@ -93,16 +63,12 @@ MsgBox, 0,Tutorial, F1 for activate macro. END for Stop, 3
 
 if WinExist("Roblox") {
 	WinActivate
-}
-Loop, 3
-{	
 	CenterWindow("ahk_exe RobloxPlayerBeta.exe")
-	Sleep 100
 }
 CenterWindow(WinTitle)
 {	
 	WinGetPos,,, Width, Height, %WinTitle%
-	WinMove, %WinTitle%,, (A_ScreenWidth/2)-(Width/2), (A_ScreenHeight/2)-(Height/2), 400, 400
+	WinMove, %WinTitle%,,, 400, 400
 }
 
 
@@ -120,9 +86,6 @@ macro_on := !macro_on
 if (macro_on)
 {	
 	CoordMode , Pixel, Window
-	slot = 1
-	current = 0
-	PixelGetColor , color2, 250, 130,
 	Loop ,
 	{	   
 		CoordMode , Click, Window
@@ -184,74 +147,61 @@ if (macro_on)
 			ImageSearch , FoundX, FoundY, 200, 240, 600, 300, *50 %A_ScriptDir%\bin\w.png
 			if (errorlevel = 0)
 			{				
-				Send {w down}{w up}
+				Send w
 			}			
 			ImageSearch , FoundX, FoundY, 200, 240, 600, 300, *50 %A_ScriptDir%\bin\a.png
 			if (errorlevel = 0)
 			{				
-				Send {a down}{a up}
+				Send a
 			}			
 			ImageSearch , FoundX, FoundY, 200, 240, 600, 300, *50 %A_ScriptDir%\bin\s.png
 			if (errorlevel = 0)
 			{				
-				Send {s down}{s up}
+				Send s
 			}			
 			ImageSearch , FoundX, FoundY, 200, 240, 600, 300, *50 %A_ScriptDir%\bin\d.png
 			if (errorlevel = 0)
 			{				
-				Send {d down}{d up}
+				Send d
 			}
 			if detect = true
 			{
 				PixelSearch , x, y, 30, 130, 40, 133, 0x3A3A3A, 40, Fast
 				If ErrorLevel = 0
 				{				
-					Sleep 8000
+					;Loop,
+					;{
+					;Sleep 100
+					;} Until A_TickCount - StartTime > 60000
+Sleep 9000
 				}	
 			}
 		} Until A_TickCount - StartTime > 60000
 		PixelSearch , x, y, 70, 144, 75, 146, 0x3A3A3A, 40, Fast
 		If ErrorLevel = 0
 		{
-			if current <= 5
+			Sleep 5000
+			Sendinput, 1234567890
+			Sleep 300
+			time := A_TickCount
+			Loop, ; Eating part
 			{
-                Loop,
-                {
-                    PixelSearch, x, y, 439, 455, 440, 456, 0x494995, 3, Fast
-                    If ErrorLevel = 0
-                    {
-                        Sleep 100
-                    }
-                    else
-                    {
-                        Break
-                    }
-                }
-                Sleep 100
-				Send %slot%
 				Click, 400, 610, 10
-				Sleep 3500
-				Send %slot%
-				current++
-			}
-			if slot = 0
-			{
-				if current >= 5
+				Sleep 100
+				PixelSearch, x, y, 119, 144, 110, 146, 0x3A3A3A, 40, Fast ; full hunger
+				If ErrorLevel = 1
 				{
-					Send !{f4}
-					Exitapp
+					Break
 				}
-			}
-			if current >= 5
-			{
-				slot++
-				current = 0
-				if slot >= 10
+				ImageSearch, x, y, 60, 515, 760, 600, *20 %A_ScriptDir%\bin\equip.png ;if not found equiped slot /and still not full hunger
+				If ErrorLevel = 1
 				{
-					slot = 0
+					Break
 				}
-			}
-		}	
+			} Until A_TickCount - time > 60000
+			Send {BackSpace}
+			
+		}
 		StartTime2 := A_TickCount
 		Loop ,
 		{			
@@ -268,8 +218,8 @@ if (macro_on)
 		Loop,
 		{			
 			Sleep 100
-			PixelSearch , x, y, 249, 129, 250, 130, color2, , Fast
-			If ErrorLevel = 0
+			PixelSearch , x, y, 249, 129, 250, 130, 0x3A3A3A, 40, Fast
+			If ErrorLevel = 1
 			{				
 				Break
 			}		

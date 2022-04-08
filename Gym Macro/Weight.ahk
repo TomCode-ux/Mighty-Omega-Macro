@@ -203,7 +203,7 @@ if (macro_on)
                         Click, 400, 390
                         Click, 400, 391
                     }
-                } Until A_TickCount - StartTime > 65000
+                } Until A_TickCount - StartTime > 70000
 
             }
             okkk++

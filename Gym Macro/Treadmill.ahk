@@ -305,6 +305,21 @@ if (macro_on)
 				cantrun = true
 			}
 		}
+		
+		PixelSearch, x, y, 40, 144, 50, 146, 0x3A3A3A, 40, Fast ; too low hunger
+		If ErrorLevel = 0
+		{
+			if webhook = true
+			{
+				lowhunder = true
+				ruined = true
+			}
+			else
+			{
+				send !{f4}
+				ExitApp
+			}
+		}
 
 		Pixelsearch, x, y, 80, 95, 81, 96, 0x37378A, 10, Fast ; Combat Tag 
 		if ErrorLevel = 0

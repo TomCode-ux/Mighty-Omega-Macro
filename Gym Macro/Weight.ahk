@@ -146,7 +146,7 @@ if (macro_on)
             Sleep 120
             Loop, 7
             {
-                ImageSearch, x, y, 380, 210, 420, 390, *75 %A_ScriptDir%\bin\w%A_Index%.png
+                ImageSearch, x, y, 370, 200, 430, 420, *20 %A_ScriptDir%\bin\w%A_Index%.png
                 If ErrorLevel = 0
                 {
                     MouseMove, x+1, y, 0

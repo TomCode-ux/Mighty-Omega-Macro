@@ -38,7 +38,7 @@ pusheda=
 (
 	{
 		"username": "i love vivace's macro",
-		"content": "%userid% you were pushed too far away from treadmill!",
+		"content": "%userid% you were pushed too far away from weight!",
 		"embeds": null
 	}
 )

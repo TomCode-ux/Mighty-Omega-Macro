@@ -169,7 +169,7 @@ if (macro_on)
                     aa := A_TickCount - StartTime
                     StartTime22 := A_TickCount
                     ImageSearch, x , y , 250 , 220 , 560 , 440, *25 %A_ScriptDir%\bin\yellow.png
-                    if (errorlevel = 0)
+                    if Errorlevel = 0
                     {
                         ElapsedTime := A_TickCount - StartTime22
                         MouseMove, x+5, y+5, 0
@@ -185,7 +185,7 @@ if (macro_on)
                     If Stam = true
                     {
                         PixelSearch, x, y, 40, 132, 65, 134, 0x3A3A3A, 40, Fast
-                        If ErrorLevel = true
+                        If ErrorLevel = 0
                         {
                             StartTime3 := A_TickCount
                             Loop,

@@ -141,6 +141,9 @@ if (macro_on)
             {
                 send {s Up}{s Down}
             }
+	    MouseMove, 0 , 0
+            MouseMove, 0 , 1
+            Sleep 50
             Loop, 7
             {
                 ImageSearch, x, y, 380, 210, 420, 390, *75 %A_ScriptDir%\bin\w%A_Index%.png

@@ -8,9 +8,11 @@ url:="bruh" ; use the url from Discord webhook bot
 userid:="<@userid>" ; Copy ID from discord
 ; True, False
 autorhythm = true
-flow = True
+flow = true
 ; do not change after this line
 Webhook = true ; can't be disable since i never test with no webhook
+
+
 ruined = False
 ss = false
 m2 = 0
@@ -56,7 +58,7 @@ autoleave=
 (
 	{
 		"username": "i love vivace's macro",
-		"content": "auto leave in 3 minutes",
+		"content": "auto leave in 5 minutes",
 		"embeds": null
 	}
 )
@@ -66,16 +68,7 @@ IfNotExist, %A_ScriptDir%\bin2
 	msgbox,, file missing,Look like you didn't extract file,3
 	ExitApp 
 }
-IfNotExist, %A_ScriptDir%\bin2\trainingss.png
-{
-	msgbox,, file missing,Look like you didn't extract file,3
-	ExitApp 
-}
-IfNotExist, %A_ScriptDir%\bin2\combatss.png
-{
-	msgbox,, file missing,Look like you didn't extract file,3
-	ExitApp 
-}
+
 if webhook = true
 {
 	if url = bruh
@@ -133,26 +126,35 @@ if (toggle)
 		)
 		if ss = false
 		{
-            ImageSearch, x, y, 60, 515, 710, 600, %A_ScriptDir%\bin2\combatss.png ;if not found equiped slot /and still not full hunger
-            If ErrorLevel = 1
-            {
-                Send 1
-            }
-            Click, 10
-            Sleep 200
-            ImageSearch, x, y, 60, 520, 790, 590, *10 %A_ScriptDir%\bin2\trainingss.png
+            Send {BackSpace}
+			Sleep 100
+            ImageSearch, x, y, 65, 525, 750, 585, *10 %A_ScriptDir%\bin2\ss.png
             if ErrorLevel = 0
             {
+				Sleep 200
                 send 2{Click}
                 Sleep 3000
+				Send 1
+				if autorhythm = true
+				{
+					send r
+				}
                 ss = true
 				m2 = 0
 				aa++
 				ok = 0
-                WebRequest.Send(currentss)
+				if webhook = true
+				{
+					WebRequest.Send(currentss)
+				}
             }
+			else
+			{
+				Click, 10
+				Sleep 200
+			}
 			ok++
-			if ok = 5
+			if ok = 15
 			{
 				ruined = true
 				cantbuy = true
@@ -160,19 +162,9 @@ if (toggle)
 		}
         if ss = true
         {
-            ImageSearch, x, y, 60, 515, 710, 600, %A_ScriptDir%\bin2\combatss.png ;if not found equiped slot /and still not full hunger
-            If ErrorLevel = 0
-            {
-                Sendinput, 1
-                if autorhythm = true
-                {
-                    Sendinput, r
-                }
-                sleep 100
-            }
             Click
 			uh++
-			if uh = 25 ;been hitting over 25 time
+			if uh = 40 ;been hitting over 40 time
 			{
 				ruined = true
 				pushed = true
@@ -192,14 +184,17 @@ if (toggle)
                 Sleep 1000
                 m2 = 0
             }
-            ImageSearch, x, y, 60, 520, 790, 590, *10 %A_ScriptDir%\bin2\trainingss.png
+            ImageSearch, x, y, 65, 525, 750, 585, *10 %A_ScriptDir%\bin2\ss.png
             If ErrorLevel = 1
             {
-                Send 1
+                Send {BackSpace}
                 Sleep 100
                 ss = false
 				uh = 0
-                WebRequest.Send(finishedss)
+				if webhook = true
+				{
+					WebRequest.Send(finishedss)
+				}
             }
         }
 		; misc
@@ -212,7 +207,7 @@ if (toggle)
             }
 		}
 		; low hunger
-		PixelSearch, x, y, 40, 144, 55, 146, 0x3A3A3A, 40, Fast ; too low hunger
+		PixelSearch, x, y, 34, 144, 35, 146, 0x3A3A3A, 40, Fast ; too low hunger
 		If ErrorLevel = 0
 		{
 			if webhook = true
@@ -234,9 +229,9 @@ if (toggle)
 			ruined = true
 		}
 
-		if webhook = true
+		If ruined = true
 		{
-			If ruined = true
+			if webhook = true
 			{
 				if pushed = true
 				{
@@ -255,6 +250,14 @@ if (toggle)
 					WebRequest.Send(lowhundera)
 				}
 				WebRequest.Send(autoleave)
+				Sleep 300000
+				Send !{f4}
+				Sleep 200
+				ExitApp
+			}
+			else
+			{
+				tooltip, leave in 3 min
 				Sleep 120000
 				Send !{f4}
 				Sleep 200
@@ -262,6 +265,7 @@ if (toggle)
 			}
 		}
 	}
+	
 }
 else
 {

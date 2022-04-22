@@ -248,7 +248,7 @@ if (toggle)
 			If Running = False
 			{
 				Sendinput, {w down}{w up}{w down}{s down}
-				Sleep 2000
+				Sleep 4000
 				Running = True
 			}
 			PixelSearch, x, y, 249, 132, 250, 134, 0x3A3A3A, 40, Fast ;Full Stamina

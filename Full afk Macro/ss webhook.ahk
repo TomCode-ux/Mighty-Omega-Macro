@@ -128,7 +128,7 @@ if (toggle)
 		{
             Send {BackSpace}
 			Sleep 100
-            ImageSearch, x, y, 65, 525, 750, 585, *10 %A_ScriptDir%\bin2\ss.png
+            ImageSearch, x, y, 65, 525, 750, 585, *10 %A_ScriptDir%\bin2\trainingss.png
             if ErrorLevel = 0
             {
 				Sleep 200
@@ -184,7 +184,7 @@ if (toggle)
                 Sleep 1000
                 m2 = 0
             }
-            ImageSearch, x, y, 65, 525, 750, 585, *10 %A_ScriptDir%\bin2\ss.png
+            ImageSearch, x, y, 65, 525, 750, 585, *10 %A_ScriptDir%\bin2\trainingss.png
             If ErrorLevel = 1
             {
                 Send {BackSpace}

@@ -14,6 +14,8 @@ s = false ; use true if you too tall and using bench press
 protein = false ; use true for enable auto eat protein make protein at slot 1 to make this work
 autolog = 999 ;run for the number you selected and leave
 temp = 0
+okkk = 0
+count = 0
 ruined = False
 combattag = false
 combattaga=
@@ -112,49 +114,63 @@ if (macro_on)
 		If ErrorLevel = 1
 		{
             if protein = true
-            {			
-                Sleep 100
-                ImageSearch, x, y, 380 , 450 , 430 , 465, *10 %A_ScriptDir%\bin\leave2.png
-                If ErrorLevel = 0
-                {
-                    Click, 400, 455
-                }
-                Sleep 100
-                Send 1
-                Sleep 50
-                Send {Click 10}
-                Sleep 8000
-                Send {BackSpace}
-                StartTime7 := A_TickCount
-                Loop,
-                {				
-                    Click, 400, 390
-                    Sleep 16
-                } Until A_TickCount - StartTime7 > 2000
-                temp++
-                if temp = 5
-                {				
-                    protein = false
-                }		
+            {	
+				if count = 3
+				{
+					count = 0
+				}		
+				if count = 0
+				{
+					count++
+					Sleep 100
+					ImageSearch, x, y, 380 , 450 , 430 , 465, *10 %A_ScriptDir%\bin\leave2.png
+					If ErrorLevel = 0
+					{
+						Click, 400, 455
+					}
+					Sleep 100
+					Send 1
+					Sleep 50
+					Send {Click 10}
+					Sleep 8000
+					Send {BackSpace}
+					StartTime7 := A_TickCount
+					Loop,
+					{				
+						Click, 400, 390
+						Sleep 16
+					} Until A_TickCount - StartTime7 > 2000
+					temp++
+					if temp = 5
+					{				
+						protein = false
+					}		
+				}
             }
             if s = true
             {
                 send {s Up}{s Down}
             }
-	    MouseMove, 0 , 0
+            MouseMove, 0 , 0
             MouseMove, 0 , 1
-            Sleep 120
+            Sleep 1200
             Loop, 7
             {
-                ImageSearch, x, y, 370, 200, 430, 420, *20 %A_ScriptDir%\bin\w%A_Index%.png
+	    	Sleep 100
+                ImageSearch, x, y, 370, 210, 430, 410, *20 %A_ScriptDir%\bin\w%A_Index%.png
                 If ErrorLevel = 0
                 {
                     MouseMove, x+1, y, 0
+					Click
                     MouseMove, x, y, 0
+					Click
+		    		MouseMove, x-1, y, 0
                     Click, 5
-                    Sleep 400
+                    Sleep 555
                     Click , 410, 355
                     Click , 410, 351
+					MouseMove, 0 , 0
+            		MouseMove, 0 , 1
                     Break
                 }
                 if A_Index = 7
@@ -164,7 +180,7 @@ if (macro_on)
                     Break
                 }
             }
-            if not ruined = true
+            if ruined = false
             {
                 StartTime := A_TickCount
                 Loop,
@@ -174,7 +190,7 @@ if (macro_on)
                     ImageSearch, x , y , 250 , 220 , 560 , 440, *25 %A_ScriptDir%\bin\yellow.png
                     if Errorlevel = 0
                     {
-                        ElapsedTime := A_TickCount - StartTime22
+                        ;ElapsedTime := A_TickCount - StartTime22
                         MouseMove, x+5, y+5, 0
                         MouseMove, x+5, y+6, 0
                         Click, 5
@@ -182,8 +198,8 @@ if (macro_on)
                         MouseMove, 400, 541, 0
                         MouseMove, 400, 540, 0
                         Sleep 20
-                        tooltip, %ElapsedTime% ms
-                        settimer, removetooltip, -300
+                        ;tooltip, %ElapsedTime% ms
+                        ;settimer, removetooltip, -300
                     }
                     If Stam = true
                     {
@@ -212,9 +228,8 @@ if (macro_on)
                 ruined = true
                 cantrun = true
             }
+
         }
-
-
         PixelSearch, x, y, 40, 144, 50, 146, 0x3A3A3A, 40, Fast ; too low hunger
 		If ErrorLevel = 0
 		{

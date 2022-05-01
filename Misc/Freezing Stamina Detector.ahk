@@ -1,4 +1,4 @@
-﻿#SingleInstance, force
+#SingleInstance, force
 #NoEnv
 #MaxThreadsPerHotkey, 2
 SetBatchLines, -1
@@ -45,6 +45,11 @@ if (toggle)
             uh = 250
             uh1 = 249
             stage = 0
+        }
+ 	PixelSearch, x, y, 249, 132, 250, 134, 0x3A3A3A, 40, Fast ;Full Stamina 1
+        If ErrorLevel = 1
+        {
+            StartTime := A_TickCount
         }
         if ( aa > 20000 )
         {

@@ -166,9 +166,12 @@ if (macro_on)
 					Click
 		    		MouseMove, x-1, y, 0
                     Click, 5
-                    Sleep 555
+                    Sleep 400
+		    Loop, 20
+		    {
                     Click , 410, 355
                     Click , 410, 351
+		    }
 					MouseMove, 0 , 0
             		MouseMove, 0 , 1
                     Break

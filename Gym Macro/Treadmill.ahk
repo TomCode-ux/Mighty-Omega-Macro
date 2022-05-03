@@ -167,8 +167,11 @@ if (macro_on)
 					MouseMove, x, y, 0
 					Click, 5
 					Sleep 400
-					Click , 410, 355
-					Click , 410, 351
+					Loop, 20
+					{
+						Click , 410, 355
+						Click , 410, 351
+					}
 					Break
 				}
 				If A_Index = 6 ; not found any 

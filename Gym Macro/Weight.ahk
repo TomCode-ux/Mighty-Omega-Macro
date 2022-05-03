@@ -151,8 +151,11 @@ if (macro_on)
             {
                 send {s Up}{s Down}
             }
+	    Loop, 10
+	    {
             MouseMove, 0 , 0
             MouseMove, 0 , 1
+	    }
             Sleep 1200
             Loop, 7
             {

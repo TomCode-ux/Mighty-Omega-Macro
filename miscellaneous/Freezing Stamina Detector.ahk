@@ -20,6 +20,7 @@ WebRequest := ComObjCreate("WinHttp.WinHttpRequest.5.1")
 WebRequest.Open("POST", url, false)
 WebRequest.SetRequestHeader("Content-Type", "application/json")
 
+
 $f2:: ; change hotkey here https://www.autohotkey.com/docs/KeyList.htm key list
 toggle := !toggle
 if (toggle)
@@ -30,23 +31,25 @@ if (toggle)
     Loop,
     {
         aa := A_TickCount - StartTime
+        tooltip, %aa%
         PixelSearch, x, y, %uh1%, 132, %uh%, 134, 0x3A3A3A, 40, Fast ;Full Stamina 1
         If ErrorLevel = 0
         {
-            uh:=uh-10
-            uh1:=uh1-10
+            uh:=uh-1
+            uh1:=uh1-1
             stage++
             StartTime := A_TickCount
         }
         Sleep 200
-        PixelSearch, x, y, uh1+10, 132, uh+10, 134, 0x3A3A3A, 40, Fast ;Full Stamina 1
+        PixelSearch, x, y, uh1+1, 132, uh+1, 134, 0x3A3A3A, 40, Fast ;Stamina Start Regen
         If ErrorLevel = 1
         {
             uh = 250
             uh1 = 249
             stage = 0
+            StartTime := A_TickCount
         }
- 	PixelSearch, x, y, 249, 132, 250, 134, 0x3A3A3A, 40, Fast ;Full Stamina 1
+ 	    PixelSearch, x, y, 249, 132, 250, 134, 0x3A3A3A, 40, Fast ;Full Stamina 1
         If ErrorLevel = 1
         {
             StartTime := A_TickCount
@@ -64,7 +67,7 @@ if (toggle)
         (
             {
                 "username": "i love vivace's macro",
-                "content": "%userid% Username:%username% YOUR STAMINA IS FREEZING AT STAGE %stage% FOR OVER 20 SECOND AUTO LEAVE IN 10 SECOND ",
+                "content": "%userid% Username:%username% YOUR STAMINA IS FREEZING AT %stage% FOR OVER 20 SECOND AUTO LEAVE IN 10 SECOND ",
                 "embeds": null
             }
         )
@@ -75,3 +78,4 @@ else
     ExitApp
 }
 Return
+

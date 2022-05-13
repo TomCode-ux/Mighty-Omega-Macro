@@ -1,4 +1,4 @@
-﻿#SingleInstance, force
+#SingleInstance, force
 #NoEnv
 #MaxThreadsPerHotkey, 2
 SetBatchLines, -1
@@ -9,10 +9,9 @@ userid:="<@userid>" ; Copy ID from discord
 ; True, False
 autorhythm = true
 flow = true
+Webhook = false 
+
 ; do not change after this line
-Webhook = true ; can't be disable since i never test with no webhook
-
-
 ruined = False
 ss = false
 m2 = 0
@@ -108,27 +107,31 @@ if (toggle)
 { ;remember to make less loop possible for best performence and always put timer in loop if stuck in loop
 	Loop, ; Start of the loop
 	{
-		currentss=
-		(
-			{
-				"username": "i love vivace's macro",
-				"content": "Current ss is %aa%",
-				"embeds": null
-			}
-		)
-		finishedss=
-		(
-			{
-				"username": "i love vivace's macro",
-				"content": "Finish %aa% time",
-				"embeds": null
-			}
-		)
+		if webhook = true
+		{
+			currentss=
+			(
+				{
+					"username": "i love vivace's macro",
+					"content": "Current ss is %aa%",
+					"embeds": null
+				}
+			)
+			finishedss=
+			(
+				{
+					"username": "i love vivace's macro",
+					"content": "Finish %aa% time",
+					"embeds": null
+				}
+			)
+		}
+		
 		if ss = false
 		{
             Send {BackSpace}
 			Sleep 100
-            ImageSearch, x, y, 65, 525, 750, 585, %A_ScriptDir%\bin2\trainingss.png
+            ImageSearch, x, y, 65, 520, 750, 585, *10 %A_ScriptDir%\bin2\trainingss.png
             if ErrorLevel = 0
             {
 				Sleep 200
@@ -156,8 +159,14 @@ if (toggle)
 			ok++
 			if ok = 15
 			{
-				ruined = true
-				cantbuy = true
+				if webhook = false
+				{
+					MsgBox, Ss not detected
+					ExitApp
+				} else {
+					ruined = true
+					cantbuy = true
+				}
 			}
 		}
         if ss = true
@@ -166,8 +175,14 @@ if (toggle)
 			uh++
 			if uh = 40 ;been hitting over 40 time
 			{
-				ruined = true
-				pushed = true
+				if webhook = false
+				{
+					msgbox, Got pushed
+					ExitApp
+				} else {
+					ruined = true
+					pushed = true
+				}
 			}
 			m2++
 			if m2 = 4
@@ -184,7 +199,7 @@ if (toggle)
                 Sleep 1000
                 m2 = 0
             }
-            ImageSearch, x, y, 65, 525, 750, 585, %A_ScriptDir%\bin2\trainingss.png
+            ImageSearch, x, y, 65, 520, 750, 585, *10 %A_ScriptDir%\bin2\trainingss.png
             If ErrorLevel = 1
             {
                 Send {BackSpace}

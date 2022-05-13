@@ -174,6 +174,7 @@ if (macro_on)
 		    }
 					MouseMove, 0 , 21
             		MouseMove, 0 , 20
+			Sleep 20
                     Break
                 }
                 if A_Index = 7

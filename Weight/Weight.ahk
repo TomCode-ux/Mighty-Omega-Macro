@@ -151,8 +151,8 @@ if (macro_on)
             {
                 send {s Up}{s Down}
             }
-            MouseMove, 0 , 0
-            MouseMove, 0 , 1
+            MouseMove, 0 , 21
+            MouseMove, 0 , 20
             Sleep 1200
             Loop, 7
             {
@@ -172,8 +172,8 @@ if (macro_on)
                     Click , 410, 355
                     Click , 410, 351
 		    }
-					MouseMove, 0 , 0
-            		MouseMove, 0 , 1
+					MouseMove, 0 , 21
+            		MouseMove, 0 , 20
                     Break
                 }
                 if A_Index = 7

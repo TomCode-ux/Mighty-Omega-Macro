@@ -1,4 +1,4 @@
-﻿#SingleInstance, force
+#SingleInstance, force
 #NoEnv
 #MaxThreadsPerHotkey, 2
 SetBatchLines, -1
@@ -68,7 +68,7 @@ if (toggle)
 	CoordMode, Pixel, Window
 	MouseMove, 0 , 0
 	Send {MButton} ;active windows 1
-	ImageSearch, x, y, 65, 525, 750, 585, *10 %A_ScriptDir%\bin\combatx.png 
+	ImageSearch, x, y, 65, 520, 750, 585, *10 %A_ScriptDir%\bin\combatx.png 
 	If ErrorLevel = 0
 	{
 		CoordMode, Mouse, Window
@@ -83,7 +83,7 @@ if (toggle)
 	}
 	MouseMove, 810 , 0
 	Send {MButton} ;active windows 1
-	ImageSearch, x, y, 65, 525, 750, 585, *10 %A_ScriptDir%\bin\combatx.png 
+	ImageSearch, x, y, 65, 520, 750, 585, *10 %A_ScriptDir%\bin\combatx.png 
 	If ErrorLevel = 0
 	{
 		CoordMode, Mouse, Window
@@ -107,10 +107,10 @@ if (toggle)
 				MouseMove, 0 , 0
 				Send {MButton}
 				CoordMode, Pixel, Window
-				ImageSearch, x, y, 65, 525, 750, 585, *10 %A_ScriptDir%\bin\dura.png
+				ImageSearch, x, y, 65, 520, 750, 585, *10 %A_ScriptDir%\bin\dura.png
 				if ErrorLevel = 1
 				{
-					ImageSearch, x, y, 65, 525, 750, 585, *10 %A_ScriptDir%\bin\combaty.png 
+					ImageSearch, x, y, 65, 520, 750, 585, *10 %A_ScriptDir%\bin\combaty.png 
 					If ErrorLevel = 0
 					{
 						Send 1
@@ -119,7 +119,7 @@ if (toggle)
 					Loop, 50
 					{
 						Click, 100, 470
-						ImageSearch, x, y, 65, 525, 750, 585, *10 %A_ScriptDir%\bin\dura.png
+						ImageSearch, x, y, 65, 520, 750, 585, *10 %A_ScriptDir%\bin\dura.png
 						If ErrorLevel = 0
 						{
 							CoordMode, Mouse, Screen
@@ -152,7 +152,7 @@ if (toggle)
 					Send {MButton} ;active windows 2
 					CoordMode, Mouse, Window
 					MouseMove, 100, 500
-					ImageSearch, x, y, 65, 525, 750, 585, *10 %A_ScriptDir%\bin\combatx.png 
+					ImageSearch, x, y, 65, 520, 750, 585, *10 %A_ScriptDir%\bin\combatx.png 
 					If ErrorLevel = 0
 					{
 						Send 1
@@ -226,10 +226,10 @@ if (toggle)
 					Send {MButton}{Click, 100, 470} ;active windows 1
 					CoordMode, Mouse, Screen
 					CoordMode, Pixel, Window
-					ImageSearch, x, y, 65, 525, 750, 585, *10 %A_ScriptDir%\bin\dura.png
+					ImageSearch, x, y, 65, 520, 750, 585, *10 %A_ScriptDir%\bin\dura.png
 					if ErrorLevel = 1
 					{
-						ImageSearch, x, y, 65, 525, 750, 585, *10 %A_ScriptDir%\bin\combaty.png 
+						ImageSearch, x, y, 65, 520, 750, 585, *10 %A_ScriptDir%\bin\combaty.png 
 						If ErrorLevel = 0
 						{
 							Send 1
@@ -238,10 +238,10 @@ if (toggle)
 						Loop, 50
 						{
 							Click, 100, 470
-							ImageSearch, x, y, 65, 525, 750, 585, *10 %A_ScriptDir%\bin\dura.png
+							ImageSearch, x, y, 65, 520, 750, 585, *10 %A_ScriptDir%\bin\dura.png
 							If ErrorLevel = 0
 							{
-								ImageSearch, x, y, 65, 525, 750, 585, *10 %A_ScriptDir%\bin\combatx.png 
+								ImageSearch, x, y, 65, 520, 750, 585, *10 %A_ScriptDir%\bin\combatx.png 
 								If ErrorLevel = 0
 								{
 									CoordMode, Mouse, Screen
@@ -297,7 +297,7 @@ if (toggle)
 				} Until A_TickCount - time > 60000
 				Send {BackSpace}
 				Sleep 100
-				ImageSearch, x, y, 65, 525, 750, 585, *10 %A_ScriptDir%\bin\combatx.png 
+				ImageSearch, x, y, 65, 520, 750, 585, *10 %A_ScriptDir%\bin\combatx.png 
 				If ErrorLevel = 0
 				{
 					CoordMode, Mouse, Screen
@@ -316,10 +316,10 @@ if (toggle)
 				MouseMove, 0 , 0
 				Send {MButton}
 				CoordMode, Pixel, Window
-				ImageSearch, x, y, 65, 525, 750, 585, *10 %A_ScriptDir%\bin\dura.png
+				ImageSearch, x, y, 65, 520, 750, 585, *10 %A_ScriptDir%\bin\dura.png
 				if ErrorLevel = 1
 				{
-					ImageSearch, x, y, 65, 525, 750, 585, *10 %A_ScriptDir%\bin\combaty.png 
+					ImageSearch, x, y, 65, 520, 750, 585, *10 %A_ScriptDir%\bin\combaty.png 
 					If ErrorLevel = 0
 					{
 						Send 1
@@ -328,7 +328,7 @@ if (toggle)
 					Loop, 50
 					{
 						Click, 100, 470
-						ImageSearch, x, y, 65, 525, 750, 585, *10 %A_ScriptDir%\bin\dura.png
+						ImageSearch, x, y, 65, 520, 750, 585, *10 %A_ScriptDir%\bin\dura.png
 						If ErrorLevel = 0
 						{
 							CoordMode, Mouse, Screen
@@ -361,7 +361,7 @@ if (toggle)
 					Send {MButton} ;active windows 2
 					CoordMode, Mouse, Window
 					MouseMove, 100, 500
-					ImageSearch, x, y, 65, 525, 750, 585, *10 %A_ScriptDir%\bin\combatx.png 
+					ImageSearch, x, y, 65, 520, 750, 585, *10 %A_ScriptDir%\bin\combatx.png 
 					If ErrorLevel = 0
 					{
 						Send 1
@@ -435,10 +435,10 @@ if (toggle)
 					Send {MButton}{Click, 100, 470} ;active windows 1
 					CoordMode, Mouse, Screen
 					CoordMode, Pixel, Window
-					ImageSearch, x, y, 65, 525, 750, 585, *10 %A_ScriptDir%\bin\dura.png
+					ImageSearch, x, y, 65, 520, 750, 585, *10 %A_ScriptDir%\bin\dura.png
 					if ErrorLevel = 1
 					{
-						ImageSearch, x, y, 65, 525, 750, 585, *10 %A_ScriptDir%\bin\combaty.png 
+						ImageSearch, x, y, 65, 520, 750, 585, *10 %A_ScriptDir%\bin\combaty.png 
 						If ErrorLevel = 0
 						{
 							Send 1
@@ -447,10 +447,10 @@ if (toggle)
 						Loop, 50
 						{
 							Click, 100, 470
-							ImageSearch, x, y, 65, 525, 750, 585, *10 %A_ScriptDir%\bin\dura.png
+							ImageSearch, x, y, 65, 520, 750, 585, *10 %A_ScriptDir%\bin\dura.png
 							If ErrorLevel = 0
 							{
-								ImageSearch, x, y, 65, 525, 750, 585, *10 %A_ScriptDir%\bin\combatx.png 
+								ImageSearch, x, y, 65, 520, 750, 585, *10 %A_ScriptDir%\bin\combatx.png 
 								If ErrorLevel = 0
 								{
 									CoordMode, Mouse, Screen
@@ -506,7 +506,7 @@ if (toggle)
 				} Until A_TickCount - time > 60000
 				Send {BackSpace}
 				Sleep 100
-				ImageSearch, x, y, 65, 525, 750, 585, *10 %A_ScriptDir%\bin\combatx.png 
+				ImageSearch, x, y, 65, 520, 750, 585, *10 %A_ScriptDir%\bin\combatx.png 
 				If ErrorLevel = 0
 				{
 					CoordMode, Mouse, Screen
@@ -522,10 +522,10 @@ if (toggle)
 				MouseMove, 810 , 0
 				Send {MButton} ;active windows 2
 				CoordMode, Pixel, Window
-				ImageSearch, x, y, 65, 525, 750, 585, *10 %A_ScriptDir%\bin\dura.png
+				ImageSearch, x, y, 65, 520, 750, 585, *10 %A_ScriptDir%\bin\dura.png
 				if ErrorLevel = 1
 				{
-					ImageSearch, x, y, 65, 525, 750, 585, *10 %A_ScriptDir%\bin\combaty.png 
+					ImageSearch, x, y, 65, 520, 750, 585, *10 %A_ScriptDir%\bin\combaty.png 
 					If ErrorLevel = 0
 					{
 						Send 1
@@ -534,7 +534,7 @@ if (toggle)
 					Loop, 50
 					{
 						Click, 100, 470
-						ImageSearch, x, y, 65, 525, 750, 585, *10 %A_ScriptDir%\bin\dura.png
+						ImageSearch, x, y, 65, 520, 750, 585, *10 %A_ScriptDir%\bin\dura.png
 						If ErrorLevel = 0
 						{
 							CoordMode, Mouse, Screen
@@ -568,7 +568,7 @@ if (toggle)
 					Send {MButton} ;active windows 1
 					CoordMode, Mouse, Window
 					MouseMove, 100, 500
-					ImageSearch, x, y, 65, 525, 750, 585, *10 %A_ScriptDir%\bin\combatx.png 
+					ImageSearch, x, y, 65, 520, 750, 585, *10 %A_ScriptDir%\bin\combatx.png 
 					If ErrorLevel = 0
 					{
 						Send 1
@@ -642,10 +642,10 @@ if (toggle)
 					Send {MButton}{Click, 100, 470} ;active windows 1
 					CoordMode, Mouse, Screen
 					CoordMode, Pixel, Window
-					ImageSearch, x, y, 65, 525, 750, 585, *10 %A_ScriptDir%\bin\dura.png
+					ImageSearch, x, y, 65, 520, 750, 585, *10 %A_ScriptDir%\bin\dura.png
 					if ErrorLevel = 1
 					{
-						ImageSearch, x, y, 65, 525, 750, 585, *10 %A_ScriptDir%\bin\combaty.png 
+						ImageSearch, x, y, 65, 520, 750, 585, *10 %A_ScriptDir%\bin\combaty.png 
 						If ErrorLevel = 0
 						{
 							Send 1
@@ -654,10 +654,10 @@ if (toggle)
 						Loop, 50
 						{
 							Click, 100, 470
-							ImageSearch, x, y, 65, 525, 750, 585, *10 %A_ScriptDir%\bin\dura.png
+							ImageSearch, x, y, 65, 520, 750, 585, *10 %A_ScriptDir%\bin\dura.png
 							If ErrorLevel = 0
 							{
-								ImageSearch, x, y, 65, 525, 750, 585, *10 %A_ScriptDir%\bin\combatx.png 
+								ImageSearch, x, y, 65, 520, 750, 585, *10 %A_ScriptDir%\bin\combatx.png 
 								If ErrorLevel = 0
 								{
 									CoordMode, Mouse, Screen
@@ -711,7 +711,7 @@ if (toggle)
 				} Until A_TickCount - time > 60000
 				Send {BackSpace}
 				Sleep 100
-				ImageSearch, x, y, 65, 525, 750, 585, *10 %A_ScriptDir%\bin\combatx.png 
+				ImageSearch, x, y, 65, 520, 750, 585, *10 %A_ScriptDir%\bin\combatx.png 
 				If ErrorLevel = 0
 				{
 					CoordMode, Mouse, Screen
@@ -731,4 +731,4 @@ else
 Return
 
 
-\::ExitApp
+end::ExitApp

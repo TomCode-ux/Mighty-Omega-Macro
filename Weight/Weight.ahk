@@ -121,7 +121,6 @@ if (macro_on)
 				}		
 				if count = 0
 				{
-					count++
 					Sleep 100
 					ImageSearch, x, y, 380 , 450 , 430 , 465, *10 %A_ScriptDir%\bin\leave2.png
 					If ErrorLevel = 0
@@ -146,41 +145,50 @@ if (macro_on)
 						protein = false
 					}		
 				}
+				count++
             }
             if s = true
             {
                 send {s Up}{s Down}
             }
-            MouseMove, 0 , 21
-            MouseMove, 0 , 20
+            MouseMove, 400, 541, 0
+            MouseMove, 400, 540, 0
             Sleep 1200
             Loop, 7
             {
-	    	Sleep 100
+	    		Sleep 100
                 ImageSearch, x, y, 370, 210, 430, 410, *20 %A_ScriptDir%\bin\w%A_Index%.png
                 If ErrorLevel = 0
                 {
                     MouseMove, x+1, y, 0
-					Click
                     MouseMove, x, y, 0
 					Click
 		    		MouseMove, x-1, y, 0
                     Click, 5
-                    Sleep 500
-		    Loop, 20
-		    {
-                    Click , 410, 355
-                    Click , 410, 351
-		    }
-					MouseMove, 0 , 21
-            		MouseMove, 0 , 20
-			Sleep 20
+                    Sleep 400
+					Loop, 20
+					{
+						Click , 410, 355
+						Click , 410, 351
+					}
+					Sleep 100
+					MouseMove, 400, 541, 0
+                    MouseMove, 400, 540, 0
+					Sleep 100
                     Break
                 }
                 if A_Index = 7
                 {
-                    pushed = true
-                    ruined = true
+					if webhook = true
+					{
+						pushed = true
+                    	ruined = true
+					}
+                    else
+					{
+						MsgBox, Not detect level stopped the macro
+						ExitApp
+					}
                     Break
                 }
             }
@@ -244,6 +252,7 @@ if (macro_on)
 			}
 			else
 			{
+				MsgBox,, Low hunger detected,3
 				send !{f4}
 				ExitApp
 			}

@@ -1,15 +1,18 @@
 #SingleInstance, force
 #NoEnv
 #MaxThreadsPerHotkey, 2
-;SetBatchLines, -1
+SetBatchLines, -1
 SetMouseDelay, -1
 SetCapsLockState, Off
 CoordMode, Pixel, Window
 CoordMode, Mouse, Window
+
 url:="bruh" ; use the url from Discord webhook bot
 userid:="<@userid>" ; Copy user ID from discord
 webhook = false
+
 autolog = 999 ;run for the number you selected and leave
+timebeforeleave = 120000 ; auto leave after getting ctag/ ruin in milisec
 settimer, chbn, 50
 MsgBox, 4, Stamina or RunningSpeed?, Choose Stamina or RunningSpeed
 IfMsgBox Yes
@@ -20,6 +23,7 @@ else
 {
 	tread = true
 }
+
 MsgBox, 4, Stamina Detection?,
 IfMsgBox Yes
 {
@@ -32,12 +36,12 @@ else
 
 chbn()
 {
-IfWinNotExist, Stamina or RunningSpeed?
-Return
-settimer, chbn, off
-WinActivate
-ControlSetText, Button1, &Stamina
-ControlSetText, Button2, &Running
+	IfWinNotExist, Stamina or RunningSpeed?
+	Return
+	settimer, chbn, off
+	WinActivate
+	ControlSetText, Button1, &Stamina
+	ControlSetText, Button2, &Running
 }
 ;; do not change under this
 ruined = False
@@ -65,6 +69,15 @@ lowhundera=
 	{
 		"username": "i love vivace's macro",
 		"content": "%userid% your hunger was too low!",
+		"embeds": null
+	}
+)
+Cash = false
+Casha=
+(
+	{
+		"username": "i love vivace's macro",
+		"content": "%userid% your cash is ranout!",
 		"embeds": null
 	}
 )
@@ -136,7 +149,6 @@ removetooltip() {
 }
 $end::ExitApp ; for stop macro
 
-Return
 $f1:: ; change hotkey here https://www.autohotkey.com/docs/KeyList.htm key list
 macro_on := !macro_on
 if (macro_on)
@@ -158,9 +170,12 @@ if (macro_on)
 				Click , 290, 311
 				Sleep 1000
 			}
+			aa = 0
 			Loop, 6
 			{
-				ImageSearch, x, y, 380, 210, 420, 390, *75 %A_ScriptDir%\bin\%A_Index%.png
+				aa++
+				Sleep 100
+				ImageSearch, x, y, 370, 210, 430, 390, *20 %A_ScriptDir%\bin\%aa%.png
 				If ErrorLevel = 0
 				{
 					MouseMove, x+1, y, 0
@@ -171,14 +186,36 @@ if (macro_on)
 					Click , 410, 351
 					Break
 				}
-				If A_Index = 6 ; not found any 
+				If aa = 6 ; not found any 
 				{
-					pushed = true
-					ruined = true
-					Break
+					if webhook = true
+					{
+						pushed = true
+                    	ruined = true
+					}
+                    else
+					{
+						MsgBox, Not detect level stopped the macro
+						ExitApp
+					}
+                    Break
 				}
 			}
 			Sleep 3000
+			ImageSearch, x, y, 370, 210, 430, 390, *20 %A_ScriptDir%\bin\%aa%.png
+			If ErrorLevel = 0
+			{
+				; Cash Ranout
+				if webhook = true
+				{
+					cash = true
+					ruined = true
+				} else {
+					msgbox, Cash ranout 
+					ExitApp
+				}
+			}
+			Return
 			StartTime := A_TickCount
 			Loop,
 			{
@@ -351,8 +388,12 @@ if (macro_on)
 				{
 					WebRequest.Send(cantruna)
 				}
+				if cash = true
+				{
+					WebRequest.Send(casha)
+				}
 				WebRequest.Send(autoleave)
-				Sleep 120000
+				Sleep %timebeforeleave%
 				Send !{f4}
 				;shutdown 
 				Sleep 200
@@ -360,7 +401,7 @@ if (macro_on)
 			}
 			else
 			{
-				Sleep 120000
+				Sleep %timebeforeleave%
 				Send !{f4}
 				;shutdown 
 				Sleep 200

@@ -11,6 +11,7 @@ url:="bruh" ; use the url from Discord webhook bot
 userid:="<@userid>" ; Copy user ID from discord
 webhook = false
 
+oldlevelselect = true ; Enable this cuz old one broke
 autolog = 999 ;run for the number you selected and leave
 timebeforeleave = 120000 ; auto leave after getting ctag/ ruin in milisec
 settimer, chbn, 50
@@ -43,6 +44,22 @@ chbn()
 	ControlSetText, Button1, &Stamina
 	ControlSetText, Button2, &Running
 }
+if oldlevelselect = true
+{
+	InputBox, level, Treadmill Level, Please enter level., , 200, 150
+	if ErrorLevel = 1
+	{
+		ExitApp
+	}
+	If not (level = "1" or level = "2" or level = "3" or level = "4" or level = "5")
+	{
+		tooltip, Look like level %level% not exist in this version of macro
+		SetTimer, removetooltip, -3000
+		return
+	}
+}
+
+
 ;; do not change under this
 ruined = False
 combattag = false
@@ -171,34 +188,79 @@ if (macro_on)
 				Sleep 1000
 			}
 			aa = 0
-			Loop, 6
+			if oldlevelselect = true
 			{
-				aa++
-				Sleep 100
-				ImageSearch, x, y, 370, 210, 430, 390, *20 %A_ScriptDir%\bin\%aa%.png
-				If ErrorLevel = 0
+				if level = 5
 				{
-					MouseMove, x+1, y, 0
-					MouseMove, x, y, 0
-					Click, 5
-					Sleep 400
+					Click , 340, 370
+					Click , 340, 371
+					Sleep 200
+				}
+				if level = 4
+				{
+					Click , 340, 340
+					Click , 340, 341
+					Sleep 200
+				}
+				if level = 3
+				{
+					Click , 340, 310
+					Click , 340, 311
+					Sleep 200
+				}
+				if level = 2
+				{
+					Click , 340, 280
+					Click , 340, 281
+					Sleep 200
+				}
+				if level = 1
+				{
+					Click , 340, 250
+					Click , 340, 251
+					Sleep 200
+				}
+				Sleep 200
+				Loop, 20
+				{
 					Click , 410, 355
 					Click , 410, 351
-					Break
 				}
-				If aa = 6 ; not found any 
+			}
+			else
+			{
+				Loop, 6
 				{
-					if webhook = true
+					aa++
+					Sleep 100
+					ImageSearch, x, y, 370, 210, 430, 390, *20 %A_ScriptDir%\bin\%aa%.png
+					If ErrorLevel = 0
 					{
-						pushed = true
-                    	ruined = true
+						MouseMove, x+1, y, 0
+						MouseMove, x, y, 0
+						Click, 5
+						Sleep 400
+						Loop, 20
+						{
+							Click , 410, 355
+							Click , 410, 351
+						}
+						Break
 					}
-                    else
+					If aa = 6 ; not found any 
 					{
-						MsgBox, Not detect level stopped the macro
-						ExitApp
+						if webhook = true
+						{
+							pushed = true
+							ruined = true
+						}
+						else
+						{
+							MsgBox, Not detect level stopped the macro
+							ExitApp
+						}
+						Break
 					}
-                    Break
 				}
 			}
 			Sleep 3000

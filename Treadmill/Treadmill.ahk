@@ -276,7 +276,6 @@ if (macro_on)
 					ExitApp
 				}
 			}
-			Return
 			StartTime := A_TickCount
 			Loop,
 			{

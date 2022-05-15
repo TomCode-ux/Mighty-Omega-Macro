@@ -1,7 +1,6 @@
 #SingleInstance, force
 #NoEnv
 #MaxThreadsPerHotkey, 2
-SetBatchLines, -1
 SetMouseDelay, -1
 SetCapsLockState, Off
 CoordMode, Pixel, Window

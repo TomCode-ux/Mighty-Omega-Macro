@@ -67,7 +67,10 @@ if (toggle)
 {
 	CoordMode, Pixel, Window
 	MouseMove, 0 , 0
-	Send {MButton} ;active windows 1
+	Loop, 3
+	{
+		Send {MButton} ;active windows 2
+	}
 	ImageSearch, x, y, 65, 520, 750, 585, *10 %A_ScriptDir%\bin\combatx.png 
 	If ErrorLevel = 0
 	{
@@ -81,8 +84,11 @@ if (toggle)
 		if autorhythm = True
 		Send r
 	}
-	MouseMove, 810 , 0
-	Send {MButton} ;active windows 1
+	MouseMove, 850 , 0
+	Loop, 3
+	{
+		Send {MButton} ;active windows 2
+	}
 	ImageSearch, x, y, 65, 520, 750, 585, *10 %A_ScriptDir%\bin\combatx.png 
 	If ErrorLevel = 0
 	{
@@ -105,7 +111,10 @@ if (toggle)
 			If ErrorLevel = 0
 			{
 				MouseMove, 0 , 0
-				Send {MButton}
+				Loop, 3
+				{
+					Send {MButton} ;active windows 2
+				}
 				CoordMode, Pixel, Window
 				ImageSearch, x, y, 65, 520, 750, 585, *10 %A_ScriptDir%\bin\dura.png
 				if ErrorLevel = 1
@@ -148,8 +157,11 @@ if (toggle)
 					}
 					Send 2{Click, 100, 470}
 					duratimer := A_TickCount
-					MouseMove, 810 , 0
-					Send {MButton} ;active windows 2
+					MouseMove, 850 , 0
+					Loop, 3
+					{
+						Send {MButton} ;active windows 2
+					}
 					CoordMode, Mouse, Window
 					MouseMove, 100, 500
 					ImageSearch, x, y, 65, 520, 750, 585, *10 %A_ScriptDir%\bin\combatx.png 
@@ -223,7 +235,11 @@ if (toggle)
 					CoordMode, Mouse, Screen
 					MouseMove, 0 , 0
 					CoordMode, Mouse, Window
-					Send {MButton}{Click, 100, 470} ;active windows 1
+					Loop, 3
+					{
+						Send {MButton} ;active windows 2
+					}
+					Click, 100, 470 ;active windows 1
 					CoordMode, Mouse, Screen
 					CoordMode, Pixel, Window
 					ImageSearch, x, y, 65, 520, 750, 585, *10 %A_ScriptDir%\bin\dura.png
@@ -266,7 +282,10 @@ if (toggle)
 			If ErrorLevel = 0
 			{
 				MouseMove, 0 , 0
-				Send {MButton}
+				Loop, 3
+				{
+					Send {MButton} ;active windows 2
+				}
 				CoordMode, Mouse, Window
 				MouseMove, 100, 500
 				Send {BackSpace}34567890 ;active windows 1
@@ -314,7 +333,10 @@ if (toggle)
 			If ErrorLevel = 0
 			{
 				MouseMove, 0 , 0
-				Send {MButton}
+				Loop, 3
+				{
+					Send {MButton} ;active windows 2
+				}
 				CoordMode, Pixel, Window
 				ImageSearch, x, y, 65, 520, 750, 585, *10 %A_ScriptDir%\bin\dura.png
 				if ErrorLevel = 1
@@ -357,8 +379,11 @@ if (toggle)
 					}
 					Send 2{Click, 100, 470}
 					duratimer := A_TickCount
-					MouseMove, 810 , 0
-					Send {MButton} ;active windows 2
+					MouseMove, 850 , 0
+					Loop, 3
+					{
+						Send {MButton} ;active windows 2
+					}
 					CoordMode, Mouse, Window
 					MouseMove, 100, 500
 					ImageSearch, x, y, 65, 520, 750, 585, *10 %A_ScriptDir%\bin\combatx.png 
@@ -432,7 +457,11 @@ if (toggle)
 					CoordMode, Mouse, Screen
 					MouseMove, 0 , 0
 					CoordMode, Mouse, Window
-					Send {MButton}{Click, 100, 470} ;active windows 1
+					Loop, 3
+					{
+						Send {MButton} ;active windows 2
+					}
+					Click, 100, 470 ;active windows 1
 					CoordMode, Mouse, Screen
 					CoordMode, Pixel, Window
 					ImageSearch, x, y, 65, 520, 750, 585, *10 %A_ScriptDir%\bin\dura.png
@@ -475,7 +504,10 @@ if (toggle)
 			If ErrorLevel = 0
 			{
 				MouseMove, 0 , 0
-				Send {MButton}
+				Loop, 3
+				{
+					Send {MButton} ;active windows 2
+				}
 				CoordMode, Mouse, Window
 				MouseMove, 100, 500
 				Send {BackSpace}34567890 ;active windows 2
@@ -519,8 +551,11 @@ if (toggle)
 			ImageSearch, x, y, 810, 100, 1060, 120, *10 %A_ScriptDir%\bin\fullhp.png ; Right windows
 			If ErrorLevel = 0
 			{
-				MouseMove, 810 , 0
-				Send {MButton} ;active windows 2
+				MouseMove, 850 , 0
+				Loop, 3
+				{
+					Send {MButton} ;active windows 2
+				}
 				CoordMode, Pixel, Window
 				ImageSearch, x, y, 65, 520, 750, 585, *10 %A_ScriptDir%\bin\dura.png
 				if ErrorLevel = 1
@@ -565,7 +600,10 @@ if (toggle)
 					CoordMode, Mouse, Screen
 					duratimer := A_TickCount
 					MouseMove, 0 , 0
-					Send {MButton} ;active windows 1
+					Loop, 3
+					{
+						Send {MButton} ;active windows 1
+					}
 					CoordMode, Mouse, Window
 					MouseMove, 100, 500
 					ImageSearch, x, y, 65, 520, 750, 585, *10 %A_ScriptDir%\bin\combatx.png 
@@ -637,9 +675,13 @@ if (toggle)
 						Sleep 450
 					}
 					CoordMode, Mouse, Screen
-					MouseMove, 810 , 0
+					MouseMove, 880 , 0
 					CoordMode, Mouse, window
-					Send {MButton}{Click, 100, 470} ;active windows 1
+					Loop, 3
+					{
+						Send {MButton} ;active windows 2
+					}
+					Click, 100, 470 ;active windows 1
 					CoordMode, Mouse, Screen
 					CoordMode, Pixel, Window
 					ImageSearch, x, y, 65, 520, 750, 585, *10 %A_ScriptDir%\bin\dura.png
@@ -681,8 +723,11 @@ if (toggle)
 			PixelSearch , x, y, 884, 133, 885, 134, 0x3A3A3A, 40, Fast
 			If ErrorLevel = 0
 			{
-				MouseMove, 810 , 0
-				Send {MButton}
+				MouseMove, 850 , 0
+				Loop, 3
+				{
+					Send {MButton} ;active windows 2
+				}
 				CoordMode, Mouse, Window
 				Send {Click, 100, 470}{BackSpace}34567890 ;active windows 1
 				Sleep 200
@@ -731,4 +776,4 @@ else
 Return
 
 
-end::ExitApp
+\::ExitApp

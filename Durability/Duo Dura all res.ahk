@@ -8,6 +8,8 @@ CoordMode, Mouse, Screen
 ;userid:="<@12345678910>" ;example
 ; True, False
 autorhythm = True
+rhyleft = true
+rhyright = true
 flow = True
 ; do not change
 Oneside = false ; start doing at left screen
@@ -82,7 +84,12 @@ if (toggle)
 		CoordMode, Mouse, Screen
 		Send 1
 		if autorhythm = True
-		Send r
+		{
+			if rhyleft = true
+			{
+				Send r
+			}
+		}
 	}
 	MouseMove, 850 , 0
 	Loop, 3
@@ -100,7 +107,13 @@ if (toggle)
 		CoordMode, Mouse, Screen
 		Send 1
 		if autorhythm = True
-		Send r
+		{
+			If rhyright = true
+			{
+				Send r
+			}
+		}
+
 	}
 	CoordMode, Pixel, Screen
 	Loop,
@@ -116,6 +129,7 @@ if (toggle)
 					Send {MButton} ;active windows 2
 				}
 				CoordMode, Pixel, Window
+				detect = 0
 				ImageSearch, x, y, 65, 520, 750, 585, *10 %A_ScriptDir%\bin\dura.png
 				if ErrorLevel = 1
 				{
@@ -128,6 +142,7 @@ if (toggle)
 					Loop, 50
 					{
 						Click, 100, 470
+						Sleep 10
 						ImageSearch, x, y, 65, 520, 750, 585, *10 %A_ScriptDir%\bin\dura.png
 						If ErrorLevel = 0
 						{
@@ -135,7 +150,11 @@ if (toggle)
 							CoordMode, Pixel, Screen
 							Break
 						}
-						if A_Index = 50
+						else
+						{
+							detect++
+						}
+						if detect = 50
 						{
 							MsgBox,,Vivace Auto Dura, Cannot buy dura, 3
 							ExitApp
@@ -169,7 +188,12 @@ if (toggle)
 					{
 						Send 1
 						if autorhythm = True
-						Send r
+						{
+							If rhyright = true
+							{
+								Send r
+							}
+						}
 					}
 					CoordMode, Pixel, Screen
 					Loop, ;fast phase
@@ -251,9 +275,11 @@ if (toggle)
 							Send 1
 						}
 						CoordMode, Mouse, Window
+						detect = 0
 						Loop, 50
 						{
 							Click, 100, 470
+							Sleep 10
 							ImageSearch, x, y, 65, 520, 750, 585, *10 %A_ScriptDir%\bin\dura.png
 							If ErrorLevel = 0
 							{
@@ -264,11 +290,20 @@ if (toggle)
 									CoordMode, Pixel, Screen
 									Send 1
 									if autorhythm = True
-									Send r
+									{
+										if rhyleft = true
+										{
+											Send r
+										}
+									}
 								}
 								Break
 							}
-							if A_Index = 50
+							else
+							{
+								detect++
+							}
+							if detect = 50
 							{
 								MsgBox,,Vivace Auto Dura, Cannot buy dura, 3
 								ExitApp
@@ -323,7 +358,12 @@ if (toggle)
 					CoordMode, Pixel, Screen
 					Send 1
 					if autorhythm = True
-					Send r
+					{
+						if rhyleft = true
+						{
+							Send r
+						}
+					}
 				}
 			}
 		}
@@ -350,6 +390,7 @@ if (toggle)
 					Loop, 50
 					{
 						Click, 100, 470
+						Sleep 10
 						ImageSearch, x, y, 65, 520, 750, 585, *10 %A_ScriptDir%\bin\dura.png
 						If ErrorLevel = 0
 						{
@@ -357,7 +398,11 @@ if (toggle)
 							CoordMode, Pixel, Screen
 							Break
 						}
-						if A_Index = 50
+						else
+						{
+							detect++
+						}
+						if detect = 50
 						{
 							MsgBox,,Vivace Auto Dura, Cannot buy dura, 3
 							ExitApp
@@ -391,7 +436,12 @@ if (toggle)
 					{
 						Send 1
 						if autorhythm = True
-						Send r
+						{
+							If rhyright = true
+							{
+								Send r
+							}
+						}
 					}
 					CoordMode, Pixel, Screen
 					Loop, ;fast phase
@@ -473,9 +523,11 @@ if (toggle)
 							Send 1
 						}
 						CoordMode, Mouse, Window
+						detect = 0
 						Loop, 50
 						{
 							Click, 100, 470
+							Sleep 10
 							ImageSearch, x, y, 65, 520, 750, 585, *10 %A_ScriptDir%\bin\dura.png
 							If ErrorLevel = 0
 							{
@@ -486,11 +538,20 @@ if (toggle)
 									CoordMode, Pixel, Screen
 									Send 1
 									if autorhythm = True
-									Send r
+									{
+										if rhyleft = true
+										{
+											Send r
+										}
+									}
 								}
 								Break
 							}
-							if A_Index = 50
+							else
+							{
+								detect++
+							}
+							if detect = 50
 							{
 								MsgBox,,Vivace Auto Dura, Cannot buy dura, 3
 								ExitApp
@@ -545,7 +606,12 @@ if (toggle)
 					CoordMode, Pixel, Screen
 					Send 1
 					if autorhythm = True
-					Send r
+					{
+						if rhyleft = true
+						{
+							Send r
+						}
+					}
 				}
 			}
 			ImageSearch, x, y, 810, 100, 1060, 120, *10 %A_ScriptDir%\bin\fullhp.png ; Right windows
@@ -566,9 +632,11 @@ if (toggle)
 						Send 1
 					}
 					CoordMode, Mouse, Window
+					detect = 0
 					Loop, 50
 					{
 						Click, 100, 470
+						Sleep 10
 						ImageSearch, x, y, 65, 520, 750, 585, *10 %A_ScriptDir%\bin\dura.png
 						If ErrorLevel = 0
 						{
@@ -576,7 +644,11 @@ if (toggle)
 							CoordMode, Pixel, Screen
 							Break
 						}
-						if A_Index = 50
+						else
+						{
+							detect++
+						}
+						if detect = 50
 						{
 							MsgBox,,Vivace Auto Dura, Cannot buy dura, 3
 							ExitApp
@@ -611,7 +683,12 @@ if (toggle)
 					{
 						Send 1
 						if autorhythm = True
-						Send r
+						{
+							if rhyleft = true
+							{
+								Send r
+							}
+						}
 					}
 					CoordMode, Pixel, Screen
 					Loop, ;fast phase
@@ -693,9 +770,11 @@ if (toggle)
 							Send 1
 						}
 						CoordMode, Mouse, Window
+						detect = 0
 						Loop, 50
 						{
 							Click, 100, 470
+							Sleep 10
 							ImageSearch, x, y, 65, 520, 750, 585, *10 %A_ScriptDir%\bin\dura.png
 							If ErrorLevel = 0
 							{
@@ -706,11 +785,20 @@ if (toggle)
 									CoordMode, Pixel, Screen
 									Send 1
 									if autorhythm = True
-									Send r
+									{
+										If rhyright = true
+										{
+											Send r
+										}
+									}
 								}
 								Break
 							}
-							if A_Index = 50
+							else
+							{
+								detect++
+							}
+							if detect = 50
 							{
 								MsgBox,,Vivace Auto Dura, Cannot buy dura, 3
 								ExitApp
@@ -763,7 +851,12 @@ if (toggle)
 					CoordMode, Pixel, Screen
 					Send 1
 					if autorhythm = True
-					Send r
+					{
+						If rhyright = true
+						{
+							Send r
+						}
+					}
 				}
 			}
 		}

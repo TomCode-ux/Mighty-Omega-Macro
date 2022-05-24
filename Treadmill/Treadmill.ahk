@@ -66,7 +66,7 @@ bodya=
 (
 	{
 		"username": "i love vivace's macro",
-		"content": "%userid% You have reach 65% fatigue!",
+		"content": "%userid% You have reach 65 percent fatigue!",
 		"embeds": null
 	}
 )

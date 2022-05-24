@@ -53,6 +53,15 @@ lowhundera=
 		"embeds": null
 	}
 )
+body = false
+bodya=
+(
+	{
+		"username": "i love vivace's macro",
+		"content": "%userid% You have reach 65% fatigue!",
+		"embeds": null
+	}
+)
 autoleave=
 (
 	{
@@ -126,7 +135,25 @@ if (toggle)
 				}
 			)
 		}
-		
+		ImageSearch, x, y, 330, 110, 350, 125, *30 %A_ScriptDir%\bin2\65.png
+		If ErrorLevel = 0
+		{
+			ruined = true
+			If webhook = true
+			{
+				body = true
+			}
+		}
+		ImageSearch, x, y, 330, 110, 350, 125, *30 %A_ScriptDir%\bin2\66.png
+		If ErrorLevel = 0
+		{
+			ruined = true
+			if Webhook = true
+			{
+				body = true
+			}
+		}
+
 		if ss = false
 		{
             Send {BackSpace}
@@ -225,29 +252,31 @@ if (toggle)
 		PixelSearch, x, y, 34, 144, 35, 146, 0x3A3A3A, 40, Fast ; too low hunger
 		If ErrorLevel = 0
 		{
+			ruined = true
 			if webhook = true
 			{
 				lowhunder = true
-				ruined = true
-			}
-			else
-			{
-				send !{f4}
-				ExitApp
 			}
 		}
 		; Combat tag detector
 		Pixelsearch, x, y, 80, 95, 81, 96, 0x37378A, 10, Fast ; Combat Tag 
 		if ErrorLevel = 0
 		{
-			combattag = true
 			ruined = true
+			if webhook = true
+			{
+				combattag = true
+			}
 		}
 
 		If ruined = true
 		{
 			if webhook = true
 			{
+				if body = true
+				{
+					WebRequest.Send(bodya) 
+				}
 				if pushed = true
 				{
 					WebRequest.Send(pushed1) 

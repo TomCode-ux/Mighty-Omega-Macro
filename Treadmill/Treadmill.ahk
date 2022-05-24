@@ -10,7 +10,7 @@ url:="bruh" ; use the url from Discord webhook bot
 userid:="<@userid>" ; Copy user ID from discord
 webhook = false
 
-oldlevelselect = true ; Enable this cuz old one broke
+oldlevelselect = false ; 
 autolog = 999 ;run for the number you selected and leave
 timebeforeleave = 120000 ; auto leave after getting ctag/ ruin in milisec
 settimer, chbn, 50
@@ -61,6 +61,15 @@ if oldlevelselect = true
 
 ;; do not change under this
 ruined = False
+body = false
+bodya=
+(
+	{
+		"username": "i love vivace's macro",
+		"content": "%userid% You have reach 65% fatigue!",
+		"embeds": null
+	}
+)
 combattag = false
 combattaga=
 (
@@ -119,11 +128,26 @@ autoleave=
 (
 	{
 		"username": "i love vivace's macro",
-		"content": "auto leave in 3 minutes",
+		"content": "auto leave in 10 seconds",
 		"embeds": null
 	}
 )
-
+wait=
+(
+	{
+		"username": "i love vivace's macro",
+		"content": "unable to leave due to combat tag",
+		"embeds": null
+	}
+)
+logged=
+(
+	{
+		"username": "i love vivace's macro",
+		"content": "Logged successfully",
+		"embeds": null
+	}
+)
 IfNotExist, %A_ScriptDir%\bin
 {
 	msgbox,, file missing,Look like you didn't extract file,3
@@ -171,6 +195,24 @@ if (macro_on)
 {
 	Loop, ; Loop Searching for full stamina
 	{
+		ImageSearch, x, y, 330, 110, 350, 125, *30 %A_ScriptDir%\bin\65.png
+		If ErrorLevel = 0
+		{
+			ruined = true
+			if webhook = true
+			{
+				body = true
+			}
+		}
+		ImageSearch, x, y, 330, 110, 350, 125, *30 %A_ScriptDir%\bin\66.png
+		If ErrorLevel = 0
+		{
+			ruined = true
+			if webhook = true
+			{
+				body = true
+			}
+		}
 		PixelSearch , x, y, 249, 129, 250, 130, 0x3A3A3A, 40, Fast
 		If ErrorLevel = 1
 		{				
@@ -374,8 +416,8 @@ if (macro_on)
 					Pixelsearch, x, y, 80, 95, 81, 96, 0x37378A, 10, Fast ; Combat Tag 
 					if ErrorLevel = 0
 					{
-						combattag = true
 						ruined = true
+						combattag = true
 					}
 					if ruined = true
 					{
@@ -399,22 +441,20 @@ if (macro_on)
 			if okk = autolog
 			{
 				ruined = true
-				cantrun = true
+				if webhook = true
+				{
+					cantrun = true
+				}
 			}
 		}
 		
 		PixelSearch, x, y, 40, 144, 50, 146, 0x3A3A3A, 40, Fast ; too low hunger
 		If ErrorLevel = 0
 		{
+			ruined = true
 			if webhook = true
 			{
 				lowhunder = true
-				ruined = true
-			}
-			else
-			{
-				send !{f4}
-				ExitApp
 			}
 		}
 
@@ -428,6 +468,10 @@ if (macro_on)
 		{
 			if webhook = true
 			{
+				if body = true
+				{
+					WebRequest.Send(bodya)
+				}
 				if foodranout = true
 				{
 					WebRequest.Send(foodranouta)
@@ -453,15 +497,36 @@ if (macro_on)
 					WebRequest.Send(casha)
 				}
 				WebRequest.Send(autoleave)
-				Sleep %timebeforeleave%
+				Sleep 10000
+				Pixelsearch, x, y, 80, 95, 81, 96, 0x37378A, 10, Fast ; Combat Tag 
+				if ErrorLevel = 0
+				{
+					WebRequest.Send(wait)
+				}
+				Loop,
+				{
+					Pixelsearch, x, y, 80, 95, 81, 96, 0x37378A, 10, Fast ; Combat Tag 
+					if ErrorLevel = 1
+					{
+						Break
+					}
+				}
 				Send !{f4}
-				;shutdown 
+				WebRequest.Send(logged)
 				Sleep 200
 				ExitApp
 			}
 			else
 			{
-				Sleep %timebeforeleave%
+				Sleep 10000
+				Loop,
+				{
+					Pixelsearch, x, y, 80, 95, 81, 96, 0x37378A, 10, Fast ; Combat Tag 
+					if ErrorLevel = 1
+					{
+						Break
+					}
+				}
 				Send !{f4}
 				;shutdown 
 				Sleep 200

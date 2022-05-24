@@ -130,7 +130,7 @@ if (toggle)
 				}
 				CoordMode, Pixel, Window
 				detect = 0
-				ImageSearch, x, y, 65, 520, 750, 585, *10 %A_ScriptDir%\bin\dura.png
+				ImageSearch, x, y, 65, 520, 750, 585, *10 %A_ScriptDir%\bin\D.png
 				if ErrorLevel = 1
 				{
 					ImageSearch, x, y, 65, 520, 750, 585, *10 %A_ScriptDir%\bin\combaty.png 
@@ -143,7 +143,7 @@ if (toggle)
 					{
 						Click, 100, 470
 						Sleep 10
-						ImageSearch, x, y, 65, 520, 750, 585, *10 %A_ScriptDir%\bin\dura.png
+						ImageSearch, x, y, 65, 520, 750, 585, *10 %A_ScriptDir%\bin\D.png
 						If ErrorLevel = 0
 						{
 							CoordMode, Mouse, Screen
@@ -266,7 +266,7 @@ if (toggle)
 					Click, 100, 470 ;active windows 1
 					CoordMode, Mouse, Screen
 					CoordMode, Pixel, Window
-					ImageSearch, x, y, 65, 520, 750, 585, *10 %A_ScriptDir%\bin\dura.png
+					ImageSearch, x, y, 65, 520, 750, 585, *10 %A_ScriptDir%\bin\D.png
 					if ErrorLevel = 1
 					{
 						ImageSearch, x, y, 65, 520, 750, 585, *10 %A_ScriptDir%\bin\combaty.png 
@@ -280,7 +280,7 @@ if (toggle)
 						{
 							Click, 100, 470
 							Sleep 10
-							ImageSearch, x, y, 65, 520, 750, 585, *10 %A_ScriptDir%\bin\dura.png
+							ImageSearch, x, y, 65, 520, 750, 585, *10 %A_ScriptDir%\bin\D.png
 							If ErrorLevel = 0
 							{
 								ImageSearch, x, y, 65, 520, 750, 585, *10 %A_ScriptDir%\bin\combatx.png 
@@ -378,7 +378,7 @@ if (toggle)
 					Send {MButton} ;active windows 2
 				}
 				CoordMode, Pixel, Window
-				ImageSearch, x, y, 65, 520, 750, 585, *10 %A_ScriptDir%\bin\dura.png
+				ImageSearch, x, y, 65, 520, 750, 585, *10 %A_ScriptDir%\bin\D.png
 				if ErrorLevel = 1
 				{
 					ImageSearch, x, y, 65, 520, 750, 585, *10 %A_ScriptDir%\bin\combaty.png 
@@ -391,7 +391,7 @@ if (toggle)
 					{
 						Click, 100, 470
 						Sleep 10
-						ImageSearch, x, y, 65, 520, 750, 585, *10 %A_ScriptDir%\bin\dura.png
+						ImageSearch, x, y, 65, 520, 750, 585, *10 %A_ScriptDir%\bin\D.png
 						If ErrorLevel = 0
 						{
 							CoordMode, Mouse, Screen
@@ -514,7 +514,7 @@ if (toggle)
 					Click, 100, 470 ;active windows 1
 					CoordMode, Mouse, Screen
 					CoordMode, Pixel, Window
-					ImageSearch, x, y, 65, 520, 750, 585, *10 %A_ScriptDir%\bin\dura.png
+					ImageSearch, x, y, 65, 520, 750, 585, *10 %A_ScriptDir%\bin\D.png
 					if ErrorLevel = 1
 					{
 						ImageSearch, x, y, 65, 520, 750, 585, *10 %A_ScriptDir%\bin\combaty.png 
@@ -528,7 +528,7 @@ if (toggle)
 						{
 							Click, 100, 470
 							Sleep 10
-							ImageSearch, x, y, 65, 520, 750, 585, *10 %A_ScriptDir%\bin\dura.png
+							ImageSearch, x, y, 65, 520, 750, 585, *10 %A_ScriptDir%\bin\D.png
 							If ErrorLevel = 0
 							{
 								ImageSearch, x, y, 65, 520, 750, 585, *10 %A_ScriptDir%\bin\combatx.png 
@@ -623,7 +623,7 @@ if (toggle)
 					Send {MButton} ;active windows 2
 				}
 				CoordMode, Pixel, Window
-				ImageSearch, x, y, 65, 520, 750, 585, *10 %A_ScriptDir%\bin\dura.png
+				ImageSearch, x, y, 65, 520, 750, 585, *10 %A_ScriptDir%\bin\D.png
 				if ErrorLevel = 1
 				{
 					ImageSearch, x, y, 65, 520, 750, 585, *10 %A_ScriptDir%\bin\combaty.png 
@@ -637,7 +637,7 @@ if (toggle)
 					{
 						Click, 100, 470
 						Sleep 10
-						ImageSearch, x, y, 65, 520, 750, 585, *10 %A_ScriptDir%\bin\dura.png
+						ImageSearch, x, y, 65, 520, 750, 585, *10 %A_ScriptDir%\bin\D.png
 						If ErrorLevel = 0
 						{
 							CoordMode, Mouse, Screen
@@ -761,7 +761,7 @@ if (toggle)
 					Click, 100, 470 ;active windows 1
 					CoordMode, Mouse, Screen
 					CoordMode, Pixel, Window
-					ImageSearch, x, y, 65, 520, 750, 585, *10 %A_ScriptDir%\bin\dura.png
+					ImageSearch, x, y, 65, 520, 750, 585, *10 %A_ScriptDir%\bin\D.png
 					if ErrorLevel = 1
 					{
 						ImageSearch, x, y, 65, 520, 750, 585, *10 %A_ScriptDir%\bin\combaty.png 
@@ -775,7 +775,7 @@ if (toggle)
 						{
 							Click, 100, 470
 							Sleep 10
-							ImageSearch, x, y, 65, 520, 750, 585, *10 %A_ScriptDir%\bin\dura.png
+							ImageSearch, x, y, 65, 520, 750, 585, *10 %A_ScriptDir%\bin\D.png
 							If ErrorLevel = 0
 							{
 								ImageSearch, x, y, 65, 520, 750, 585, *10 %A_ScriptDir%\bin\combatx.png 

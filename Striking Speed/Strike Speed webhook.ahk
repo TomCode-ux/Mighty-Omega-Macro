@@ -10,6 +10,7 @@ userid:="<@userid>" ; Copy ID from discord
 autorhythm = true
 flow = true
 Webhook = false 
+logat65 = false
 
 ; do not change after this line
 ruined = False
@@ -135,24 +136,28 @@ if (toggle)
 				}
 			)
 		}
-		ImageSearch, x, y, 330, 110, 350, 125, *30 %A_ScriptDir%\bin2\65.png
-		If ErrorLevel = 0
-		{
-			ruined = true
-			If webhook = true
-			{
-				body = true
-			}
-		}
-		ImageSearch, x, y, 330, 110, 350, 125, *30 %A_ScriptDir%\bin2\66.png
-		If ErrorLevel = 0
-		{
-			ruined = true
-			if Webhook = true
-			{
-				body = true
-			}
-		}
+        if logat65 = true
+        {
+            ImageSearch, x, y, 330, 110, 345, 125, *30 %A_ScriptDir%\bin2\65.png
+            If ErrorLevel = 0
+            {
+                ruined = true
+                If webhook = true
+                {
+                    body = true
+                }
+            }
+            ImageSearch, x, y, 330, 110, 345, 125, *30 %A_ScriptDir%\bin2\66.png
+            If ErrorLevel = 0
+            {
+                ruined = true
+                if Webhook = true
+                {
+                    body = true
+                }
+		    }
+        }
+
 
 		if ss = false
 		{

@@ -10,6 +10,7 @@ url:="bruh" ; use the url from Discord webhook bot
 userid:="<@userid>" ; Copy user ID from discord
 webhook = false
 
+percentcheck = false
 oldlevelselect = false ; 
 autolog = 999 ;run for the number you selected and leave
 timebeforeleave = 120000 ; auto leave after getting ctag/ ruin in milisec
@@ -66,7 +67,7 @@ bodya=
 (
 	{
 		"username": "i love vivace's macro",
-		"content": "%userid% You have reach 65 percent fatigue!",
+		"content": "%userid% You have reach 65% fatigue!",
 		"embeds": null
 	}
 )
@@ -195,24 +196,28 @@ if (macro_on)
 {
 	Loop, ; Loop Searching for full stamina
 	{
-		ImageSearch, x, y, 330, 110, 350, 125, *30 %A_ScriptDir%\bin\65.png
-		If ErrorLevel = 0
+		if percentcheck = true
 		{
-			ruined = true
-			if webhook = true
+			ImageSearch, x, y, 330, 110, 350, 125, *30 %A_ScriptDir%\bin\65.png
+			If ErrorLevel = 0
 			{
-				body = true
+				ruined = true
+				if webhook = true
+				{
+					body = true
+				}
+			}
+			ImageSearch, x, y, 330, 110, 350, 125, *30 %A_ScriptDir%\bin\66.png
+			If ErrorLevel = 0
+			{
+				ruined = true
+				if webhook = true
+				{
+					body = true
+				}
 			}
 		}
-		ImageSearch, x, y, 330, 110, 350, 125, *30 %A_ScriptDir%\bin\66.png
-		If ErrorLevel = 0
-		{
-			ruined = true
-			if webhook = true
-			{
-				body = true
-			}
-		}
+		
 		PixelSearch , x, y, 249, 129, 250, 130, 0x3A3A3A, 40, Fast
 		If ErrorLevel = 1
 		{				

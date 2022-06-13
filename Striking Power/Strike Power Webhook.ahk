@@ -247,7 +247,7 @@ if (toggle)
 			rhythm = false
 			If Running = False
 			{
-				Sendinput, {w down}{w up}{w down}{s down}
+				Sendinput, {s down}{w down}{w up}{w down}
 				Sleep 4000
 				Running = True
 			}

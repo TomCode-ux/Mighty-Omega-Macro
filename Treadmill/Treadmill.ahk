@@ -629,7 +629,6 @@ If ErrorLevel = 0
         {
             Send {f8}
         }
-        Break
     } else {
         Pause
     }

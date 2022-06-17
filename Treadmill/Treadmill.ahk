@@ -1,38 +1,206 @@
+;useful stuff
 #SingleInstance, force
 #NoEnv
 #MaxThreadsPerHotkey, 2
-SetMouseDelay, -1
 SetCapsLockState, Off
+SetBatchLines, -1
+SetMouseDelay, -1
 CoordMode, Pixel, Window
 CoordMode, Mouse, Window
 
-url:="bruh" ; use the url from Discord webhook bot
-userid:="<@userid>" ; Copy user ID from discord
-webhook = false
 
-percentcheck = false
-oldlevelselect = true ; 
-autolog = 999 ;run for the number you selected and leave
-timebeforeleave = 120000 ; auto leave after getting ctag/ ruin in milisec
-settimer, chbn, 50
+
+
+IfNotExist, %A_ScriptDir%\bin
+{
+	msgbox,, file missing,Look like you didn't extract file,3
+	ExitApp 
+}
+
+if !FileExist("webhook.txt")
+{
+    FileAppend, false, Webhook.txt
+}
+tooltip, Cancel if you don't want to use webhook
+FileRead, lamo, webhook.txt
+xd:
+if lamo = false
+{   
+
+    InputBox, Webhook, Vivace's Macro, Put your webhook,, 300, 150
+    If ErrorLevel = 0
+    {
+        filedelete, webhook.txt
+        FileAppend, %webhook%, Webhook.txt
+        InputBox, userid, Vivace's Macro, Put your userid,, 300, 150
+        If ErrorLevel = 0
+        {
+            FileAppend, `n<@%userid%>, Webhook.txt
+            goto, xd
+        } else {
+            webhook = false
+            filedelete, webhook.txt
+            FileAppend, false, Webhook.txt
+        }
+    } else {
+        webhook = false
+        filedelete, webhook.txt
+        FileAppend, false, Webhook.txt
+    }
+    
+} else {
+    tooltip, Checked
+    webhook = true
+    FileReadLine, url, webhook.txt, 1
+    FileReadLine, userid, webhook.txt, 2
+    discord = %url%
+    id = %userid%
+    WebRequest := ComObjCreate("WinHttp.WinHttpRequest.5.1")
+	WebRequest.Open("POST", discord, false)
+	WebRequest.SetRequestHeader("Content-Type", "application/json")
+    Food=
+    (
+        {
+            "username": "i love vivace's macro",
+            "content": "%userid% You are out of food!",
+            "embeds": null
+        }
+    )
+    Fatigue=
+    (
+        {
+            "username": "i love vivace's macro",
+            "content": "%userid% You have reach 65`% fatigue!",
+            "embeds": null
+        }
+    )
+    Combat=
+    (
+        {
+            "username": "i love vivace's macro",
+            "content": "%userid% You are attacked!",
+            "embeds": null
+        }
+    )
+    Cash=
+    (
+        {
+            "username": "i love vivace's macro",
+            "content": "%userid% You are out of cash!",
+            "embeds": null
+        }
+    )
+    Level=
+    (
+        {
+            "username": "i love vivace's macro",
+            "content": "%userid% You are pushed away from treadmill!",
+            "embeds": null
+        }
+    )
+    Combatlog=
+    (
+        {
+            "username": "i love vivace's macro",
+            "content": "auto log when not in combat",
+            "embeds": null
+        }
+    )
+    Logged=
+    (
+        {
+            "username": "i love vivace's macro",
+            "content": "Logged successfully",
+            "embeds": null
+        }
+    )
+    Kicked=
+    (
+        {
+            "username": "i love vivace's macro",
+            "content": "%userid% you got kicked from the game 😨",
+            "embeds": null
+        }
+    )
+}
+tooltip
+
+
+
+; options
+MSGBox, 4, Vivace's Macro, Do you want to auto log?
+IfMsgBox, Yes
+{
+    autolog = true
+    MSGBox, 4, Vivace's Macro, Do you want to log at 65`%
+    IfMsgBox, Yes
+    {
+        InputBox, fatiguebase , Vivace's Macro, How much fatigue do you have right now?,,300,125
+        If ErrorLevel = 1
+        {
+            MsgBox,,Vivace's Macro,Do Not Cancel,3
+            ExitApp
+        }
+        if fatiguebase is Not number
+        {
+            MsgBox,,Vivace's Macro,please enter only digits,3
+            ExitApp
+        }
+        InputBox, fatigueplus , Vivace's Macro, What is your minimum fatigue gained per training?,,340,125
+        If ErrorLevel = 1
+        {
+            
+            MsgBox,,Vivace's Macro,Do Not Cancel,3
+            ExitApp
+        }
+        if fatigueplus = 0
+        {
+            MsgBox,,Vivace's Macro,Don't use 0 in this,3
+            ExitApp
+        }
+        if fatigueplus is Not number
+        {
+            MsgBox,,Vivace's Macro,please enter only digits,3
+            ExitApp
+        }
+        Loop,
+        {
+            cal:=fatiguebase+fatigueplus
+            fatiguebase:=cal
+            Log++ 
+            if cal > 65
+            {
+                Break
+            }
+        }
+        MsgBox,,Vivace's Macro, Repeat: %log% times,4
+    }
+    IfMsgBox, No
+    {
+        InputBox, Log, Vivace's Macro, How many times you want to do treadmill?,,340,125
+        If ErrorLevel = 1
+        {
+            MsgBox,,Vivace's Macro,Do Not Cancel,3
+            ExitApp
+        }
+        if Log is Not number
+        {
+            MsgBox,,Vivace's Macro,please enter only digits,3
+            ExitApp
+        }
+    }
+} else {
+    autolog = false
+}
+
+
+settimer, chbn, 20
 MsgBox, 4, Stamina or RunningSpeed?, Choose Stamina or RunningSpeed
 IfMsgBox Yes
 {
     tread = false
-}
-else
-{
+} else {
 	tread = true
-}
-
-MsgBox, 4, Stamina Detection?,
-IfMsgBox Yes
-{
-    detect = true
-}
-else
-{
-	detect = false
 }
 
 chbn()
@@ -44,505 +212,541 @@ chbn()
 	ControlSetText, Button1, &Stamina
 	ControlSetText, Button2, &Running
 }
-if oldlevelselect = true
+MSGBox, 4, Vivace's Macro, Auto clip?`nAutomatically Clip and check name if you are attacked
+IfMsgBox, Yes
 {
-	InputBox, level, Treadmill Level, Please enter level., , 200, 150
-	if ErrorLevel = 1
-	{
-		ExitApp
-	}
-	If not (level = "1" or level = "2" or level = "3" or level = "4" or level = "5")
-	{
-		tooltip, Look like level %level% not exist in this version of macro
-		SetTimer, removetooltip, -3000
-		return
-	}
+    autoclip = true
+    MSGBox, 4, Vivace's Macro, Please set your instant replay to F8`nIf not Macro will use f12 record
+    IfMsgBox, Yes
+    {
+        instant = true
+    }
+    IfMsgBox, No
+    {
+        record = true
+    }
 }
 
 
-;; do not change under this
-ruined = False
-body = false
-bodya=
-(
-	{
-		"username": "i love vivace's macro",
-		"content": "%userid% You have reach 65 fatigue!",
-		"embeds": null
-	}
-)
-combattag = false
-combattaga=
-(
-	{
-		"username": "i love vivace's macro",
-		"content": "%userid% Combat tag detected!",
-		"embeds": null
-	}
-)
-foodranout = false
-foodranouta=
-(
-	{
-		"username": "i love vivace's macro",
-		"content": "%userid% your food in ranout of inventory!",
-		"embeds": null
-	}
-)
-lowhunder = false
-lowhundera=
-(
-	{
-		"username": "i love vivace's macro",
-		"content": "%userid% your hunger was too low!",
-		"embeds": null
-	}
-)
-Cash = false
-Casha=
-(
-	{
-		"username": "i love vivace's macro",
-		"content": "%userid% your cash is ranout!",
-		"embeds": null
-	}
-)
-pushed = false
-pusheda=
-(
-	{
-		"username": "i love vivace's macro",
-		"content": "%userid% you were pushed too far away from treadmill!",
-		"embeds": null
-	}
-)
-cantrun = false
-cantruna=
-(
-	{
-		"username": "i love vivace's macro",
-		"content": "%userid% unable to continue the tread macro!",
-		"embeds": null
-	}
-)
-autoleave=
-(
-	{
-		"username": "i love vivace's macro",
-		"content": "auto leave in 10 seconds",
-		"embeds": null
-	}
-)
-wait=
-(
-	{
-		"username": "i love vivace's macro",
-		"content": "unable to leave due to combat tag",
-		"embeds": null
-	}
-)
-logged=
-(
-	{
-		"username": "i love vivace's macro",
-		"content": "Logged successfully",
-		"embeds": null
-	}
-)
-IfNotExist, %A_ScriptDir%\bin
+
+
+msgbox,,Vivace's Macro, Welcome to free vivace's macro`nPress Space Bar to Exit Macro,2
+Sleep 1000
+ToolTip
+if WinExist("Ahk_exe RobloxPlayerBeta.exe")
 {
-	msgbox,, file missing,Look like you didn't extract file,3
-	ExitApp 
-}
-
-if webhook = true
-{
-	if url = bruh
-	{
-		MsgBox, 0, Something Went Wrong, Your webhook was invalid, 3
-		ExitApp
-	}
-	if userid = <@userid>
-	{
-		MsgBox, 0, Something Went Wrong, You have to put your userid after enable Webhook, 3
-		ExitApp
-	}
-	WebRequest := ComObjCreate("WinHttp.WinHttpRequest.5.1")
-	WebRequest.Open("POST", url, false)
-	WebRequest.SetRequestHeader("Content-Type", "application/json")
-}
-
-if WinExist("Roblox") {
-	WinActivate
-    CenterWindow("ahk_exe RobloxPlayerBeta.exe")
-} else {
-	tooltip, Roblox not found
-	settimer, removetooltip, -3000
-	Sleep 3000
-	ExitApp
-}
-CenterWindow(WinTitle) {	
-	WinGetPos,,, Width, Height, %WinTitle%
-	WinMove, %WinTitle%,,,, 800, 599
-}
-removetooltip() {
-    tooltip
-}
-$end::ExitApp ; for stop macro
-
-$f1:: ; change hotkey here https://www.autohotkey.com/docs/KeyList.htm key list
-macro_on := !macro_on
-if (macro_on)
-{
-	Loop, ; Loop Searching for full stamina
-	{
-		if percentcheck = true
-		{
-			ImageSearch, x, y, 330, 110, 350, 125, *30 %A_ScriptDir%\bin\65.png
-			If ErrorLevel = 0
-			{
-				ruined = true
-				if webhook = true
-				{
-					body = true
-				}
-			}
-			ImageSearch, x, y, 330, 110, 350, 125, *30 %A_ScriptDir%\bin\66.png
-			If ErrorLevel = 0
-			{
-				ruined = true
-				if webhook = true
-				{
-					body = true
-				}
-			}
-		}
-		
-		PixelSearch , x, y, 249, 129, 250, 130, 0x3A3A3A, 40, Fast
-		If ErrorLevel = 1
-		{				
-			if tread = true ; rs
-			{
-				Click , 520, 310
-				Click , 520, 311
-				Sleep 1000
-			}
-			if tread = false ; stam
-			{
-				Click , 290, 310
-				Click , 290, 311
-				Sleep 1000
-			}
-			aa = 0
-			if oldlevelselect = true
-			{
-				if level = 5
-				{
-					Click , 340, 370
-					Click , 340, 371
-					Sleep 200
-				}
-				if level = 4
-				{
-					Click , 340, 340
-					Click , 340, 341
-					Sleep 200
-				}
-				if level = 3
-				{
-					Click , 340, 310
-					Click , 340, 311
-					Sleep 200
-				}
-				if level = 2
-				{
-					Click , 340, 280
-					Click , 340, 281
-					Sleep 200
-				}
-				if level = 1
-				{
-					Click , 340, 250
-					Click , 340, 251
-					Sleep 200
-				}
-				Sleep 200
-				Loop, 20
-				{
-					Click , 410, 355
-					Click , 410, 351
-				}
-			}
-			else
-			{
-				Loop, 6
-				{
-					aa++
-					Sleep 100
-					ImageSearch, x, y, 370, 210, 430, 390, *20 %A_ScriptDir%\bin\%aa%.png
-					If ErrorLevel = 0
-					{
-						MouseMove, x+1, y, 0
-						MouseMove, x, y, 0
-						Click, 5
-						Sleep 400
-						Loop, 20
-						{
-							Click , 410, 355
-							Click , 410, 351
-						}
-						Break
-					}
-					If aa = 6 ; not found any 
-					{
-						if webhook = true
-						{
-							pushed = true
-							ruined = true
-						}
-						else
-						{
-							MsgBox, Not detect level stopped the macro
-							ExitApp
-						}
-						Break
-					}
-				}
-			}
-			Sleep 3000
-			ImageSearch, x, y, 370, 210, 430, 390, *20 %A_ScriptDir%\bin\%aa%.png
-			If ErrorLevel = 0
-			{
-				; Cash Ranout
-				if webhook = true
-				{
-					cash = true
-					ruined = true
-				} else {
-					msgbox, Cash ranout 
-					ExitApp
-				}
-			}
-			StartTime := A_TickCount
-			Loop,
-			{
-				aa := A_TickCount - StartTime
-				ImageSearch, x, y, 200, 240, 600, 300, *50 %A_ScriptDir%\bin\w.png
-				if Errorlevel = 0
-				{				
-					Send w
-				}			
-				ImageSearch, x, y, 200, 240, 600, 300, *50 %A_ScriptDir%\bin\a.png
-				if Errorlevel = 0
-				{				
-					Send a
-				}
-				ImageSearch, x, y, 200, 240, 600, 300, *50 %A_ScriptDir%\bin\s.png
-				if Errorlevel = 0
-				{				
-					Send s
-				}			
-				ImageSearch, x, y, 200, 240, 600, 300, *50 %A_ScriptDir%\bin\d.png
-				if Errorlevel = 0
-				{				
-					Send d
-				}
-				if ( aa > 58000 )
-				{
-					PixelSearch , x, y, 70, 144, 71, 146, 0x3A3A3A, 40, Fast
-					If ErrorLevel = 1
-					{
-						Click, 409, 296
-						Click, 409, 295
-					}
-				}
-				if detect = true
-				{
-					PixelSearch , x, y, 30, 130, 40, 133, 0x3A3A3A, 40, Fast
-					If ErrorLevel = 0
-					{				
-						StartTime3 := A_TickCount
-						Loop,
-						{
-							PixelSearch , x, y, 70, 144, 71, 146, 0x3A3A3A, 40, Fast
-							If ErrorLevel = 1
-							{
-								Click, 409, 296
-								Click, 409, 295
-							}
-						} Until A_TickCount - StartTime3 > 9000
-						
-					}
-				}
-				Pixelsearch, x, y, 80, 95, 81, 96, 0x37378A, 10, Fast ; Combat Tag 
-				if ErrorLevel = 0
-				{
-					combattag = true
-					ruined = true
-				}
-				if ruined = true
-				{
-					Break
-				}
-			} Until A_TickCount - StartTime > 65000
-			PixelSearch , x, y, 70, 144, 75, 146, 0x3A3A3A, 40, Fast
-			If ErrorLevel = 0
-			{
-				ImageSearch, x, y, 370 , 335 , 445 , 355, *10 %A_ScriptDir%\bin\leave2.png
-				If ErrorLevel = 0
-				{
-					Click, 410, 345
-					Sleep 2000
-				}
-				Sleep 500
-				Sendinput, 1234567890
-				Sleep 200
-				time := A_TickCount
-				aw = 0
-				Loop, ; Eating part
-				{
-					Click, 400, 610, 10
-					Sleep 100
-					PixelSearch, x, y, 119, 144, 110, 146, 0x3A3A3A, 40, Fast ; full hunger
-					If ErrorLevel = 1
-					{
-						Break
-					}
-					ImageSearch, x, y, 60, 515, 760, 600, *20 %A_ScriptDir%\bin\equip.png ;if not found equiped slot /and still not full hunger
-					If ErrorLevel = 1
-					{
-						Sendinput, 1234567890
-						aw++
-					}
-					if aw = 3
-					{
-						Break
-					}
-					Pixelsearch, x, y, 80, 95, 81, 96, 0x37378A, 10, Fast ; Combat Tag 
-					if ErrorLevel = 0
-					{
-						ruined = true
-						combattag = true
-					}
-					if ruined = true
-					{
-						Break
-					}
-					
-				} Until A_TickCount - time > 60000
-				Send {BackSpace}
-			}
-			ImageSearch, x, y, 370 , 335 , 445 , 355, *10 %A_ScriptDir%\bin\leave2.png
-			If ErrorLevel = 1
-			{
-				StartTime2 := A_TickCount
-				Loop ,
-				{			
-					Click , 409, 296
-					Click , 409, 295
-				} Until A_TickCount - StartTime2 > 4000
-			}
-			okk++
-			if okk = autolog
-			{
-				ruined = true
-				if webhook = true
-				{
-					cantrun = true
-				}
-			}
-		}
-		
-		PixelSearch, x, y, 40, 144, 50, 146, 0x3A3A3A, 40, Fast ; too low hunger
-		If ErrorLevel = 0
-		{
-			ruined = true
-			if webhook = true
-			{
-				lowhunder = true
-			}
-		}
-
-		Pixelsearch, x, y, 80, 95, 81, 96, 0x37378A, 10, Fast ; Combat Tag 
-		if ErrorLevel = 0
-		{
-			combattag = true
-			ruined = true
-		}
-		if ruined = true
-		{
-			if webhook = true
-			{
-				if body = true
-				{
-					WebRequest.Send(bodya)
-				}
-				if foodranout = true
-				{
-					WebRequest.Send(foodranouta)
-				}
-				if combattag = true
-				{
-					WebRequest.Send(combattaga) 
-				}
-				if lowhunder = true
-				{
-					WebRequest.Send(lowhundera)
-				}
-				if pushed = true
-				{
-					WebRequest.Send(pusheda)
-				}
-				if cantrun = true
-				{
-					WebRequest.Send(cantruna)
-				}
-				if cash = true
-				{
-					WebRequest.Send(casha)
-				}
-				WebRequest.Send(autoleave)
-				Sleep 10000
-				Pixelsearch, x, y, 80, 95, 81, 96, 0x37378A, 10, Fast ; Combat Tag 
-				if ErrorLevel = 0
-				{
-					WebRequest.Send(wait)
-				}
-				Loop,
-				{
-					Pixelsearch, x, y, 80, 95, 81, 96, 0x37378A, 10, Fast ; Combat Tag 
-					if ErrorLevel = 1
-					{
-						Break
-					}
-				}
-				Send !{f4}
-				WebRequest.Send(logged)
-				Sleep 200
-				ExitApp
-			}
-			else
-			{
-				Sleep 10000
-				Loop,
-				{
-					Pixelsearch, x, y, 80, 95, 81, 96, 0x37378A, 10, Fast ; Combat Tag 
-					if ErrorLevel = 1
-					{
-						Break
-					}
-				}
-				Send !{f4}
-				;shutdown 
-				Sleep 200
-				ExitApp
-			}
-		}
-	}
+    WinActivate
+    WinMove, Ahk_exe RobloxPlayerBeta.exe,,,, 800, 599 
 }
 else
 {
-	ExitApp
+    MsgBox,,Vivace's Macro,Roblox not active,3
+    ExitApp
 }
-Return
+    ;start the macro
+Sleep 1000
+ImageSearch,,, 65, 35, 100, 65, *10 %A_WorkingDir%/bin/chat.bmp
+If ErrorLevel = 0
+{
+    Click, 80 50
+}
+Loop,
+{
+    ImageSearch,,, 330, 230, 485, 270, *10 %A_WorkingDir%/bin/Leave.bmp
+    If ErrorLevel = 0
+    {
+        Send {PrintScreen}
+        If Webhook = true
+        {
+            Broken = true
+            akicked = true ;:fearful:
+            if instant = true
+            {
+                Send {f8}
+            }
+            Break
+        } else {
+            Pause
+        }
+    }
+    PixelSearch ,,, 249, 129, 250, 130, 0x3A3A3A, 40, Fast
+    If ErrorLevel = 1
+    {				
+        if tread = true ; rs
+        {
+            Click , 520, 310
+            Click , 520, 311
+        }
+        if tread = false ; stam
+        {
+            Click , 290, 310
+            Click , 290, 311
+        }
+        wait := A_TickCount
+        Loop,
+        {
+            Ahee := A_TickCount - Ahee
+            ImageSearch,,, 380, 450, 430, 470, %A_WorkingDir%/bin/lea.bmp
+            If ErrorLevel = 0
+            {
+                Break
+            }
+        }
+        ClickLevel := A_TickCount
+        Loop,
+        {
+            Alo := A_TickCount - ClickLevel
+            ImageSearch,,, 390, 240, 430, 390, %A_WorkingDir%/bin/level5.bmp
+            If ErrorLevel = 0
+            {
+                MouseMove, 470, 370
+                Break
+            }
+            ImageSearch,,, 390, 240, 430, 390, %A_WorkingDir%/bin/level4.bmp
+            If ErrorLevel = 0
+            {
+                
+                MouseMove, 470, 340
+                Break
+            }
+            ImageSearch,,, 390, 240, 430, 390, %A_WorkingDir%/bin/level3.bmp
+            If ErrorLevel = 0
+            {
+                
+                MouseMove, 470, 310
+                Break
+            }
+            ImageSearch,,, 390, 240, 430, 390, %A_WorkingDir%/bin/level2.bmp
+            If ErrorLevel = 0
+            {
+                
+                MouseMove, 470, 280
+                Break
+            }
+            ImageSearch,,, 390, 240, 430, 390, %A_WorkingDir%/bin/level1.bmp
+            If ErrorLevel = 0
+            {
+                
+                MouseMove, 470, 250
+                Break
+            } 
+            If (Alo > 5000)
+            {
+                If Webhook = true
+                {
+                    Broken = true
+                    alevel = true
+                    Click, 410, 345
+                    Sleep 500
+                    Break
+                } else {
+                    Loop,
+                    {
+                        Pixelsearch,,, 79, 98, 80, 99, 0x38388E, 10, Fast ; Combat Tag 
+                        if ErrorLevel = 1
+                        {
+                            Sleep 100
+                            Pixelsearch,,, 79, 98, 80, 99, 0x38388E, 10, Fast ; Combat Tag 
+                            if ErrorLevel = 1
+                            {
+                                Break
+                            }
+                        }     
+                    }
+                    If autolog = true
+                    {
+                        Process, Close, RobloxPlayerBeta.exe
+                    }
+                    MsgBox, Level not found
+                    ExitApp
+                }
+            }
+            
+        }
+        If Broken = true
+        {
+            Break
+        }
+        Click, 10 ; Select Level
+        hand := A_TickCount
+        Loop,
+        {
+            hand2 := A_TickCount - hand
+            Sleep 50
+            ImageSearch,,, 390, 330, 430, 370, %A_WorkingDir%/bin/hand.bmp
+            If ErrorLevel = 0
+            {
+                Break
+            }
+            if (hand2 > 5000)
+            {
+                If Webhook = true
+                {
+                    Broken = true
+                    amoney = true
+                    Click, 410, 345
+                    Sleep 500
+                    Break
+                }
+                else
+                {
+                    If autolog = true
+                    {
+                        Process, Close, RobloxPlayerBeta.exe
+                    }
+                    MsgBox, Money ranout
+                    ExitApp
+                }
+            }
+        }
+        If Broken = true
+        {
+            Break
+        }
+        Loop, 20 ;Click hand
+        {
+            Click , 410, 355
+            Click , 410, 351
+        }
+        Sleep 3000
 
+        Treadrun := A_TickCount
+        Loop,
+        {
+            run := A_TickCount - Treadrun
+            ImageSearch,,, 200, 240, 600, 300, *50 %A_ScriptDir%\bin\w.bmp
+            if Errorlevel = 0
+            {				
+                Send {vk57} ;w
+            }			
+            ImageSearch,,, 200, 240, 600, 300, *50 %A_ScriptDir%\bin\a.bmp
+            if Errorlevel = 0
+            {				
+                Send {vk41} ;a
+            }
+            ImageSearch,,, 200, 240, 600, 300, *50 %A_ScriptDir%\bin\s.bmp
+            if Errorlevel = 0
+            {				
+                Send {vk53} ;s
+            }			
+            ImageSearch,,, 200, 240, 600, 300, *50 %A_ScriptDir%\bin\d.bmp
+            if Errorlevel = 0
+            {				
+                Send {vk44} ;d
+            }
+            if (run > 57000)
+            {
+                Click, 400, 290
+                Click, 400, 291
+            }
+            PixelSearch ,,, 40, 130, 45, 133, 0x3A3A3A, 40, Fast
+            If ErrorLevel = 0
+            {				
+                WaitforStamina := A_TickCount
+                Loop,
+                {
+                    if (run > 57000)
+                    {
+                        Click, 400, 290
+                        Click, 400, 291
+                    }
+                } Until A_TickCount - WaitforStamina > 9000			
+            }
+        } Until A_TickCount - Treadrun > 65000
+        if autolog = true
+        {
+            Count++
+
+            if Count = %Log%
+            {
+                If Webhook = true
+                {
+                    Broken = true
+                    a65 = true
+                    Break
+                } else {
+                    Loop,
+                    {
+                        Pixelsearch,,, 79, 98, 80, 99, 0x38388E, 10, Fast ; Combat Tag 
+                        if ErrorLevel = 1
+                        {
+                            Sleep 100
+                            Pixelsearch,,, 79, 98, 80, 99, 0x38388E, 10, Fast ; Combat Tag 
+                            if ErrorLevel = 1
+                            {
+                                Break
+                            }
+                        }     
+                    }
+                    If autolog = true
+                    {
+                        Process, Close, RobloxPlayerBeta.exe
+                    }
+                    MsgBox, Fatigue Reached 65`%
+                    ExitApp
+                }
+                
+            }
+        }
+        ; check for food
+        Pixelsearch,,, 80, 95, 81, 96, 0x37378A, 10, Fast ; Combat Tag 
+		if ErrorLevel = 0
+		{
+            If Webhook = true
+            {
+                Broken = true
+                aCombat = true
+                Break
+            }
+            else
+            {
+                Loop,
+                {
+                    Pixelsearch,,, 79, 98, 80, 99, 0x38388E, 10, Fast ; Combat Tag 
+                    if ErrorLevel = 1
+                    {
+                        Sleep 100
+                        Pixelsearch,,, 79, 98, 80, 99, 0x38388E, 10, Fast ; Combat Tag 
+                        if ErrorLevel = 1
+                        {
+                            Break
+                        }
+                    }     
+                }
+                If autolog = true
+                {
+                    Process, Close, RobloxPlayerBeta.exe
+                }
+                MsgBox, Combat tag 
+                ExitApp
+            }
+		}
+        PixelSearch ,,, 70, 144, 75, 146, 0x3A3A3A, 40, Fast
+		If ErrorLevel = 0
+		{
+            If nofoodleft = false
+            {
+                Click, 410, 345
+                Sleep 500
+                Sendinput, 1234567890
+                Sleep 200
+                time := A_TickCount
+                aw = 0
+                Loop, ; Eating part
+                {
+                    Click, 400, 610, 10
+                    Sleep 100
+                    PixelSearch,,, 119, 144, 110, 146, 0x3A3A3A, 40, Fast ; full hunger
+                    If ErrorLevel = 1
+                    {
+                        Break
+                    }
+                    ImageSearch,,, 60, 515, 760, 600, *10 %A_ScriptDir%\bin\slot.bmp ;if not found equiped slot /and still not full hunger
+                    If ErrorLevel = 1
+                    {
+                        Sendinput, 1234567890
+                        aw++
+                    }
+                    if aw = 3
+                    {
+                        nofoodleft = true
+                        Break
+                    }
+                    Pixelsearch,,, 80, 95, 81, 96, 0x37378A, 10, Fast ; Combat Tag 
+                    if ErrorLevel = 0
+                    {
+                        If Webhook = true
+                        {
+                            Broken = true
+                            aCombat = true
+                            Break
+                        } else {
+                            Loop,
+                            {
+                                Pixelsearch,,, 79, 98, 80, 99, 0x38388E, 10, Fast ; Combat Tag 
+                                if ErrorLevel = 1
+                                {
+                                    Sleep 100
+                                    Pixelsearch,,, 79, 98, 80, 99, 0x38388E, 10, Fast ; Combat Tag 
+                                    if ErrorLevel = 1
+                                    {
+                                        Break
+                                    }
+                                }
+                            }
+                            If autolog = true
+                            {
+                                Process, Close, RobloxPlayerBeta.exe
+                            }
+                            MsgBox, Combat tag 
+                            ExitApp
+                        }
+                    }
+                    
+                } Until A_TickCount - time > 60000
+                If Broken = true
+                {
+                    Break
+                }
+                Send {BackSpace}
+                StartTime2 := A_TickCount
+                Loop ,
+                {			
+                    Click , 409, 296
+                    Click , 409, 295
+                } Until A_TickCount - StartTime2 > 1500
+            } else {
+                Click, 410, 345
+                If webhook = true
+                {
+                    Broken = true
+                    anofood = true
+                } else {
+                    if autoleave = true
+                    {
+                        Process, Close, RobloxPlayerBeta.exe
+                    }
+                    MsgBox, You don't have food
+                    ExitApp
+                }
+                
+
+                Break
+            }
+        }
+    }
+}
+
+ImageSearch,,, 330, 230, 485, 270, *10 %A_WorkingDir%/bin/Leave.bmp
+If ErrorLevel = 0
+{
+    Send {PrintScreen}
+    If Webhook = true
+    {
+        Broken = true
+        akicked = true ;:fearful:
+        if instant = true
+        {
+            Send {f8}
+        }
+        Break
+    } else {
+        Pause
+    }
+}
+    
+If aCombat  = true
+{
+    if webhook = true
+    {
+        WebRequest.Send(Combat)
+        Pixelsearch,,, 80, 95, 81, 96, 0x37378A, 10, Fast ; Combat Tag 
+        if ErrorLevel = 0
+        {
+            WebRequest.Send(Combatlog)
+        }
+    }
+    Send {PrintScreen}
+    if autoclip = true
+    {
+        If record = true
+        {
+            Send {f12}
+        }
+        PixelSearch,,, 565, 90, 566 , 91, 0xFFFFFF, 10
+        IF ErrorLevel = 1
+        {
+            Send {Tab}
+        }
+        x = 30
+        l = 125
+        MouseMove, 765, %l%
+        Loop, 10
+        {
+            Click, WheelUp
+            Sleep 100
+        }
+            
+        Sleep 350
+        Loop, 36
+        {
+            MouseMove, 765, %l%
+            l := (l + x)
+            If A_Index = 14
+            {
+                MouseMove, 805, 140
+                Click, Down
+                MouseMove, 805, 250
+                Click, Up
+                Sleep 200
+                l = 125
+            }
+            If A_Index = 28
+            {
+                MouseMove, 805, 250
+                Click, Down
+                MouseMove, 805, 350
+                Click, Up
+                Sleep 200
+                l = 125
+            }
+            Sleep 70
+        }
+        Sleep 1000
+        if instant = true
+        {
+            Send {f8}
+        }
+        if record = true
+        {
+            Send {f12}
+        }
+    } 
+        
+}
+if webhook = true
+{
+    If anofood = true
+    {
+        WebRequest.Send(Food)
+    }
+    If amoney = true
+    {
+        WebRequest.Send(Cash)
+    }
+    If alevel = true
+    {   
+        WebRequest.Send(Level)
+    }
+    If akicked = true
+    {
+        WebRequest.Send(kicked)
+    }
+}
+    
+Sleep 10000
+Loop,
+{
+    Pixelsearch,,, 79, 98, 80, 99, 0x38388E, 10, Fast ; Combat Tag 
+    if ErrorLevel = 1
+    {
+        Sleep 100
+        Pixelsearch,,, 79, 98, 80, 99, 0x38388E, 10, Fast ; Combat Tag 
+        if ErrorLevel = 1
+        {
+            Break
+        }
+    }     
+}
+If autolog = true
+{
+    Process, Close, RobloxPlayerBeta.exe
+}
+If webhook = true
+{
+    WebRequest.Send(Logged)
+}
+Sleep 100
+ExitApp
+
+Space::ExitApp

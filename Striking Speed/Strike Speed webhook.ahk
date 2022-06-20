@@ -10,7 +10,7 @@ userid:="<@userid>" ; Copy ID from discord
 autorhythm = true
 flow = true
 Webhook = false 
-logat65 = false
+sendcurrentss = false
 
 ; do not change after this line
 ruined = False
@@ -94,6 +94,72 @@ if webhook = true
 	WebRequest.Open("POST", url, false)
 	WebRequest.SetRequestHeader("Content-Type", "application/json")
 }
+
+MSGBox, 4, Vivace's Macro, Do you want to auto log?
+IfMsgBox, Yes
+{
+    autolog = true
+    MSGBox, 4, Vivace's Macro, Do you want to auto calculate log at 65`%
+    IfMsgBox, Yes
+    {
+        InputBox, fatiguebase , Vivace's Macro, How much fatigue do you have right now?,,300,125
+        If ErrorLevel = 1
+        {
+            MsgBox,,Vivace's Macro,Do Not Cancel,3
+            ExitApp
+        }
+        if fatiguebase is Not number
+        {
+            MsgBox,,Vivace's Macro,please enter only digits,3
+            ExitApp
+        }
+        InputBox, fatigueplus , Vivace's Macro, What is your minimum fatigue gained per training?,,340,125
+        If ErrorLevel = 1
+        {
+            
+            MsgBox,,Vivace's Macro,Do Not Cancel,3
+            ExitApp
+        }
+        if fatigueplus = 0
+        {
+            MsgBox,,Vivace's Macro,Don't use 0 in this,3
+            ExitApp
+        }
+        if fatigueplus is Not number
+        {
+            MsgBox,,Vivace's Macro,please enter only digits,3
+            ExitApp
+        }
+        Loop,
+        {
+            cal:=fatiguebase+fatigueplus
+            fatiguebase:=cal
+            Log++ 
+            if cal > 65
+            {
+                Break
+            }
+        }
+        MsgBox,,Vivace's Macro, Repeat: %log% times,4
+    }
+    IfMsgBox, No
+    {
+        InputBox, Log, Vivace's Macro, How many times you want to do strike speed?,,340,125
+        If ErrorLevel = 1
+        {
+            MsgBox,,Vivace's Macro,Do Not Cancel,3
+            ExitApp
+        }
+        if Log is Not number
+        {
+            MsgBox,,Vivace's Macro,please enter only digits,3
+            ExitApp
+        }
+    }
+} else {
+    autolog = false
+}
+
 if WinExist("Roblox") {
 	WinActivate
     CenterWindow("ahk_exe RobloxPlayerBeta.exe")
@@ -103,6 +169,7 @@ if WinExist("Roblox") {
 	Sleep 3000
 	ExitApp
 }
+
 CenterWindow(WinTitle) {	
 	WinGetPos,,, Width, Height, %WinTitle%
 	WinMove, %WinTitle%,,,, 800, 599
@@ -117,53 +184,52 @@ if (toggle)
 { ;remember to make less loop possible for best performence and always put timer in loop if stuck in loop
 	Loop, ; Start of the loop
 	{
-		if webhook = true
+		if sendcurrentss = true
 		{
-			currentss=
-			(
-				{
-					"username": "i love vivace's macro",
-					"content": "Current ss is %aa%",
-					"embeds": null
-				}
-			)
-			finishedss=
-			(
-				{
-					"username": "i love vivace's macro",
-					"content": "Finish %aa% time",
-					"embeds": null
-				}
-			)
+			if webhook = true
+			{
+				currentss=
+				(
+					{
+						"username": "i love vivace's macro",
+						"content": "Current ss is %Count%",
+						"embeds": null
+					}
+				)
+				finishedss=
+				(
+					{
+						"username": "i love vivace's macro",
+						"content": "Finish %Count% time",
+						"embeds": null
+					}
+				)
+			} else {
+				tooltip, %Count%
+			}
 		}
-        if logat65 = true
+		
+		if autolog = true
         {
-            ImageSearch, x, y, 330, 110, 345, 125, *30 %A_ScriptDir%\bin2\65.png
-            If ErrorLevel = 0
+            Count++
+
+            if Count = %Log%
             {
-                ruined = true
-                If webhook = true
-                {
-                    body = true
-                }
+				if webhook = false
+				{
+					msgbox, max fatigue
+					ExitApp
+				} else {
+					body = True
+                	ruined = true
+				}
             }
-            ImageSearch, x, y, 330, 110, 345, 125, *30 %A_ScriptDir%\bin2\66.png
-            If ErrorLevel = 0
-            {
-                ruined = true
-                if Webhook = true
-                {
-                    body = true
-                }
-		    }
         }
-
-
 		if ss = false
 		{
             Send {BackSpace}
 			Sleep 100
-            ImageSearch, x, y, 65, 520, 750, 585, *10 %A_ScriptDir%\bin2\trainingss.png
+            ImageSearch, x, y, 65, 520, 750, 585, *10 %A_ScriptDir%\bin2\ss.bmp
             if ErrorLevel = 0
             {
 				Sleep 200
@@ -231,7 +297,7 @@ if (toggle)
                 Sleep 1000
                 m2 = 0
             }
-            ImageSearch, x, y, 65, 520, 750, 585, *10 %A_ScriptDir%\bin2\trainingss.png
+            ImageSearch, x, y, 65, 520, 750, 585, *10 %A_ScriptDir%\bin2\ss.bmp
             If ErrorLevel = 1
             {
                 Send {BackSpace}
@@ -244,15 +310,8 @@ if (toggle)
 				}
             }
         }
-		; misc
-		If Flow = True
-		{
-			PixelSearch, x, y, 409, 151, 411, 153, 0x242424,, Fast ;auto flow
-            If ErrorLevel = 0
-            {
-                Send e
-            }
-		}
+
+
 		; low hunger
 		PixelSearch, x, y, 34, 144, 35, 146, 0x3A3A3A, 40, Fast ; too low hunger
 		If ErrorLevel = 0

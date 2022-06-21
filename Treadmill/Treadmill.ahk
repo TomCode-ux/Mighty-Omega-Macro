@@ -282,6 +282,7 @@ Loop,
     PixelSearch ,,, 249, 129, 250, 130, 0x3A3A3A, 40, Fast
     If ErrorLevel = 1
     {				
+        back:
         if tread = true ; rs
         {
             Click , 520, 310
@@ -295,93 +296,73 @@ Loop,
         wait := A_TickCount
         Loop,
         {
-            Ahee := A_TickCount - wait
             ImageSearch,,, 380, 450, 430, 470, %A_WorkingDir%/bin/lea.bmp
             If ErrorLevel = 0
             {
+                Sleep 10
                 Break
             }
-            If (Ahee > 5000)
-            {
-
-            }
-        }
-        ClickLevel := A_TickCount
+        } Until A_TickCount - wait > 3000
+        levely = 370
+        levell = 5
+        error = 0
         Loop,
         {
-            Alo := A_TickCount - ClickLevel
-            ImageSearch,,, 390, 240, 430, 390, %A_WorkingDir%/bin/level5.bmp
+            ImageSearch,,, 390, 240, 430, 390, %A_WorkingDir%/bin/level%levell%.bmp
             If ErrorLevel = 0
             {
-                MouseMove, 470, 370
+                MouseMove, 470 , %levely%
+                MouseMove, 471 , %levely%
+                Click, 10
+                Sleep 100
                 Break
-            }
-            ImageSearch,,, 390, 240, 430, 390, %A_WorkingDir%/bin/level4.bmp
-            If ErrorLevel = 0
-            {
-                
-                MouseMove, 470, 340
-                Break
-            }
-            ImageSearch,,, 390, 240, 430, 390, %A_WorkingDir%/bin/level3.bmp
-            If ErrorLevel = 0
-            {
-                
-                MouseMove, 470, 310
-                Break
-            }
-            ImageSearch,,, 390, 240, 430, 390, %A_WorkingDir%/bin/level2.bmp
-            If ErrorLevel = 0
-            {
-                
-                MouseMove, 470, 280
-                Break
-            }
-            ImageSearch,,, 390, 240, 430, 390, %A_WorkingDir%/bin/level1.bmp
-            If ErrorLevel = 0
-            {
-                
-                MouseMove, 470, 250
-                Break
-            } 
-            If (Alo > 5000)
-            {
-                If Webhook = true
+            } else {
+                levell--
+                levely:=levely-30
+                if levely <= 220
                 {
-                    Broken = true
-                    alevel = true
-                    Click, 410, 345
-                    Sleep 500
-                    Break
-                } else {
-                    Loop,
+                    levely = 370
+                    level = 5
+                    error++
+                    if error <= 50
                     {
-                        Pixelsearch,,, 79, 98, 80, 99, 0x38388E, 10, Fast ; Combat Tag 
-                        if ErrorLevel = 1
+                        If Webhook = true
                         {
-                            Sleep 100
-                            Pixelsearch,,, 79, 98, 80, 99, 0x38388E, 10, Fast ; Combat Tag 
-                            if ErrorLevel = 1
+                            Broken = true
+                            alevel = true
+                            Click, 410, 345
+                            Sleep 500
+                            Break
+                        } else {
+                            Loop,
                             {
-                                Break
+                                Pixelsearch,,, 79, 98, 80, 99, 0x38388E, 10, Fast ; Combat Tag 
+                                if ErrorLevel = 1
+                                {
+                                    Sleep 100
+                                    Pixelsearch,,, 79, 98, 80, 99, 0x38388E, 10, Fast ; Combat Tag 
+                                    if ErrorLevel = 1
+                                    {
+                                        Break
+                                    }
+                                }     
                             }
-                        }     
+                            If autolog = true
+                            {
+                                Process, Close, RobloxPlayerBeta.exe
+                            }
+                            MsgBox, Level not found
+                            ExitApp
+                        }
                     }
-                    If autolog = true
-                    {
-                        Process, Close, RobloxPlayerBeta.exe
-                    }
-                    MsgBox, Level not found
-                    ExitApp
                 }
-            }
-            
+            }       
         }
         If Broken = true
         {
             Break
         }
-        Click, 10 ; Select Level
+        MouseMove, 405, 600
         hand := A_TickCount
         Loop,
         {
@@ -852,16 +833,17 @@ Loop,
         }
     }     
 }
+
 If autolog = true
 {
     Process, Close, RobloxPlayerBeta.exe
+    If webhook = true
+    {
+        WebRequest.Send(Logged)
+    }
 }
-If webhook = true
-{
-    WebRequest.Send(Logged)
-}
+
 Sleep 100
 ExitApp
-
+Return
 Space::ExitApp
-

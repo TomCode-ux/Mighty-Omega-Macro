@@ -1,4 +1,3 @@
-;useful stuff
 #SingleInstance, force
 #NoEnv
 #MaxThreadsPerHotkey, 2
@@ -7,7 +6,6 @@ SetBatchLines, -1
 SetMouseDelay, -1
 CoordMode, Pixel, Window
 CoordMode, Mouse, Window
-
 
 IfNotExist, %A_ScriptDir%\bin\Food
 {
@@ -31,117 +29,38 @@ if !FileExist("webhook.txt")
 {
     FileAppend, false, Webhook.txt
 }
-tooltip, Cancel if you don't want to use webhook
-FileRead, lamo, webhook.txt
-xd:
-if lamo = false
-{   
 
-    InputBox, Webhook, Vivace's Macro, Put your webhook,, 300, 150
-    If ErrorLevel = 0
-    {
-        filedelete, webhook.txt
-        FileAppend, %webhook%, Webhook.txt
-        InputBox, userid, Vivace's Macro, Put your userid,, 300, 150
-        If ErrorLevel = 0
-        {
-            FileAppend, `n<@%userid%>, Webhook.txt
-            goto, xd
-        } else {
-            webhook = false
-            filedelete, webhook.txt
-            FileAppend, false, Webhook.txt
-        }
-    } else {
-        webhook = false
-        filedelete, webhook.txt
-        FileAppend, false, Webhook.txt
-    }
-    
-} else {
-    tooltip, Checked
-    webhook = true
-    FileReadLine, url, webhook.txt, 1
-    FileReadLine, userid, webhook.txt, 2
-    discord = %url%
-    id = %userid%
-    WebRequest := ComObjCreate("WinHttp.WinHttpRequest.5.1")
-	WebRequest.Open("POST", discord, false)
-	WebRequest.SetRequestHeader("Content-Type", "application/json")
-    Food=
-    (
-        {
-            "username": "i love vivace's macro",
-            "content": "%userid% You are out of food!",
-            "embeds": null
-        }
-    )
-    Fatigue=
-    (
-        {
-            "username": "i love vivace's macro",
-            "content": "%userid% You have reach 65`% fatigue!",
-            "embeds": null
-        }
-    )
-    Combat=
-    (
-        {
-            "username": "i love vivace's macro",
-            "content": "%userid% You are attacked!",
-            "embeds": null
-        }
-    )
-    Cash=
-    (
-        {
-            "username": "i love vivace's macro",
-            "content": "%userid% You are out of cash!",
-            "embeds": null
-        }
-    )
-    Level=
-    (
-        {
-            "username": "i love vivace's macro",
-            "content": "%userid% You are pushed away from treadmill!",
-            "embeds": null
-        }
-    )
-    Combatlog=
-    (
-        {
-            "username": "i love vivace's macro",
-            "content": "auto log when not in combat",
-            "embeds": null
-        }
-    )
-    Logged=
-    (
-        {
-            "username": "i love vivace's macro",
-            "content": "Logged successfully",
-            "embeds": null
-        }
-    )
-    Kicked=
-    (
-        {
-            "username": "i love vivace's macro",
-            "content": "%userid% you got kicked from the game 😨",
-            "embeds": null
-        }
-    )
-}
-tooltip
+; New GUI
+Gui, Add, Tab3 ,, Options | Autolog 
 
 
+; Options tab
+Gui, Tab, 1
+Gui, Add, Text,, Discord webhook url *Optional
+Gui, Add, Edit, w470 vWebhook r1,
+Gui, Add, Text,, Discord User id 
+Gui, Add, Edit, w200  vUserId r1,
+Gui, Add, Text,, Stamina or RunningSpeed? *Required
+Gui, Add, DropDownList, vTrainingChoice, Stamina|Running Speed
+Gui, Add, CheckBox, vRecord, Auto clip?`nAutomatically Clip and check name if you are attacked
+Gui, Add, Text,, How many times you want to do treadmill? *Only if you didn' t select autolog
+Gui, Add, Edit ,Number w100 vReptimes r1, Required
+; Auto log tab
+Gui, Tab, 2
+Gui, Add, CheckBox, vAutolog gALog, Do you want to auto log? *Optional
 
-; options
-MSGBox, 4, Vivace's Macro, Do you want to auto log?
-IfMsgBox, Yes
-{
-    autolog = true
+
+; Show GUI
+
+Gui, Tab  ; i.e. subsequently-added controls will not belong to the tab control.
+Gui, Add, Button, +default, Finished
+Gui, Show, w550 h320, Vivace's Macro, Treadmill Macro
+return
+
+
+; Auto log lable:
+ALog:
+autolog = true
     MSGBox, 4, Vivace's Macro, Do you want to log at 65`%
     IfMsgBox, Yes
     {
@@ -199,49 +118,159 @@ IfMsgBox, Yes
             ExitApp
         }
     }
-} else {
+ else {
     autolog = false
 }
+return
 
+GuiClose:
+GuiEscape:
+ButtonFinished:
+Gui, Submit, NoHide
+; MsgBox, %Reptimes% %TrainingChoice% %Record%
 
-settimer, chbn, 20
-MsgBox, 4, Stamina or RunningSpeed?, Choose Stamina or RunningSpeed
-IfMsgBox Yes
+if (TrainingChoice != "" )
 {
-    tread = false
-} else {
-	tread = true
+    msgbox,,Vivace's Macro, Welcome to free vivace's macro`nPress Space Bar to Exit Macro,
+    if Record = 1
+            {
+                autoclip = true
+                MsgBox,4,,Please set your instant replay to F8`nIf not Macro will use f12 record
+                IfMsgBox, Yes
+                            {
+                                instant = true
+                            }
+                            IfMsgBox, No
+                            {
+                                record = true
+                            }
+                record = true
+                Gui, Destroy
+            }
+    else{
+        Gui, Destroy
+    }
+    if TrainingChoice = "Running Speed"
+    {
+        tread = true
+    }
+    else
+    {
+        tread = false
+    }
+      
 }
+else{
 
-chbn()
-{
-	IfWinNotExist, Stamina or RunningSpeed?
-	Return
-	settimer, chbn, off
-	WinActivate
-	ControlSetText, Button1, &Stamina
-	ControlSetText, Button2, &Running
-}
-MSGBox, 4, Vivace's Macro, Auto clip?`nAutomatically Clip and check name if you are attacked
-IfMsgBox, Yes
-{
-    autoclip = true
-    MSGBox, 4, Vivace's Macro, Please set your instant replay to F8`nIf not Macro will use f12 record
+     MsgBox, 4,, Are you sure you want to exit, you have uncompleted info.
     IfMsgBox, Yes
     {
-        instant = true
-    }
-    IfMsgBox, No
-    {
-        record = true
+        Gui, Destroy  
+
+    }else{
+
+        return
+
     }
 }
+if (Webhook != "" or FileExist("webhook.txt"))
+{
+    if (UserId != "" or FileExist("webhook.txt"))
+{
+    FileRead, lamo, webhook.txt
+    xd:
+    if lamo = false
+    {   
+    FileRead, lamo, webhook.txt 
+        filedelete, webhook.txt
+        FileAppend, %Webhook%, Webhook.txt
+        FileAppend, `n<@%UserId%>, Webhook.txt
+        goto, xd
 
+        tooltip, Checked
+        webhook = true
+        FileReadLine, url, webhook.txt, 1
+        FileReadLine, userid, webhook.txt, 2
+        discord = %url%
+        id = %userid%
+        WebRequest := ComObjCreate("WinHttp.WinHttpRequest.5.1")
+        WebRequest.Open("POST", discord, false)
+        WebRequest.SetRequestHeader("Content-Type", "application/json")
+        Food=
+        (
+            {
+                "username": "i love vivace's macro",
+                "content": "%userid% You are out of food!",
+                "embeds": null
+            }
+        )
+        Fatigue=
+        (
+            {
+                "username": "i love vivace's macro",
+                "content": "%userid% You have reach 65`% fatigue!",
+                "embeds": null
+            }
+        )
+        Combat=
+        (
+            {
+                "username": "i love vivace's macro",
+                "content": "%userid% You are attacked!",
+                "embeds": null
+            }
+        )
+        Cash=
+        (
+            {
+                "username": "i love vivace's macro",
+                "content": "%userid% You are out of cash!",
+                "embeds": null
+            }
+        )
+        Level=
+        (
+            {
+                "username": "i love vivace's macro",
+                "content": "%userid% You are pushed away from treadmill!",
+                "embeds": null
+            }
+        )
+        Combatlog=
+        (
+            {
+                "username": "i love vivace's macro",
+                "content": "auto log when not in combat",
+                "embeds": null
+            }
+        )
+        Logged=
+        (
+            {
+                "username": "i love vivace's macro",
+                "content": "Logged successfully",
+                "embeds": null
+            }
+        )
+        Kicked=
+        (
+            {
+                "username": "i love vivace's macro",
+                "content": "%userid% you got kicked from the game 😨",
+                "embeds": null
+            }
+        )
+    }
+} 
+} 
+else
+{
+    webhook = false
+    filedelete, webhook.txt
+    FileAppend, false, Webhook.txt
+}
 
-
-
-msgbox,,Vivace's Macro, Welcome to free vivace's macro`nPress Space Bar to Exit Macro,2
-Sleep 1000
+sleep 1000
 ToolTip
 if WinExist("Ahk_exe RobloxPlayerBeta.exe")
 {
